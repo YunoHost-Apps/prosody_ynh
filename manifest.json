@@ -22,7 +22,6 @@
     },
     "multi_instance": false,
     "services": [
-        "php7.3-fpm",
         "mysql"
     ],
     "arguments": {

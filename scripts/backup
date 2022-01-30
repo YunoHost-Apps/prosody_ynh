@@ -51,19 +51,6 @@ ynh_backup --src_path="$final_path"
 ynh_backup --src_path="$datadir" --is_big
 
 #=================================================
-# BACKUP THE PHP-FPM CONFIGURATION
-#=================================================
-
-ynh_backup --src_path="/etc/php/$phpversion/fpm/pool.d/$app.conf"
-
-#=================================================
-# BACKUP FAIL2BAN CONFIGURATION
-#=================================================
-
-ynh_backup --src_path="/etc/fail2ban/jail.d/$app.conf"
-ynh_backup --src_path="/etc/fail2ban/filter.d/$app.conf"
-
-#=================================================
 # SPECIFIC BACKUP
 #=================================================
 # BACKUP LOGROTATE
