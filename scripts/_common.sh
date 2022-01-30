@@ -5,7 +5,7 @@
 #=================================================
 
 # dependencies used by the app
-pkg_dependencies="deb1 deb2 php$YNH_DEFAULT_PHP_VERSION-deb1 php$YNH_DEFAULT_PHP_VERSION-deb2"
+pkg_dependencies="libidn11-dev, liblua5.2-dev, libssl-dev, lua-busted, lua5.2-expat, lua5.2-socket, lua5.2, openssl, txt2man"
 
 #=================================================
 # PERSONAL HELPERS
