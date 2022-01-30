@@ -35,11 +35,6 @@
                 "type": "user"
             },
             {
-                "name": "is_public",
-                "type": "boolean",
-                "default": true
-            },
-            {
                 "name": "language",
                 "type": "string",
                 "ask": {

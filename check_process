@@ -7,7 +7,6 @@
 	; Manifest
 		domain="domain.tld"
 		admin="john"
-		is_public=1
 		language="fr"
 		password="1Strong-Password"
 		port="666"
