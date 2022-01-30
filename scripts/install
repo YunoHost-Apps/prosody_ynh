@@ -31,14 +31,6 @@ password=$YNH_APP_ARG_PASSWORD
 app=$YNH_APP_INSTANCE_NAME
 
 #=================================================
-# CHECK IF THE APP CAN BE INSTALLED WITH THESE ARGS
-#=================================================
-ynh_script_progression --message="Validating installation parameters..."
-
-final_path=/var/www/$app
-test ! -e "$final_path" || ynh_die --message="This path already contains a folder"
-
-#=================================================
 # STORE SETTINGS FROM MANIFEST
 #=================================================
 ynh_script_progression --message="Storing installation settings..."
@@ -79,50 +71,73 @@ ynh_install_app_dependencies $pkg_dependencies
 ynh_script_progression --message="Configuring system user..."
 
 # Create a system user
-ynh_system_user_create --username=$app --home_dir="$final_path"
+ynh_system_user_create --username=$app
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 ynh_script_progression --message="Setting up source files..."
 
-ynh_app_setting_set --app=$app --key=final_path --value=$final_path
+builddir="$(mktemp -d)"
 # Download, check integrity, uncompress and patch the source from app.src
-ynh_setup_source --dest_dir="$final_path"
-
-chmod 750 "$final_path"
-chmod -R o-rwx "$final_path"
-chown -R $app:www-data "$final_path"
+ynh_setup_source --dest_dir="$builddir"
 
 #=================================================
 # SPECIFIC SETUP
 #=================================================
-# ...
+# BUILD PROSODY
 #=================================================
+ynh_script_progression --message="Building prosody..."
+
+pushd "$builddir"
+	./configure --prefix=/usr
+	make
+	make install
+popd
+
+ynh_secure_remove --file="$builddir"
 
 #=================================================
 # CREATE DATA DIRECTORY
 #=================================================
 ynh_script_progression --message="Creating a data directory..."
 
-datadir=/home/yunohost.app/$app
+datadir=/var/lib/$app
 ynh_app_setting_set --app=$app --key=datadir --value=$datadir
 
 mkdir -p $datadir
 
 chmod 750 "$datadir"
 chmod -R o-rwx "$datadir"
-chown -R $app:www-data "$datadir"
+chown -R $app:$app "$datadir"
 
 #=================================================
 # ADD A CONFIGURATION
 #=================================================
 ynh_script_progression --message="Adding a configuration file..."
 
-ynh_add_config --template="some_config_file" --destination="$final_path/some_config_file"
+config_path=/etc/$app
+ynh_app_setting_set --app=$app --key=config_path --value=$config_path
+mkdir -p $config_path
+mkdir -p $config_path/{certs,conf.avail,conf.d}
 
-chmod 400 "$final_path/some_config_file"
-chown $app:$app "$final_path/some_config_file"
+ynh_add_config --template="../conf/prosody.cfg.lua" --destination="$config_path/prosody.cfg.lua"
+ynh_add_config --template="../conf/example.com.cfg.lua" --destination="$config_path/conf.avail/example.com.cfg.lua"
+ynh_add_config --template="../conf/localhost.cfg.lua" --destination="$config_path/conf.avail/localhost.cfg.lua"
+
+ln -s $config_path/conf.avail/localhost.cfg.lua $config_path/conf.d/
+
+chown root:root "$config_path"
+chmod 755 "$config_path"
+
+chown root:$app "$config_path/conf.d"
+chmod 754 "$config_path/conf.d"
+
+chown root:$app "$config_path/conf.avail"
+chmod 754 "$config_path/conf.avail"
+
+chown root:$app "$config_path/certs"
+chmod 750 "$config_path/certs"
 
 #=================================================
 # SETUP SYSTEMD
@@ -133,28 +148,16 @@ ynh_script_progression --message="Configuring a systemd service..."
 ynh_add_systemd_config
 
 #=================================================
-# SETUP APPLICATION WITH CURL
-#=================================================
-ynh_script_progression --message="Setuping application with CURL..."
-
-# Set the app as temporarily public for curl call
-ynh_script_progression --message="Configuring SSOwat..."
-# Making the app public for curl
-ynh_permission_update --permission="main" --add="visitors"
-
-# Installation with curl
-ynh_script_progression --message="Finalizing installation..."
-ynh_local_curl "/INSTALL_PATH" "key1=value1" "key2=value2" "key3=value3"
-
-# Remove the public access
-ynh_permission_update --permission="main" --remove="visitors"
-
-#=================================================
 # GENERIC FINALIZATION
 #=================================================
 # SETUP LOGROTATE
 #=================================================
 ynh_script_progression --message="Configuring log rotation..."
+
+mkdir -p "/var/log/$app"
+chmod 750 "/var/log/$app"
+chmod -R o-rwx "/var/log/$app"
+chown -R $app:adm "/var/log/$app"
 
 # Use logrotate to manage application logfile(s)
 ynh_use_logrotate

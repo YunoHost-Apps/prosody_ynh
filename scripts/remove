@@ -18,8 +18,8 @@ app=$YNH_APP_INSTANCE_NAME
 
 domain=$(ynh_app_setting_get --app=$app --key=domain)
 port=$(ynh_app_setting_get --app=$app --key=port)
-final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 datadir=$(ynh_app_setting_get --app=$app --key=datadir)
+config_path=$(ynh_app_setting_get --app=$app --key=config_path)
 
 #=================================================
 # STANDARD REMOVE
@@ -49,14 +49,6 @@ ynh_script_progression --message="Removing logrotate configuration..."
 
 # Remove the app-specific logrotate config
 ynh_remove_logrotate
-
-#=================================================
-# REMOVE APP MAIN DIR
-#=================================================
-ynh_script_progression --message="Removing app main directory..."
-
-# Remove the app directory securely
-ynh_secure_remove --file="$final_path"
 
 #=================================================
 # REMOVE DATA DIR
@@ -94,24 +86,16 @@ fi
 #=================================================
 ynh_script_progression --message="Removing various files..."
 
-# Remove a cron file
-ynh_secure_remove --file="/etc/cron.d/$app"
-
 # Remove a directory securely
-ynh_secure_remove --file="/etc/$app"
+ynh_secure_remove --file="$config_path"
 
 # Remove the log files
 ynh_secure_remove --file="/var/log/$app"
 
-/etc/prosody/conf.d/localhost.cfg.lua
-/etc/prosody/conf.d
-/run/prosody
-/var/lib/prosody
-/var/log/prosody
-/usr/bin/prosody
-/usr/bin/prosodyctl
-/usr/bin/prosody-migrator
-
+ynh_secure_remove --file="/run/$app"
+ynh_secure_remove --file="/usr/bin/prosody"
+ynh_secure_remove --file="/usr/bin/prosodyctl"
+ynh_secure_remove --file="/usr/bin/prosody-migrator"
 
 #=================================================
 # GENERIC FINALIZATION
