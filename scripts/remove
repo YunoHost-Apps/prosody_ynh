@@ -108,6 +108,14 @@ ynh_script_progression --message="Removing the dedicated system user..."
 ynh_system_user_delete --username=$app
 
 #=================================================
+# ENABLE METRONOME
+#=================================================
+ynh_script_progression --message="Enabling Metronome..."
+
+systemctl enable metronome.service --quiet
+ynh_systemd_action --service_name="metronome" --action="start"
+
+#=================================================
 # END OF SCRIPT
 #=================================================
 

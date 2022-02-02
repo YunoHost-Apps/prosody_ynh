@@ -31,6 +31,14 @@ password=$YNH_APP_ARG_PASSWORD
 app=$YNH_APP_INSTANCE_NAME
 
 #=================================================
+# DISABLE METRONOME
+#=================================================
+ynh_script_progression --message="Disabling Metronome..."
+
+ynh_systemd_action --service_name="metronome" --action="stop"
+systemctl disable metronome.service --quiet
+
+#=================================================
 # STORE SETTINGS FROM MANIFEST
 #=================================================
 ynh_script_progression --message="Storing installation settings..."
@@ -47,16 +55,34 @@ ynh_app_setting_set --app=$app --key=language --value=$language
 ynh_script_progression --message="Finding an available port..."
 
 # Find an available port
-port=$(ynh_find_port --port=8095)
-ynh_app_setting_set --app=$app --key=port --value=$port
+file_port=5000
+client_port=5222
+server_port=5269
+http_port=5280
+https_port=5281
+component_port=5347
+telnet_port=5582
+ynh_app_setting_set --app=$app --key=file_port --value=$file_port
+ynh_app_setting_set --app=$app --key=client_port --value=$client_port
+ynh_app_setting_set --app=$app --key=server_port --value=$server_port
+ynh_app_setting_set --app=$app --key=http_port --value=$http_port
+ynh_app_setting_set --app=$app --key=https_port --value=$https_port
+ynh_app_setting_set --app=$app --key=component_port --value=$component_port
+ynh_app_setting_set --app=$app --key=telnet_port --value=$telnet_port
 
 # Optional: Expose this port publicly
 # (N.B.: you only need to do this if the app actually needs to expose the port publicly.
 # If you do this and the app doesn't actually need you are CREATING SECURITY HOLES IN THE SERVER !)
 
 # Open the port
-# ynh_script_progression --message="Configuring firewall..."
-# ynh_exec_warn_less yunohost firewall allow --no-upnp TCP $port
+ynh_script_progression --message="Configuring firewall..."
+ynh_exec_warn_less yunohost firewall allow --no-upnp TCP $file_port
+ynh_exec_warn_less yunohost firewall allow --no-upnp TCP $client_port
+ynh_exec_warn_less yunohost firewall allow --no-upnp TCP $server_port
+ynh_exec_warn_less yunohost firewall allow --no-upnp TCP $http_port
+ynh_exec_warn_less yunohost firewall allow --no-upnp TCP $https_port
+ynh_exec_warn_less yunohost firewall allow --no-upnp TCP $component_port
+ynh_exec_warn_less yunohost firewall allow --no-upnp TCP $telnet_port
 
 #=================================================
 # INSTALL DEPENDENCIES
@@ -167,7 +193,7 @@ ynh_use_logrotate
 #=================================================
 ynh_script_progression --message="Integrating service in YunoHost..."
 
-yunohost service add $app --description="A short description of the app" --log="/var/log/$app/$app.log"
+yunohost service add $app --log="/var/log/$app/$app.log" --needs_exposed_ports="$file_port,$client_port,$server_port,$http_port,$https_port,$component_port,$telnet_port"
 
 #=================================================
 # START SYSTEMD SERVICE

@@ -21,6 +21,13 @@ admin=$(ynh_app_setting_get --app=$app --key=admin)
 language=$(ynh_app_setting_get --app=$app --key=language)
 config_path=$(ynh_app_setting_get --app=$app --key=config_path)
 datadir=$(ynh_app_setting_get --app=$app --key=datadir)
+file_port=$(ynh_app_setting_get --app=$app --key=file_port)
+client_port=$(ynh_app_setting_get --app=$app --key=client_port)
+server_port=$(ynh_app_setting_get --app=$app --key=server_port)
+http_port=$(ynh_app_setting_get --app=$app --key=http_port)
+https_port=$(ynh_app_setting_get --app=$app --key=https_port)
+component_port=$(ynh_app_setting_get --app=$app --key=component_port)
+config_path=$(ynh_app_setting_get --app=$app --key=telnet_port)
 
 #=================================================
 # CHECK VERSION
@@ -42,6 +49,14 @@ ynh_clean_setup () {
 }
 # Exit if an error occurs during the execution of the script
 ynh_abort_if_errors
+
+#=================================================
+# DISABLE METRONOME
+#=================================================
+ynh_script_progression --message="Disabling Metronome..."
+
+ynh_systemd_action --service_name="metronome" --action="stop"
+systemctl disable metronome.service --quiet
 
 #=================================================
 # STANDARD UPGRADE STEPS
@@ -154,7 +169,7 @@ ynh_use_logrotate --non-append
 #=================================================
 ynh_script_progression --message="Integrating service in YunoHost..."
 
-yunohost service add $app --description="A short description of the app" --log="/var/log/$app/$app.log"
+yunohost service add $app --description="A short description of the app" --log="/var/log/$app/$app.log" --needs_exposed_ports="$file_port,$client_port,$server_port,$http_port,$https_port,$component_port,$telnet_port"
 
 #=================================================
 # START SYSTEMD SERVICE
