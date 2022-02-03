@@ -27,7 +27,6 @@ ynh_script_progression --message="Loading installation settings..."
 
 app=$YNH_APP_INSTANCE_NAME
 
-domain=$(ynh_app_setting_get --app=$app --key=domain)
 datadir=$(ynh_app_setting_get --app=$app --key=datadir)
 config_path=$(ynh_app_setting_get --app=$app --key=config_path)
 file_port=$(ynh_app_setting_get --app=$app --key=file_port)
@@ -66,7 +65,7 @@ ynh_restore_file --origin_path="$config_path"
 mkdir -p $config_path
 mkdir -p $config_path/{certs,conf.avail,conf.d}
 
-ln -s $config_path/conf.avail/localhost.cfg.lua $config_path/conf.d/
+#ln -s $config_path/conf.avail/localhost.cfg.lua $config_path/conf.d/
 
 chown root:root "$config_path"
 chmod 755 "$config_path"
@@ -137,7 +136,7 @@ ynh_restore_file --origin_path="/etc/logrotate.d/$app"
 #=================================================
 ynh_script_progression --message="Integrating service in YunoHost..."
 
-yunohost service add $app --description="A short description of the app" --log="/var/log/$app/$app.log" --needs_exposed_ports $file_port $client_port $server_port $http_port $https_port $component_port $telnet_port
+yunohost service add $app --log="/var/log/$app/$app.log" --needs_exposed_ports $file_port $client_port $server_port $http_port $https_port $component_port $telnet_port
 
 #=================================================
 # START SYSTEMD SERVICE

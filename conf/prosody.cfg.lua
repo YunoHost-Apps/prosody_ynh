@@ -32,7 +32,7 @@ admins = { }
 -- will look for modules first. For community modules, see https://modules.prosody.im/
 -- For a local administrator it's common to place local modifications
 -- under /usr/local/ hierarchy:
-plugin_paths = { "/usr/local/lib/__APP__/modules" }
+plugin_paths = { "/usr/lib/__APP__/modules" }
 
 -- This is the list of modules Prosody will load on startup.
 -- It looks for mod_modulename.lua in the plugins folder, so make sure that exists too.

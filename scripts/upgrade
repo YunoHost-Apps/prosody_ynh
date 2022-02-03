@@ -16,9 +16,6 @@ ynh_script_progression --message="Loading installation settings..."
 
 app=$YNH_APP_INSTANCE_NAME
 
-domain=$(ynh_app_setting_get --app=$app --key=domain)
-admin=$(ynh_app_setting_get --app=$app --key=admin)
-language=$(ynh_app_setting_get --app=$app --key=language)
 config_path=$(ynh_app_setting_get --app=$app --key=config_path)
 datadir=$(ynh_app_setting_get --app=$app --key=datadir)
 file_port=$(ynh_app_setting_get --app=$app --key=file_port)
@@ -27,7 +24,7 @@ server_port=$(ynh_app_setting_get --app=$app --key=server_port)
 http_port=$(ynh_app_setting_get --app=$app --key=http_port)
 https_port=$(ynh_app_setting_get --app=$app --key=https_port)
 component_port=$(ynh_app_setting_get --app=$app --key=component_port)
-config_path=$(ynh_app_setting_get --app=$app --key=telnet_port)
+telnet_port=$(ynh_app_setting_get --app=$app --key=telnet_port)
 
 #=================================================
 # CHECK VERSION
@@ -125,9 +122,8 @@ mkdir -p $config_path/{certs,conf.avail,conf.d}
 
 ynh_add_config --template="../conf/prosody.cfg.lua" --destination="$config_path/prosody.cfg.lua"
 ynh_add_config --template="../conf/example.com.cfg.lua" --destination="$config_path/conf.avail/example.com.cfg.lua"
-ynh_add_config --template="../conf/localhost.cfg.lua" --destination="$config_path/conf.avail/localhost.cfg.lua"
-
-ln -s $config_path/conf.avail/localhost.cfg.lua $config_path/conf.d/
+#ynh_add_config --template="../conf/localhost.cfg.lua" --destination="$config_path/conf.avail/localhost.cfg.lua"
+#ln -s $config_path/conf.avail/localhost.cfg.lua $config_path/conf.d/
 
 chown root:root "$config_path"
 chmod 755 "$config_path"
@@ -169,7 +165,7 @@ ynh_use_logrotate --non-append
 #=================================================
 ynh_script_progression --message="Integrating service in YunoHost..."
 
-yunohost service add $app --description="A short description of the app" --log="/var/log/$app/$app.log" --needs_exposed_ports $file_port $client_port $server_port $http_port $https_port $component_port $telnet_port
+yunohost service add $app --log="/var/log/$app/$app.log" --needs_exposed_ports $file_port $client_port $server_port $http_port $https_port $component_port $telnet_port
 
 #=================================================
 # START SYSTEMD SERVICE

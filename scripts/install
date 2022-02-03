@@ -23,11 +23,6 @@ ynh_abort_if_errors
 # RETRIEVE ARGUMENTS FROM THE MANIFEST
 #=================================================
 
-domain=$YNH_APP_ARG_DOMAIN
-admin=$YNH_APP_ARG_ADMIN
-language=$YNH_APP_ARG_LANGUAGE
-password=$YNH_APP_ARG_PASSWORD
-
 app=$YNH_APP_INSTANCE_NAME
 
 #=================================================
@@ -42,10 +37,6 @@ systemctl disable metronome.service --quiet
 # STORE SETTINGS FROM MANIFEST
 #=================================================
 ynh_script_progression --message="Storing installation settings..."
-
-ynh_app_setting_set --app=$app --key=domain --value=$domain
-ynh_app_setting_set --app=$app --key=admin --value=$admin
-ynh_app_setting_set --app=$app --key=language --value=$language
 
 #=================================================
 # STANDARD MODIFICATIONS
@@ -75,14 +66,8 @@ ynh_app_setting_set --app=$app --key=telnet_port --value=$telnet_port
 # If you do this and the app doesn't actually need you are CREATING SECURITY HOLES IN THE SERVER !)
 
 # Open the port
-ynh_script_progression --message="Configuring firewall..."
-ynh_exec_warn_less yunohost firewall allow --no-upnp TCP $file_port
-ynh_exec_warn_less yunohost firewall allow --no-upnp TCP $client_port
-ynh_exec_warn_less yunohost firewall allow --no-upnp TCP $server_port
-ynh_exec_warn_less yunohost firewall allow --no-upnp TCP $http_port
-ynh_exec_warn_less yunohost firewall allow --no-upnp TCP $https_port
-ynh_exec_warn_less yunohost firewall allow --no-upnp TCP $component_port
-ynh_exec_warn_less yunohost firewall allow --no-upnp TCP $telnet_port
+# ynh_script_progression --message="Configuring firewall..."
+# ynh_exec_warn_less yunohost firewall allow --no-upnp TCP $port
 
 #=================================================
 # INSTALL DEPENDENCIES
@@ -149,9 +134,8 @@ mkdir -p $config_path/{certs,conf.avail,conf.d}
 
 ynh_add_config --template="../conf/prosody.cfg.lua" --destination="$config_path/prosody.cfg.lua"
 ynh_add_config --template="../conf/example.com.cfg.lua" --destination="$config_path/conf.avail/example.com.cfg.lua"
-ynh_add_config --template="../conf/localhost.cfg.lua" --destination="$config_path/conf.avail/localhost.cfg.lua"
-
-ln -s $config_path/conf.avail/localhost.cfg.lua $config_path/conf.d/
+#ynh_add_config --template="../conf/localhost.cfg.lua" --destination="$config_path/conf.avail/localhost.cfg.lua"
+#ln -s $config_path/conf.avail/localhost.cfg.lua $config_path/conf.d/
 
 chown root:root "$config_path"
 chmod 755 "$config_path"

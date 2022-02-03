@@ -27,7 +27,6 @@ ynh_print_info --message="Loading installation settings..."
 
 app=$YNH_APP_INSTANCE_NAME
 
-domain=$(ynh_app_setting_get --app=$app --key=domain)
 datadir=$(ynh_app_setting_get --app=$app --key=datadir)
 config_path=$(ynh_app_setting_get --app=$app --key=config_path)
 
