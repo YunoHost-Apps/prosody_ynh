@@ -36,6 +36,12 @@ config_path=$(ynh_app_setting_get --app=$app --key=config_path)
 ynh_print_info --message="Declaring files to be backed up..."
 
 #=================================================
+# BACKUP THE CONFIG DIR
+#=================================================
+
+ynh_backup --src_path="$config_path"
+
+#=================================================
 # BACKUP THE DATA DIR
 #=================================================
 
@@ -54,12 +60,6 @@ ynh_backup --src_path="/etc/logrotate.d/$app"
 #=================================================
 
 ynh_backup --src_path="/etc/systemd/system/$app.service"
-
-#=================================================
-# BACKUP VARIOUS FILES
-#=================================================
-
-ynh_backup --src_path="$config_path"
 
 #=================================================
 # END OF SCRIPT

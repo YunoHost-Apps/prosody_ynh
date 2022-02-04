@@ -16,15 +16,8 @@ ynh_script_progression --message="Loading installation settings..."
 
 app=$YNH_APP_INSTANCE_NAME
 
-config_path=$(ynh_app_setting_get --app=$app --key=config_path)
 datadir=$(ynh_app_setting_get --app=$app --key=datadir)
-file_port=$(ynh_app_setting_get --app=$app --key=file_port)
-client_port=$(ynh_app_setting_get --app=$app --key=client_port)
-server_port=$(ynh_app_setting_get --app=$app --key=server_port)
-http_port=$(ynh_app_setting_get --app=$app --key=http_port)
-https_port=$(ynh_app_setting_get --app=$app --key=https_port)
-component_port=$(ynh_app_setting_get --app=$app --key=component_port)
-telnet_port=$(ynh_app_setting_get --app=$app --key=telnet_port)
+config_path=$(ynh_app_setting_get --app=$app --key=config_path)
 
 #=================================================
 # CHECK VERSION
@@ -165,7 +158,7 @@ ynh_use_logrotate --non-append
 #=================================================
 ynh_script_progression --message="Integrating service in YunoHost..."
 
-yunohost service add $app --log="/var/log/$app/$app.log" --needs_exposed_ports $file_port $client_port $server_port $http_port $https_port $component_port $telnet_port
+yunohost service add $app --log="/var/log/$app/$app.log"
 
 #=================================================
 # START SYSTEMD SERVICE
