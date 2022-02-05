@@ -1,9 +1,1 @@
-Some long and extensive description of what the app is and does, lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-
-### Features
-
-- Ut enim ad minim veniam, quis nostrud exercitation ullamco ;
-- Laboris nisi ut aliquip ex ea commodo consequat ;
-- Duis aute irure dolor in reprehenderit in voluptate ;
-- Velit esse cillum dolore eu fugiat nulla pariatur ;
-- Excepteur sint occaecat cupidatat non proident, sunt in culpa."
+Prosody is a modern XMPP communication server. It aims to be easy to set up and configure, and efficient with system resources. Additionally, for developers it aims to be easy to extend and give a flexible system on which to rapidly develop added functionality, or prototype new protocols.
