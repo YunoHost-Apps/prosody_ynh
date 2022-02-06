@@ -95,7 +95,7 @@ ynh_install_app_dependencies $pkg_dependencies
 #=================================================
 # BUILD PROSODY
 #=================================================
-ynh_script_progression --message="Building prosody..."
+ynh_script_progression --message="Building Prosody..."
 
 pushd "$builddir"
 	./configure --prefix=/usr

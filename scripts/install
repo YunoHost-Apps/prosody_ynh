@@ -98,7 +98,7 @@ ynh_setup_source --dest_dir="$builddir"
 #=================================================
 # BUILD PROSODY
 #=================================================
-ynh_script_progression --message="Building prosody..."
+ynh_script_progression --message="Building Prosody..."
 
 pushd "$builddir"
 	./configure --prefix=/usr
