@@ -104,11 +104,6 @@ ynh_script_progression --message="Enabling Metronome..."
 systemctl enable metronome.service --quiet
 ynh_systemd_action --service_name="metronome" --action="start"
 
-ynh_exec_warn_less yunohost diagnosis unignore --filter ports port=5222
-ynh_exec_warn_less yunohost diagnosis unignore --filter ports port=5269
-ynh_exec_warn_less yunohost diagnosis unignore --filter services service=metronome
-ynh_exec_warn_less yunohost diagnosis run --force
-
 #=================================================
 # END OF SCRIPT
 #=================================================
