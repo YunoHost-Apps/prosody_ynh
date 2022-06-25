@@ -18,7 +18,7 @@ Si vous n'avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour
 Prosody is a modern XMPP communication server. It aims to be easy to set up and configure, and efficient with system resources. Additionally, for developers it aims to be easy to extend and give a flexible system on which to rapidly develop added functionality, or prototype new protocols.
 
 
-**Version incluse :** 0.11.13~ynh2
+**Version incluse :** 0.11.13~ynh3
 ## Avertissements / informations importantes
 
 * Prosody will not replace the XMPP service Metronome integrated in YunoHost, it has been implemented for some specific apps that require Prosody
