@@ -96,15 +96,18 @@ ynh_install_app_dependencies $pkg_dependencies
 #=================================================
 # BUILD PROSODY
 #=================================================
-ynh_script_progression --message="Building Prosody..."
+if [ "$upgrade_type" == "UPGRADE_APP" ]
+then
+	ynh_script_progression --message="Building Prosody..."
 
-pushd "$builddir"
-	./configure --prefix=/usr
-	make
-	make install
-popd
+	pushd "$builddir"
+		./configure --prefix=/usr
+		make
+		make install
+	popd
 
-ynh_secure_remove --file="$builddir"
+	ynh_secure_remove --file="$builddir"
+fi
 
 #=================================================
 # UPDATE A CONFIG FILE
