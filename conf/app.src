@@ -1,5 +1,5 @@
-SOURCE_URL=https://prosody.im/downloads/source/prosody-0.11.13.tar.gz
-SOURCE_SUM=39c61b346a09b5125b604cb969e14206cbbcb86c81156ffc6ba2d62527cf0432
+SOURCE_URL=https://prosody.im/downloads/source/prosody-0.12.3.tar.gz
+SOURCE_SUM=35da0d031ff46040a2d638e004d4255e249b6323fe6212db9ddd76b401db2101
 SOURCE_SUM_PRG=sha256sum
 SOURCE_FORMAT=tar.gz
 SOURCE_IN_SUBDIR=true

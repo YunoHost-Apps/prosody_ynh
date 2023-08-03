@@ -5,7 +5,7 @@
 #=================================================
 
 # dependencies used by the app
-pkg_dependencies="libidn11-dev, liblua5.2-dev, libssl-dev, lua-busted, lua5.2-expat, lua5.2-socket, lua5.2, openssl, txt2man"
+pkg_dependencies="gawk icu-devtools libicu-dev libidn11-dev|libidn-dev liblua5.4-dev libncurses-dev libpkgconf3 libreadline-dev libsigsegv2 libssl-dev libyaml-dev lua-busted lua-cliargs lua-dkjson lua-expat lua-inifile lua-luassert lua-mediator lua-penlight lua-say lua-system lua-term lua-yaml lua5.4 pkg-config|pkgconf-bin pkgconf txt2man"
 
 #=================================================
 # PERSONAL HELPERS

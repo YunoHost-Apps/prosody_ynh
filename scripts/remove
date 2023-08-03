@@ -101,8 +101,11 @@ ynh_system_user_delete --username=$app
 #=================================================
 ynh_script_progression --message="Enabling Metronome..."
 
-systemctl enable metronome.service --quiet
-ynh_systemd_action --service_name="metronome" --action="start"
+if systemctl list-unit-files metronome.service &>/dev/null
+then
+	systemctl enable metronome.service --quiet
+	ynh_systemd_action --service_name="metronome" --action="start"
+fi
 
 #=================================================
 # END OF SCRIPT
