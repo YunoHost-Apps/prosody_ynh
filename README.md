@@ -5,7 +5,8 @@ It shall NOT be edited by hand.
 
 # Prosody for YunoHost
 
-[![Integration level](https://dash.yunohost.org/integration/prosody.svg)](https://dash.yunohost.org/appci/app/prosody) ![Working status](https://ci-apps.yunohost.org/ci/badges/prosody.status.svg) ![Maintenance status](https://ci-apps.yunohost.org/ci/badges/prosody.maintain.svg)  
+[![Integration level](https://dash.yunohost.org/integration/prosody.svg)](https://dash.yunohost.org/appci/app/prosody) ![Working status](https://ci-apps.yunohost.org/ci/badges/prosody.status.svg) ![Maintenance status](https://ci-apps.yunohost.org/ci/badges/prosody.maintain.svg)
+
 [![Install Prosody with YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=prosody)
 
 *[Lire ce readme en français.](./README_fr.md)*
@@ -18,7 +19,7 @@ If you don't have YunoHost, please consult [the guide](https://yunohost.org/#/in
 Prosody is a modern XMPP communication server. It aims to be easy to set up and configure, and efficient with system resources. Additionally, for developers it aims to be easy to extend and give a flexible system on which to rapidly develop added functionality, or prototype new protocols.
 
 
-**Shipped version:** 0.11.13~ynh3
+**Shipped version:** 0.12.3~ynh3
 ## Disclaimers / important information
 
 * Prosody will not replace the XMPP service Metronome integrated in YunoHost, it has been implemented for some specific apps that require Prosody

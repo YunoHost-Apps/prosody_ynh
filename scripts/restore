@@ -35,8 +35,11 @@ config_path=$(ynh_app_setting_get --app=$app --key=config_path)
 #=================================================
 ynh_script_progression --message="Disabling Metronome..."
 
-ynh_systemd_action --service_name="metronome" --action="stop"
-systemctl disable metronome.service --quiet
+if systemctl list-unit-files metronome.service &>/dev/null
+then
+	ynh_systemd_action --service_name="metronome" --action="stop"
+	systemctl disable metronome.service --quiet
+fi
 
 #=================================================
 # STANDARD RESTORATION STEPS
