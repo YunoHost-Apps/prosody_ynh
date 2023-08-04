@@ -30,8 +30,11 @@ app=$YNH_APP_INSTANCE_NAME
 #=================================================
 ynh_script_progression --message="Disabling Metronome..."
 
-ynh_systemd_action --service_name="metronome" --action="stop"
-systemctl disable metronome.service --quiet
+if systemctl list-unit-files metronome.service &>/dev/null
+then
+	ynh_systemd_action --service_name="metronome" --action="stop"
+	systemctl disable metronome.service --quiet
+fi
 
 #=================================================
 # STORE SETTINGS FROM MANIFEST
@@ -99,6 +102,8 @@ ynh_setup_source --dest_dir="$builddir"
 # BUILD PROSODY
 #=================================================
 ynh_script_progression --message="Building Prosody..."
+
+update-alternatives --set lua-interpreter /usr/bin/lua5.4
 
 pushd "$builddir"
 	./configure --prefix=/usr

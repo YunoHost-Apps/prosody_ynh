@@ -46,8 +46,11 @@ ynh_abort_if_errors
 #=================================================
 ynh_script_progression --message="Disabling Metronome..."
 
-ynh_systemd_action --service_name="metronome" --action="stop"
-systemctl disable metronome.service --quiet
+if systemctl list-unit-files metronome.service &>/dev/null
+then
+	ynh_systemd_action --service_name="metronome" --action="stop"
+	systemctl disable metronome.service --quiet
+fi
 
 #=================================================
 # STANDARD UPGRADE STEPS
@@ -99,6 +102,8 @@ ynh_install_app_dependencies $pkg_dependencies
 if [ "$upgrade_type" == "UPGRADE_APP" ]
 then
 	ynh_script_progression --message="Building Prosody..."
+
+	update-alternatives --set lua-interpreter /usr/bin/lua5.4
 
 	pushd "$builddir"
 		./configure --prefix=/usr
