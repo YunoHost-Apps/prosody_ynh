@@ -5,7 +5,7 @@
     "description": {
         "en": "a modern XMPP communication server"
     },
-    "version": "0.12.3~ynh1",
+    "version": "0.12.3~ynh2",
     "url": "https://prosody.im/",
     "upstream": {
         "license": "MIT",
