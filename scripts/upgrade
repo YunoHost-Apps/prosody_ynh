@@ -103,7 +103,7 @@ if [ "$upgrade_type" == "UPGRADE_APP" ]
 then
 	ynh_script_progression --message="Building Prosody..."
 
-	update-alternatives --set lua-interpreter /usr/bin/lua5.4
+	update-alternatives --set lua-interpreter /usr/bin/lua${luaversion}
 
 	pushd "$builddir"
 		./configure --prefix=/usr

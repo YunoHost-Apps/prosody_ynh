@@ -4,8 +4,14 @@
 # COMMON VARIABLES
 #=================================================
 
+if [[ $(lsb_release --codename --short) == "bookworm" ]]; then
+	luaversion="5.4"
+else
+	luaversion="5.2"
+fi
+
 # dependencies used by the app
-pkg_dependencies="gawk icu-devtools libicu-dev libidn11-dev|libidn-dev liblua5.4-dev libncurses-dev libpkgconf3 libreadline-dev libsigsegv2 libssl-dev libyaml-dev lua-busted lua-cliargs lua-dkjson lua-expat lua-inifile lua-luassert lua-mediator lua-penlight lua-say lua-system lua-term lua-yaml lua5.4 pkg-config|pkgconf-bin txt2man"
+pkg_dependencies="libicu-dev libidn11-dev|libidn-dev liblua${luaversion}-dev libssl-dev lua-busted lua${luaversion} lua${luaversion}-expat lua${luaversion}-socket openssl txt2man lua${luaversion}-sec lua${luaversion}-unbound"
 
 #=================================================
 # PERSONAL HELPERS
