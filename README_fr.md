@@ -29,7 +29,7 @@ Prosody is a modern XMPP communication server. It aims to be easy to set up and 
 * Site officiel de l’app : <https://prosody.im/>
 * Documentation officielle de l’admin : <https://prosody.im/doc>
 * Dépôt de code officiel de l’app : <https://hg.prosody.im/>
-* Documentation YunoHost pour cette app : <https://yunohost.org/app_prosody>
+* YunoHost Store: <https://apps.yunohost.org/app/prosody>
 * Signaler un bug : <https://github.com/YunoHost-Apps/prosody_ynh/issues>
 
 ## Informations pour les développeurs
