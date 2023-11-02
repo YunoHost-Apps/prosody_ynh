@@ -10,22 +10,6 @@ source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
-# MANAGE SCRIPT FAILURE
-#=================================================
-
-#REMOVEME? ynh_clean_setup () {
-	ynh_clean_check_starting
-}
-# Exit if an error occurs during the execution of the script
-#REMOVEME? ynh_abort_if_errors
-
-#=================================================
-# RETRIEVE ARGUMENTS FROM THE MANIFEST
-#=================================================
-
-#REMOVEME? app=$YNH_APP_INSTANCE_NAME
-
-#=================================================
 # DISABLE METRONOME
 #=================================================
 ynh_script_progression --message="Disabling Metronome..."
@@ -35,57 +19,6 @@ then
 	ynh_systemd_action --service_name="metronome" --action="stop"
 	systemctl disable metronome.service --quiet
 fi
-
-#=================================================
-# STORE SETTINGS FROM MANIFEST
-#=================================================
-#REMOVEME? ynh_script_progression --message="Storing installation settings..."
-
-#=================================================
-# STANDARD MODIFICATIONS
-#=================================================
-# FIND AND OPEN A PORT
-#=================================================
-#REMOVEME? ynh_script_progression --message="Finding an available port..."
-
-# Find an available port
-file_port=5000
-client_port=5222
-server_port=5269
-http_port=5280
-https_port=5281
-component_port=5347
-telnet_port=5582
-#REMOVEME? ynh_app_setting_set --app=$app --key=file_port --value=$file_port
-#REMOVEME? ynh_app_setting_set --app=$app --key=client_port --value=$client_port
-#REMOVEME? ynh_app_setting_set --app=$app --key=server_port --value=$server_port
-#REMOVEME? ynh_app_setting_set --app=$app --key=http_port --value=$http_port
-#REMOVEME? ynh_app_setting_set --app=$app --key=https_port --value=$https_port
-#REMOVEME? ynh_app_setting_set --app=$app --key=component_port --value=$component_port
-#REMOVEME? ynh_app_setting_set --app=$app --key=telnet_port --value=$telnet_port
-
-# Optional: Expose this port publicly
-# (N.B.: you only need to do this if the app actually needs to expose the port publicly.
-# If you do this and the app doesn't actually need you are CREATING SECURITY HOLES IN THE SERVER !)
-
-# Open the port
-# ynh_script_progression --message="Configuring firewall..."
-# ynh_exec_warn_less yunohost firewall allow --no-upnp TCP $port
-
-#=================================================
-# INSTALL DEPENDENCIES
-#=================================================
-#REMOVEME? ynh_script_progression --message="Installing dependencies..."
-
-#REMOVEME? ynh_install_app_dependencies $pkg_dependencies
-
-#=================================================
-# CREATE DEDICATED USER
-#=================================================
-#REMOVEME? ynh_script_progression --message="Configuring system user..."
-
-# Create a system user
-#REMOVEME? ynh_system_user_create --username=$app
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -114,26 +47,12 @@ popd
 ynh_secure_remove --file="$builddir"
 
 #=================================================
-# CREATE DATA DIRECTORY
-#=================================================
-ynh_script_progression --message="Creating a data directory..."
-
-#REMOVEME? data_dir=/var/lib/$app
-#REMOVEME? ynh_app_setting_set --app=$app --key=data_dir --value=$data_dir
-
-mkdir -p $data_dir
-
-chmod 750 "$data_dir"
-chmod -R o-rwx "$data_dir"
-chown -R $app:$app "$data_dir"
-
-#=================================================
 # ADD A CONFIGURATION
 #=================================================
 ynh_script_progression --message="Adding a configuration file..."
 
 config_path=/etc/$app
-#REMOVEME? ynh_app_setting_set --app=$app --key=config_path --value=$config_path
+ynh_app_setting_set --app=$app --key=config_path --value=$config_path
 mkdir -p $config_path
 mkdir -p $config_path/{certs,conf.avail,conf.d}
 

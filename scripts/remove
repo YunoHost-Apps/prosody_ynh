@@ -10,17 +10,6 @@ source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
-# LOAD SETTINGS
-#=================================================
-#REMOVEME? ynh_script_progression --message="Loading installation settings..."
-
-#REMOVEME? app=$YNH_APP_INSTANCE_NAME
-
-#REMOVEME? port=$(ynh_app_setting_get --app=$app --key=port)
-#REMOVEME? data_dir=$(ynh_app_setting_get --app=$app --key=data_dir)
-#REMOVEME? config_path=$(ynh_app_setting_get --app=$app --key=config_path)
-
-#=================================================
 # STANDARD REMOVE
 #=================================================
 # REMOVE SERVICE INTEGRATION IN YUNOHOST
@@ -33,40 +22,11 @@ then
 	yunohost service remove $app
 fi
 
-#=================================================
-# STOP AND REMOVE SERVICE
-#=================================================
-ynh_script_progression --message="Stopping and removing the systemd service..."
-
 # Remove the dedicated systemd config
 ynh_remove_systemd_config
 
-#=================================================
-# REMOVE LOGROTATE CONFIGURATION
-#=================================================
-ynh_script_progression --message="Removing logrotate configuration..."
-
 # Remove the app-specific logrotate config
 ynh_remove_logrotate
-
-#=================================================
-# REMOVE DATA DIR
-#=================================================
-
-# Remove the data directory if --purge option is used
-if [ "${YNH_APP_PURGE:-0}" -eq 1 ]
-then
-	ynh_script_progression --message="Removing app data directory..."
-#REMOVEME? 	ynh_secure_remove --file="$data_dir"
-fi
-
-#=================================================
-# REMOVE DEPENDENCIES
-#=================================================
-#REMOVEME? ynh_script_progression --message="Removing dependencies..."
-
-# Remove metapackage and its dependencies
-#REMOVEME? ynh_remove_app_dependencies
 
 #=================================================
 # SPECIFIC REMOVE
@@ -85,16 +45,6 @@ ynh_secure_remove --file="/run/$app"
 ynh_secure_remove --file="/usr/bin/prosody"
 ynh_secure_remove --file="/usr/bin/prosodyctl"
 ynh_secure_remove --file="/usr/bin/prosody-migrator"
-
-#=================================================
-# GENERIC FINALIZATION
-#=================================================
-# REMOVE DEDICATED USER
-#=================================================
-#REMOVEME? ynh_script_progression --message="Removing the dedicated system user..."
-
-# Delete a system user
-#REMOVEME? ynh_system_user_delete --username=$app
 
 #=================================================
 # ENABLE METRONOME
