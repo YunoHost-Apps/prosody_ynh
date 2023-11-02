@@ -27,7 +27,7 @@ NonBlocking=true
 
 ### See man systemd.exec ###
 
-WorkingDirectory=__DATADIR__
+WorkingDirectory=__DATA_DIR__
 
 User=__APP__
 Group=__APP__
