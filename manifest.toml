@@ -50,4 +50,4 @@ ram.runtime = "50M"
     [resources.permissions]
 
     [resources.apt]
-    packages = "libicu-dev, libidn11-dev|libidn-dev, liblua5.2-dev, libssl-dev, lua-busted, lua5.2, lua5.2-expat, lua5.2-socket, openssl, txt2man, lua5.2-sec, lua5.2-unbound"
+    packages = "libicu-dev, libidn11-dev, liblua5.2-dev, libssl-dev, lua-busted, lua5.2, lua5.2-expat, lua5.2-socket, openssl, txt2man, lua5.2-sec, lua5.2-unbound"
