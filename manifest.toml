@@ -1,0 +1,53 @@
+packaging_format = 2
+
+id = "prosody"
+name = "Prosody"
+description.en = "Modern XMPP communication server"
+description.fr = "Serveur de communication XMPP moderne"
+
+version = "0.12.4~ynh1"
+
+maintainers = ["yalh76"]
+
+[upstream]
+license = "MIT"
+website = "https://prosody.im/"
+admindoc = "https://prosody.im/doc"
+code = "https://hg.prosody.im/"
+
+[integration]
+yunohost = ">= 11.2"
+architectures = "all"
+multi_instance = false
+ldap = false
+sso = false
+disk = "50M"
+ram.build = "50M"
+ram.runtime = "50M"
+
+[install]
+
+[resources]
+        [resources.sources.main]
+        url = "https://prosody.im/downloads/source/prosody-0.12.4.tar.gz"
+        sha256 = "47d712273c2f29558c412f6cdaec073260bbc26b7dda243db580330183d65856"
+
+    [resources.system_user]
+
+    [resources.install_dir]
+
+    [resources.data_dir]
+
+    [resources.ports]
+    file.default=5000
+    client.default=5222
+    server.default=5269
+    http.default=5280
+    https.default=5281
+    component.default=5347
+    telnet.default=5582
+
+    [resources.permissions]
+
+    [resources.apt]
+    packages = "libicu-dev, libidn11-dev, liblua5.2-dev, libssl-dev, lua-busted, lua5.2, lua5.2-expat, lua5.2-socket, openssl, txt2man, lua5.2-sec, lua5.2-unbound"
