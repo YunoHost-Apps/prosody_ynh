@@ -42,6 +42,7 @@ ynh_secure_remove --file="$config_path"
 ynh_secure_remove --file="/var/log/$app"
 
 ynh_secure_remove --file="/run/$app"
+ynh_secure_remove --file="/var/lib/$app"
 ynh_secure_remove --file="/usr/bin/prosody"
 ynh_secure_remove --file="/usr/bin/prosodyctl"
 ynh_secure_remove --file="/usr/bin/prosody-migrator"
