@@ -45,7 +45,7 @@ then
 
 	builddir="$(mktemp -d)"
 	# Download, check integrity, uncompress and patch the source from app.src
-	ynh_setup_source --dest_dir="$builddir"
+	ynh_setup_source --dest_dir="$builddir" --full_replace=1
 fi
 
 #=================================================
