@@ -10,8 +10,22 @@ source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
+# CHECKING DEPENDANCIES
+#=================================================
+# (waiting for packaging v3)
+# we need 'coturn' to support A/V calls
+if ! yunohost app list | grep -q "id: coturn"; then
+        echo "Coturn is not installed. Installing... "
+        yunohost tools update
+	#TODO: install on default domain?
+        yunohost app install https://github.com/anubister/coturn_ynh --force --args "domain=domain"
+fi
+
+#=================================================
 # DISABLE METRONOME
 #=================================================
+# it should not be present anymore in YNH12
+# but probably kept for people migrating from YNH11
 ynh_script_progression --message="Disabling Metronome..."
 
 if systemctl list-unit-files metronome.service &>/dev/null
