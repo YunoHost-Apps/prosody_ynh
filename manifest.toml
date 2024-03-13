@@ -16,7 +16,7 @@ admindoc = "https://prosody.im/doc"
 code = "https://hg.prosody.im/"
 
 [integration]
-yunohost = ">= 11.2"
+yunohost = ">= 12.0"
 architectures = "all"
 multi_instance = false
 ldap = false
