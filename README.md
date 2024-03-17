@@ -6,6 +6,15 @@ It shall NOT be edited by hand.
 and aiming at providing the best XMPP support possible!
 Discussion on xmpp:yunohost-xmpp@muc.chapril.org?join ⚠️
 
+Target is to provide at least:
+  * A/V calls (https://github.com/YunoHost/issues/issues/1607) 
+  * BOSH (https://forum.yunohost.org/t/unable-to-set-up-bosh-conf-nginx/12995)
+  * invite links (if not covered by https://github.com/YunoHost/issues/issues/1677)
+  * File sharing for all usual filetypes (https://forum.yunohost.org/t/metronome-mime-types-for-metronome-again/20073)
+
+...and ultimately an Advanced Server compliance level (https://xmpp.org/extensions/xep-0479.html).
+
+
 # Prosody for YunoHost
 
 [![Integration level](https://dash.yunohost.org/integration/prosody.svg)](https://dash.yunohost.org/appci/app/prosody) ![Working status](https://ci-apps.yunohost.org/ci/badges/prosody.status.svg) ![Maintenance status](https://ci-apps.yunohost.org/ci/badges/prosody.maintain.svg)
