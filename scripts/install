@@ -98,6 +98,9 @@ ynh_script_progression --message="Configuring a systemd service..."
 # Create a dedicated systemd config
 ynh_add_systemd_config
 
+# Add permision to read certs
+usermod -a -G ssl-cert prosody
+
 #=================================================
 # GENERIC FINALIZATION
 #=================================================
