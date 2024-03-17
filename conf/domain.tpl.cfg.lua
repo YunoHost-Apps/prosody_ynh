@@ -1,8 +1,8 @@
-VirtualHost "{{ domain }}"
+VirtualHost "__DOMAIN__"
   enable = true
   ssl = {
-        key = "/etc/yunohost/certs/{{ domain }}/key.pem";
-        certificate = "/etc/yunohost/certs/{{ domain }}/crt.pem";
+        key = "/etc/yunohost/certs/__DOMAIN__/key.pem";
+        certificate = "/etc/yunohost/certs/__DOMAIN__/crt.pem";
   }
   authentication = "ldap"
   ldap_base = "ou=users,dc=yunohost,dc=org"
@@ -10,7 +10,7 @@ VirtualHost "{{ domain }}"
      hostname      = "localhost",
      user = {
        basedn        = "ou=users,dc=yunohost,dc=org",
-       filter        = "(&(objectClass=posixAccount)(mail=*@{{ domain }})(permission=cn=xmpp.main,ou=permission,dc=yunohost,dc=org))",
+       filter        = "(&(objectClass=posixAccount)(mail=*@__DOMAIN__)(permission=cn=xmpp.main,ou=permission,dc=yunohost,dc=org))",
        usernamefield = "mail",
        namefield     = "cn",
        },
@@ -18,16 +18,16 @@ VirtualHost "{{ domain }}"
 
   -- Discovery items
   disco_items = {
-    { "muc.{{ domain }}" },
-    { "pubsub.{{ domain }}" },
-    --{ "jabber.{{ domain }}" },
-    { "vjud.{{ domain }}" },
-    { "xmpp-upload.{{ domain }}" },
+    { "muc.__DOMAIN__" },
+    { "pubsub.__DOMAIN__" },
+    --{ "jabber.__DOMAIN__" },
+    { "vjud.__DOMAIN__" },
+    { "xmpp-upload.__DOMAIN__" },
   };
 
 --  contact_info = {
---    abuse = { "mailto:abuse@{{ domain }}", "xmpp:admin@{{ domain }}" };
---    admin = { "mailto:root@{{ domain }}", "xmpp:admin@{{ domain }}" };
+--    abuse = { "mailto:abuse@__DOMAIN__", "xmpp:admin@__DOMAIN__" };
+--    admin = { "mailto:root@__DOMAIN__", "xmpp:admin@__DOMAIN__" };
 --  };
 
 ------ Components ------
@@ -35,8 +35,8 @@ VirtualHost "{{ domain }}"
 -- like multi-user conferences, and transports.
 
 ---Set up a MUC (multi-user chat) room server
-Component "muc.{{ domain }}" "muc"
-  name = "{{ domain }} Chatrooms"
+Component "muc.__DOMAIN__" "muc"
+  name = "__DOMAIN__ Chatrooms"
 
   modules_enabled = {
     --"muc_limits";
@@ -54,17 +54,17 @@ Component "muc.{{ domain }}" "muc"
   };
 
 ---Set up a PubSub server
-Component "pubsub.{{ domain }}" "pubsub"
-  name = "{{ domain }} Publish/Subscribe"
+Component "pubsub.__DOMAIN__" "pubsub"
+  name = "__DOMAIN__ Publish/Subscribe"
 
   unrestricted_node_creation = true -- Anyone can create a PubSub node (from any server)
 
 ---Set up a HTTP Upload service
-Component "xmpp-upload.{{ domain }}" "http_upload"
-  name = "{{ domain }} Sharing Service"
+Component "xmpp-upload.__DOMAIN__" "http_upload"
+  name = "__DOMAIN__ Sharing Service"
 
-  http_file_path = "/var/xmpp-upload/{{ domain }}/upload"
-  http_external_url = "https://xmpp-upload.{{ domain }}:443"
+  http_file_path = "/var/xmpp-upload/__DOMAIN__/upload"
+  http_external_url = "https://xmpp-upload.__DOMAIN__:443"
   http_file_base_path = "/upload"
   http_file_size_limit = 50*1024*1024
   http_file_quota = 50*1024*1024
@@ -72,5 +72,5 @@ Component "xmpp-upload.{{ domain }}" "http_upload"
   http_upload_quota = 1 * 1024 * 1024 * 1024 -- bytes
 
 ---Set up a VJUD service
-Component "vjud.{{ domain }}" "vjud"
-  vjud_disco_name = "{{ domain }} User Directory"
+Component "vjud.__DOMAIN__" "vjud"
+  vjud_disco_name = "__DOMAIN__ User Directory"
