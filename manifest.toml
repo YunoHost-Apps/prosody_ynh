@@ -43,9 +43,12 @@ ram.runtime = "10M"
     [resources.ports]
     file.default=5000
     client.default=5222
+    client.exposed="TCP"
     server.default=5269
+    server.exposed="TCP"
     http.default=5280
     https.default=5281
+    https.exposed="TCP"
     component.default=5347
     telnet.default=5582
     #ports from https://github.com/YunoHost/issues/issues/1607
