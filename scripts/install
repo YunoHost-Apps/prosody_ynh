@@ -71,9 +71,12 @@ mkdir -p $config_path
 mkdir -p $config_path/{certs,conf.avail,conf.d}
 
 ynh_add_config --template="../conf/prosody.cfg.lua" --destination="$config_path/prosody.cfg.lua"
-ynh_add_config --template="../conf/example.com.cfg.lua" --destination="$config_path/conf.avail/example.com.cfg.lua"
+#ynh_add_config --template="../conf/example.com.cfg.lua" --destination="$config_path/conf.avail/example.com.cfg.lua"
 #ynh_add_config --template="../conf/localhost.cfg.lua" --destination="$config_path/conf.avail/localhost.cfg.lua"
 #ln -s $config_path/conf.avail/localhost.cfg.lua $config_path/conf.d/
+# Add domain configuration
+ynh_add_config --template="../conf/domain.tpl.cfg.lua" --destination="/etc/prosody/conf.d/$domain.cfg.lua"
+
 
 chown root:root "$config_path"
 chmod 755 "$config_path"
