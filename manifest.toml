@@ -18,15 +18,17 @@ code = "https://hg.prosody.im/"
 [integration]
 yunohost = ">= 12.0"
 architectures = "all"
-multi_instance = false
-ldap = false
+multi_instance = true
+ldap = true
 sso = false
 disk = "50M"
 ram.build = "50M"
 ram.runtime = "50M"
 
 [install]
-
+    [install.domain]
+    type = "domain"
+    
 [resources]
         [resources.sources.main]
         url = "https://prosody.im/downloads/source/prosody-0.12.4.tar.gz"
@@ -46,6 +48,17 @@ ram.runtime = "50M"
     https.default=5281
     component.default=5347
     telnet.default=5582
+    #ports from https://github.com/YunoHost/issues/issues/1607
+    coturn.default=3478
+    coturntls.default=5349
+    coturn2.default=3479
+    coturn3.default=5350
+    coturn.exposed="TCP"
+    coturntls.exposed="TCP"
+    coturn2.exposed="TCP"
+    coturn3.exposed="TCP"
+    #TODO:
+    #yunohost firewall allow UDP -4 49152:65535
 
     [resources.permissions]
 
