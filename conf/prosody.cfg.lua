@@ -246,5 +246,5 @@ Include "conf.d/*.cfg.lua"
 
 ---Set up A/V calls
 turn_external_secret = "qfcjmwd8wKj4TIRP8mblbXXrFpd3Ev"
-turn_external_host = "krokro.org"
+turn_external_host = "__DOMAIN__"
 turn_external_port = 3478
