@@ -71,15 +71,14 @@ mkdir -p $config_path
 mkdir -p $config_path/{certs,conf.avail,conf.d}
 
 ynh_add_config --template="../conf/prosody.cfg.lua" --destination="$config_path/prosody.cfg.lua"
-#ynh_add_config --template="../conf/example.com.cfg.lua" --destination="$config_path/conf.avail/example.com.cfg.lua"
-#ynh_add_config --template="../conf/localhost.cfg.lua" --destination="$config_path/conf.avail/localhost.cfg.lua"
-#ln -s $config_path/conf.avail/localhost.cfg.lua $config_path/conf.d/
 # Add domain configuration
 ynh_add_config --template="../conf/domain.tpl.cfg.lua" --destination="/etc/prosody/conf.d/$domain.cfg.lua"
 
-# update password from coturn app
+# update password and port from coturn app
 turnpassword=$(ynh_app_setting_get --app="coturn" --key=turnserver_pwd)
-ynh_replace_string --match_string="Some passphrase" --replace_string="$turnpassword" --target_file="/etc/prosody/conf.d/$domain.cfg.lua"
+turnport=$(ynh_app_setting_get --app="coturn" --key=port_turnserver)
+ynh_replace_string --match_string="Some passphrase" --replace_string="$turnpassword" --target_file="$config_path/prosody.cfg.lua"
+ynh_replace_string --match_string="turn_external_port = 3478" --replace_string="turn_external_port = $turnport" --target_file="$config_path/prosody.cfg.lua"
 
 chown root:root "$config_path"
 chmod 755 "$config_path"
