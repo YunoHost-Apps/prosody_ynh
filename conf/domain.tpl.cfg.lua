@@ -74,3 +74,54 @@ Component "xmpp-upload.__DOMAIN__" "http_upload"
 ---Set up a VJUD service
 Component "vjud.__DOMAIN__" "vjud"
   vjud_disco_name = "__DOMAIN__ User Directory"
+
+---Set up A/V calls https://github.com/YunoHost/issues/issues/1607
+external_services = {
+    ["__DOMAIN__"] = {
+        [1] = {
+            port = "3478",
+            transport = "udp",
+            type = "stun"
+        },
+
+        [2] = {
+            port = "3478",
+            transport = "tcp",
+            type = "stun"
+        },
+
+        [3] = {
+            port = "5349",
+            transport = "tcp",
+            type = "stuns"
+        },
+        [4] = {
+            port = "3478",
+            transport = "tcp",
+            type = "turn",
+            turn_secret = "Some passphrase",
+            turn_ttl = 300
+        },
+
+        [5] = {
+            port = "3478",
+            transport = "udp",
+            type = "turn",
+            turn_secret = "Some passphrase",
+            turn_ttl = 7200
+        },
+
+        [6] = {
+            port = "5349",
+            transport = "tcp",
+            type = "turns",
+            turn_secret = "Some passphrase",
+            turn_ttl = 7200
+        }
+    }
+};
+
+jingle_nodes_turn_credentials = true;
+jingle_nodes_turn_secret = "Some passphrase";
+jingle_nodes_turn_credentials_ttl = 86400;
+jingle_nodes_restricted = false;
