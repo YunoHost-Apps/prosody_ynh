@@ -77,6 +77,9 @@ ynh_add_config --template="../conf/prosody.cfg.lua" --destination="$config_path/
 # Add domain configuration
 ynh_add_config --template="../conf/domain.tpl.cfg.lua" --destination="/etc/prosody/conf.d/$domain.cfg.lua"
 
+# update password from coturn app
+turnpassword=$(ynh_app_setting_get --app="coturn" --key=turnserver_pwd)
+ynh_replace_string --match_string="Some passphrase" --replace_string="$turnpassword" --target_file="/etc/prosody/conf.d/$domain.cfg.lua"
 
 chown root:root "$config_path"
 chmod 755 "$config_path"
