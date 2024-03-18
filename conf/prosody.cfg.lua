@@ -83,6 +83,9 @@ modules_enabled = {
 		--"motd"; -- Send a message to users when they log in
 		--"legacyauth"; -- Legacy authentication. Only used by some old clients and bots.
 		--"proxy65"; -- Enables a file transfer proxy service which clients behind NAT can use
+
+	        -- STUN/TURN A/V
+	        "turn_external";
 }
 
 -- These modules are auto-loaded, but should you want
@@ -218,8 +221,6 @@ certificates = "certs"
 -- Component definitions in their own config files. This line includes
 -- all config files in /etc/prosody/conf.d/
 
-VirtualHost "localhost"
-
 --VirtualHost "example.com"
 --	certificate = "/path/to/example.crt"
 
@@ -242,3 +243,8 @@ VirtualHost "localhost"
 --Component "gateway.example.com"
 --	component_secret = "password"
 Include "conf.d/*.cfg.lua"
+
+---Set up A/V calls
+turn_external_secret = "qfcjmwd8wKj4TIRP8mblbXXrFpd3Ev"
+turn_external_host = "krokro.org"
+turn_external_port = 3478
