@@ -14,7 +14,17 @@ Target is to provide at least:
 
 ...and ultimately an Advanced Server compliance level (https://xmpp.org/extensions/xep-0479.html).
 
-
+* What works:
+  * install on brand new Yunohost 12
+  * LDAP auth
+  * A/V calls
+* What is not tested:
+  * any migration from Yunohost 11 or upstream version of coturn app.
+  * many functionalities...
+* What does not work:
+  * to be defined
+ 
+  
 # Prosody for YunoHost
 
 [![Integration level](https://dash.yunohost.org/integration/prosody.svg)](https://dash.yunohost.org/appci/app/prosody) ![Working status](https://ci-apps.yunohost.org/ci/badges/prosody.status.svg) ![Maintenance status](https://ci-apps.yunohost.org/ci/badges/prosody.maintain.svg)
