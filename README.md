@@ -18,6 +18,7 @@ Target is to provide at least:
   * install on brand new Yunohost 12
   * LDAP auth
   * A/V calls
+  * automatically install coturn if not yet present (https://github.com/anubister/coturn_ynh/ , a fork compatible with Yunohost 12)
 * What is not tested:
   * any migration from Yunohost 11 or upstream version of coturn app.
   * many functionalities...
