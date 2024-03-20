@@ -18,7 +18,7 @@ if ! yunohost app list | grep -q "id: coturn"; then
         echo "Coturn is not installed. Installing... "
         yunohost tools update
 	#TODO: install on default domain?
-        yunohost app install https://github.com/anubister/coturn_ynh --force --args "domain=domain"
+        yunohost app install https://github.com/anubister/coturn_ynh --force --args "domain=$domain"
 fi
 
 #=================================================
