@@ -44,6 +44,7 @@ Component "muc.__DOMAIN__" "muc"
     --"muc_log_mam";
     "muc_log_http";
     --"muc_vcard";
+    "muc_mam";
   }
 
   muc_event_rate = 0.5
@@ -52,6 +53,8 @@ Component "muc.__DOMAIN__" "muc"
     logging = true,
     persistent = true
   };
+
+  muc_log_expires_after = "1w"
 
 ---Set up a PubSub server
 Component "pubsub.__DOMAIN__" "pubsub"

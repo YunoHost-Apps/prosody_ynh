@@ -93,7 +93,8 @@ chmod 750 "$config_path/certs"
 
 # create directory for file sharing uploads
 mkdir -p "/var/xmpp-upload/$domain/upload"
-chown -R "$app:www-data" "/var/xmpp-upload/$domain/upload"
+chown -R "$app:www-data" "/var/xmpp-upload/"
+chmod -R g+s "/var/xmpp-upload/"
 
 #=================================================
 # SETUP SYSTEMD
