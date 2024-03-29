@@ -92,6 +92,14 @@ chmod 754 "$config_path/conf.avail"
 chown root:$app "$config_path/certs"
 chmod 750 "$config_path/certs"
 
+# create directory for file sharing uploads
+mkdir -p "/var/xmpp-upload/$domain/upload"
+chown -R "$app:www-data" "/var/xmpp-upload/$domain/upload"
+
+# add http_upload, muc_log modules not included by default with Prosody
+ynh_exec_fully_quiet prosodyctl install --server=https://modules.prosody.im/rocks/ mod_http_upload
+ynh_exec_fully_quiet prosodyctl install --server=https://modules.prosody.im/rocks/ mod_muc_log
+
 #=================================================
 # SETUP SYSTEMD
 #=================================================

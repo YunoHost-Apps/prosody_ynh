@@ -69,7 +69,7 @@ modules_enabled = {
 		--"admin_telnet"; -- Opens telnet console interface on localhost port 5582
 
 	-- HTTP modules
-		--"bosh"; -- Enable BOSH clients, aka "Jabber over HTTP"
+		"bosh"; -- Enable BOSH clients, aka "Jabber over HTTP"
 		--"websocket"; -- XMPP over WebSockets
 		--"http_files"; -- Serve static files from a directory over HTTP
 
@@ -248,3 +248,8 @@ Include "conf.d/*.cfg.lua"
 turn_external_secret = "Some passphrase"
 turn_external_host = "__DOMAIN__"
 turn_external_port = 3478
+
+-- HTTP server (BOSH)
+http_ports = { 5290 }
+http_interfaces = { "127.0.0.1", "::1" }
+
