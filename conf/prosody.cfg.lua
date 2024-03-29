@@ -61,7 +61,7 @@ modules_enabled = {
 		"time"; -- Let others know the time here on this server
 		"ping"; -- Replies to XMPP pings with pongs
 		"register"; -- Allow users to register on this server using a client and change passwords
-		--"mam"; -- Store messages in an archive and allow users to access it
+		"mam"; -- Store messages in an archive and allow users to access it
 		--"csi_simple"; -- Simple Mobile optimizations
 
 	-- Admin interfaces

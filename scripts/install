@@ -141,6 +141,9 @@ ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$ap
 ynh_exec_fully_quiet /usr/bin/prosodyctl install --server=https://modules.prosody.im/rocks/ mod_http_upload
 ynh_exec_fully_quiet /usr/bin/prosodyctl install --server=https://modules.prosody.im/rocks/ mod_muc_log
 
+# restart to take into account new modules
+ynh_systemd_action --service_name=$app --action="restart" --log_path="/var/log/$app/$app.log"
+
 #=================================================
 # END OF SCRIPT
 #=================================================

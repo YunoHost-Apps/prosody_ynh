@@ -62,8 +62,7 @@ Component "pubsub.__DOMAIN__" "pubsub"
 ---Set up a HTTP Upload service
 Component "xmpp-upload.__DOMAIN__" "http_upload"
   name = "__DOMAIN__ Sharing Service"
-
-  http_file_path = "/var/xmpp-upload/__DOMAIN__/upload/"
+  http_upload_path = "/var/xmpp-upload/__DOMAIN__/upload/"
   http_external_url = "https://xmpp-upload.__DOMAIN__:443"
   --http_file_base_path = "/upload"
   --http_file_size_limit = 50*1024*1024
