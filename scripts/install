@@ -17,7 +17,6 @@ source /usr/share/yunohost/helpers
 if ! yunohost app list | grep -q "id: coturn"; then
         echo "Coturn is not installed. Installing... "
         yunohost tools update
-	#TODO: install on default domain?
         yunohost app install https://github.com/anubister/coturn_ynh --force --args "domain=$domain"
 fi
 
@@ -96,10 +95,6 @@ chmod 750 "$config_path/certs"
 mkdir -p "/var/xmpp-upload/$domain/upload"
 chown -R "$app:www-data" "/var/xmpp-upload/$domain/upload"
 
-# add http_upload, muc_log modules not included by default with Prosody
-ynh_exec_fully_quiet prosodyctl install --server=https://modules.prosody.im/rocks/ mod_http_upload
-ynh_exec_fully_quiet prosodyctl install --server=https://modules.prosody.im/rocks/ mod_muc_log
-
 #=================================================
 # SETUP SYSTEMD
 #=================================================
@@ -141,6 +136,10 @@ ynh_script_progression --message="Starting a systemd service..."
 
 # Start a systemd service
 ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/$app.log"
+
+# add http_upload, muc_log modules not included by default with Prosody
+ynh_exec_fully_quiet /usr/bin/prosodyctl install --server=https://modules.prosody.im/rocks/ mod_http_upload
+ynh_exec_fully_quiet /usr/bin/prosodyctl install --server=https://modules.prosody.im/rocks/ mod_muc_log
 
 #=================================================
 # END OF SCRIPT

@@ -27,7 +27,10 @@ Target is to provide at least:
   * usability by other apps (PeerTube, ... ?)
 * What does not work:
   * to be defined
- 
+* TODO (help welcomed!):
+  * check initial configuration (DNS, ?) : inform or block?
+  * update scripts/remove and others...
+  * check app score
   
 # Prosody for YunoHost
 
