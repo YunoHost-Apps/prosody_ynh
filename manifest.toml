@@ -7,7 +7,7 @@ description.fr = "Serveur de communication XMPP moderne"
 
 version = "0.12.4~ynh2"
 
-maintainers = ["yalh76"]
+maintainers = ["yalh76", "anubister"]
 
 [upstream]
 license = "MIT"
@@ -66,4 +66,4 @@ ram.runtime = "10M"
     [resources.permissions]
 
     [resources.apt]
-    packages = "libicu-dev, libidn11-dev, liblua5.2-dev, libssl-dev, lua-busted, lua5.2, lua5.2-expat, lua5.2-socket, openssl, txt2man, lua5.2-sec, lua5.2-unbound, lua-ldap"
+    packages = "libicu-dev, libidn11-dev, liblua5.2-dev, libssl-dev, lua-busted, lua5.2, lua5.2-expat, lua5.2-socket, openssl, txt2man, lua5.2-sec, lua5.2-unbound, lua-ldap, luarocks"

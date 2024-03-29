@@ -18,13 +18,20 @@ Target is to provide at least:
   * install on brand new Yunohost 12
   * LDAP auth
   * A/V calls
+  * File upload (FIXME: limited to 10MB)
+  * MUC
   * automatically install coturn if not yet present (https://github.com/anubister/coturn_ynh/ , a fork compatible with Yunohost 12)
+  * XEP-0163, XEP-0191, XEP-0215, XEP-0237, XEP-0280, XEP-0313, XEP-0363 (see 'xmpp_compliance' file)
 * What is not tested:
   * any migration from Yunohost 11 or upstream version of coturn app.
   * many functionalities...
+  * usability by other apps (PeerTube, ... ?)
 * What does not work:
   * to be defined
- 
+* TODO (help welcomed!):
+  * check initial configuration (DNS, ?) : inform or block?
+  * update scripts/remove and others...
+  * check app score
   
 # Prosody for YunoHost
 

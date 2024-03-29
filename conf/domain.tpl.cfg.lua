@@ -44,6 +44,7 @@ Component "muc.__DOMAIN__" "muc"
     --"muc_log_mam";
     "muc_log_http";
     --"muc_vcard";
+    "muc_mam";
   }
 
   muc_event_rate = 0.5
@@ -52,6 +53,8 @@ Component "muc.__DOMAIN__" "muc"
     logging = true,
     persistent = true
   };
+
+  muc_log_expires_after = "1w"
 
 ---Set up a PubSub server
 Component "pubsub.__DOMAIN__" "pubsub"
@@ -62,14 +65,14 @@ Component "pubsub.__DOMAIN__" "pubsub"
 ---Set up a HTTP Upload service
 Component "xmpp-upload.__DOMAIN__" "http_upload"
   name = "__DOMAIN__ Sharing Service"
-
-  http_file_path = "/var/xmpp-upload/__DOMAIN__/upload"
+  http_upload_path = "/var/xmpp-upload/__DOMAIN__/upload/"
   http_external_url = "https://xmpp-upload.__DOMAIN__:443"
-  http_file_base_path = "/upload"
-  http_file_size_limit = 50*1024*1024
-  http_file_quota = 50*1024*1024
-  http_upload_file_size_limit = 50 * 1024 * 1024 -- bytes
+  --http_file_base_path = "/upload"
+  --http_file_size_limit = 50*1024*1024
+  --http_file_quota = 50*1024*1024
+  http_upload_file_size_limit = 50 * 1024 * 1024 -- bytes (limited by http_max_content_size (default 10M))
   http_upload_quota = 1 * 1024 * 1024 * 1024 -- bytes
+  http_upload_expire_after = 60 * 60 * 24 * 7 -- a week in seconds
 
 ---Set up a VJUD service
 Component "vjud.__DOMAIN__" "vjud"
