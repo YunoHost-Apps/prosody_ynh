@@ -18,7 +18,7 @@ Target is to provide at least:
   * install on brand new Yunohost 12
   * LDAP auth
   * A/V calls
-  * File upload (FIXME: limited to 10MB)
+  * File upload
   * MUC
   * automatically install coturn if not yet present (https://github.com/anubister/coturn_ynh/ , a fork compatible with Yunohost 12)
   * XEP-0163, XEP-0191, XEP-0215, XEP-0237, XEP-0280, XEP-0313, XEP-0363 (see 'xmpp_compliance' file)
