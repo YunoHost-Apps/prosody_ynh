@@ -27,7 +27,7 @@ Target is to provide at least:
   * many functionalities...
   * usability by other apps (PeerTube, ... ?)
 * What does not work:
-  * to be defined
+  * vjud (Users directory) (help welcomed!)
 * TODO (help welcomed!):
   * check initial configuration (DNS, ?) : inform or block?
   * update scripts/remove and others...
