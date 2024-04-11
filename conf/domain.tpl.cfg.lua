@@ -21,7 +21,7 @@ VirtualHost "__DOMAIN__"
     { "muc.__DOMAIN__" },
     { "pubsub.__DOMAIN__" },
     --{ "jabber.__DOMAIN__" },
-    { "vjud.__DOMAIN__" },
+    --{ "vjud.__DOMAIN__" },
     { "xmpp-upload.__DOMAIN__" },
   };
 
@@ -42,7 +42,7 @@ Component "muc.__DOMAIN__" "muc"
     --"muc_limits";
     "muc_log";
     --"muc_log_mam";
-    "muc_log_http";
+    --"muc_log_http";
     --"muc_vcard";
     "muc_mam";
   }
@@ -75,5 +75,6 @@ Component "xmpp-upload.__DOMAIN__" "http_upload"
   http_upload_expire_after = 60 * 60 * 24 * 7 -- a week in seconds
 
 ---Set up a VJUD service
-Component "vjud.__DOMAIN__" "vjud"
-  vjud_disco_name = "__DOMAIN__ User Directory"
+--FIXME: vjud does not load even if vcard is installed/enabled
+--Component "vjud.__DOMAIN__" "vjud"
+--  vjud_disco_name = "__DOMAIN__ User Directory"
