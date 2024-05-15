@@ -1,0 +1,1 @@
+Prosody est un serveur de communication XMPP moderne. Il vise à être facile à installer et à configurer, et efficace avec les ressources système. De plus, pour les développeurs, il vise à être facile à étendre et à fournir un système flexible sur lequel développer rapidement des fonctionnalités supplémentaires ou prototyper de nouveaux protocoles.

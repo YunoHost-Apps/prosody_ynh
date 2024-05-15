@@ -14,8 +14,8 @@ source /usr/share/yunohost/helpers
 #=================================================
 # REMOVE SERVICE INTEGRATION IN YUNOHOST
 #=================================================
+ynh_script_progression --message="Removing system configurations related to $app..." --weight=1
 
-# Remove the service from the list of services known by YunoHost (added from `yunohost service add`)
 if ynh_exec_warn_less yunohost service status $app >/dev/null
 then
 	ynh_script_progression --message="Removing $app service integration..."
@@ -33,7 +33,7 @@ ynh_remove_logrotate
 #=================================================
 # REMOVE VARIOUS FILES
 #=================================================
-ynh_script_progression --message="Removing various files..."
+ynh_script_progression --message="Removing various files..." --weight=1
 
 # Remove a directory securely
 ynh_secure_remove --file="$config_path"
@@ -50,7 +50,7 @@ ynh_secure_remove --file="/usr/bin/prosody-migrator"
 #=================================================
 # ENABLE METRONOME
 #=================================================
-ynh_script_progression --message="Enabling Metronome..."
+ynh_script_progression --message="Enabling Metronome..." --weight=1
 
 if systemctl list-unit-files metronome.service &>/dev/null
 then
@@ -62,4 +62,4 @@ fi
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Removal of $app completed"
+ynh_script_progression --message="Removal of $app completed" --last

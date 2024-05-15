@@ -13,7 +13,7 @@ source /usr/share/yunohost/helpers
 #=================================================
 # DISABLE METRONOME
 #=================================================
-ynh_script_progression --message="Disabling Metronome..."
+ynh_script_progression --message="Disabling Metronome..." --weight=1
 
 if systemctl list-unit-files metronome.service &>/dev/null
 then
@@ -24,7 +24,7 @@ fi
 #=================================================
 # RESTORE THE CONFIG DIR
 #=================================================
-ynh_script_progression --message="Restoring the config directory..."
+ynh_script_progression --message="Restoring the config directory..." --weight=1
 
 ynh_restore_file --origin_path="$config_path"
 
@@ -48,7 +48,7 @@ chmod 750 "$config_path/certs"
 #=================================================
 # RESTORE THE DATA DIRECTORY
 #=================================================
-ynh_script_progression --message="Restoring the data directory..."
+ynh_script_progression --message="Restoring the data directory..." --weight=1
 
 ynh_restore_file --origin_path="$data_dir" --not_mandatory
 ynh_restore_file --origin_path="/var/lib/$app" --not_mandatory
@@ -59,7 +59,7 @@ chown -R $app:$app "/var/lib/$app"
 #=================================================
 # RESTORE SYSTEMD
 #=================================================
-ynh_script_progression --message="Restoring the systemd configuration..."
+ynh_script_progression --message="Restoring the systemd configuration..." --weight=1
 
 ynh_restore_file --origin_path="/etc/systemd/system/$app.service"
 systemctl enable $app.service --quiet
@@ -67,7 +67,7 @@ systemctl enable $app.service --quiet
 #=================================================
 # RESTORE THE LOGROTATE CONFIGURATION
 #=================================================
-ynh_script_progression --message="Restoring the logrotate configuration..."
+ynh_script_progression --message="Restoring the logrotate configuration..." --weight=1
 
 mkdir -p "/var/log/$app"
 chmod 750 "/var/log/$app"
@@ -79,14 +79,14 @@ ynh_restore_file --origin_path="/etc/logrotate.d/$app"
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST
 #=================================================
-ynh_script_progression --message="Integrating service in YunoHost..."
+ynh_script_progression --message="Integrating service in YunoHost..." --weight=1
 
 yunohost service add $app --log="/var/log/$app/$app.log"
 
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
-ynh_script_progression --message="Starting a systemd service..."
+ynh_script_progression --message="Starting a systemd service..." --weight=1
 
 ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/$app.log"
 
@@ -96,4 +96,4 @@ ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$ap
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Restoration completed for $app"
+ynh_script_progression --message="Restoration completed for $app" --last
