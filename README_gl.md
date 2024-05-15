@@ -20,6 +20,7 @@ Prosody is a modern XMPP communication server. It aims to be easy to set up and 
 
 
 **Versión proporcionada:** 0.12.4~ynh3
+
 ## Documentación e recursos
 
 - Web oficial da app: <https://prosody.im/>
