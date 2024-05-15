@@ -19,7 +19,7 @@ Il NE doit PAS être modifié à la main.
 Prosody est un serveur de communication XMPP moderne. Il vise à être facile à installer et à configurer, et efficace avec les ressources système. De plus, pour les développeurs, il vise à être facile à étendre et à fournir un système flexible sur lequel développer rapidement des fonctionnalités supplémentaires ou prototyper de nouveaux protocoles.
 
 
-**Version incluse :** 0.12.4~ynh2
+**Version incluse :** 0.12.4~ynh3
 ## Documentations et ressources
 
 - Site officiel de l’app : <https://prosody.im/>
