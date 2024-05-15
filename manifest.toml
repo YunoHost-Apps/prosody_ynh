@@ -53,4 +53,11 @@ ram.runtime = "50M"
     [resources.permissions]
 
     [resources.apt]
-    packages = "libicu-dev, libidn11-dev, liblua5.2-dev, libssl-dev, lua-busted, lua5.2, lua5.2-expat, lua5.2-socket, openssl, txt2man, lua5.2-sec, lua5.2-unbound"
+    packages = "libicu-dev, libidn11-dev, libssl-dev, openssl, txt2man"
+    packages_from_raw_bash = """
+    if [[ $YNH_DEBIAN_VERSION == "bullseye" ]]; then
+        echo "lua5.2, lua5.2-expat, lua5.2-socket, lua5.2-sec, lua5.2-unbound, liblua5.2-dev, lua-busted";
+    elif [[ $YNH_DEBIAN_VERSION == "bookworm" ]]; then
+        echo "lua5.4, lua5.4-expat, lua5.4-socket, lua5.4-sec, lua5.4-unbound, liblua5.4-dev, lua-busted";
+    fi
+    """
