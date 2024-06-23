@@ -39,7 +39,6 @@ ynh_script_progression --message="Removing various files..." --weight=1
 ynh_secure_remove --file="$config_path"
 
 # Remove the log files
-ynh_secure_remove --file="/var/log/$app"
 
 ynh_secure_remove --file="/run/$app"
 ynh_secure_remove --file="/var/lib/$app"
