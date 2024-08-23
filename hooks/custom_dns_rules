@@ -1,0 +1,21 @@
+#! /bin/bash
+
+suffix="${base_domain}."
+echo "
+- name: 'xmpp-upload.${suffix}'
+  ttl: 3600
+  type: CNAME
+  value: '${suffix}'
+- name: 'muc.${suffix}'
+  ttl: 3600
+  type: CNAME
+  value: '${suffix}'
+- name: 'pubsub.${suffix}'
+  ttl: 3600
+  type: CNAME
+  value: '${suffix}'
+- name: 'vjud.${suffix}'
+  ttl: 3600
+  type: CNAME
+  value: '${suffix}'
+" > ${YNH_STDRETURN}
