@@ -1,0 +1,3 @@
+#! /bin/bash
+
+echo "['xmpp-upload', 'muc']" > ${YNH_STDRETURN}
