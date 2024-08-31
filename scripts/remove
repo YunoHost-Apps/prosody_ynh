@@ -1,11 +1,5 @@
 #!/bin/bash
 
-#=================================================
-# GENERIC START
-#=================================================
-# IMPORT GENERIC HELPERS
-#=================================================
-
 source _common.sh
 source /usr/share/yunohost/helpers
 
@@ -14,51 +8,51 @@ source /usr/share/yunohost/helpers
 #=================================================
 # REMOVE SERVICE INTEGRATION IN YUNOHOST
 #=================================================
-ynh_script_progression --message="Removing system configurations related to $app..." --weight=1
+ynh_script_progression "Removing system configurations related to $app..."
 
-if ynh_exec_warn_less yunohost service status $app >/dev/null
+if ynh_hide_warnings yunohost service status $app >/dev/null
 then
-	ynh_script_progression --message="Removing $app service integration..."
+	ynh_script_progression "Removing $app service integration..."
 	yunohost service remove $app
 fi
 
 # Remove the dedicated systemd config
-ynh_remove_systemd_config
+ynh_config_remove_systemd
 
 # Remove the app-specific logrotate config
-ynh_remove_logrotate
+ynh_config_remove_logrotate
 
 #=================================================
 # SPECIFIC REMOVE
 #=================================================
 # REMOVE VARIOUS FILES
 #=================================================
-ynh_script_progression --message="Removing various files..." --weight=1
+ynh_script_progression "Removing various files..."
 
 # Remove a directory securely
-ynh_secure_remove --file="$config_path"
+ynh_safe_rm "$config_path"
 
 # Remove the log files
 
-ynh_secure_remove --file="/run/$app"
-ynh_secure_remove --file="/var/lib/$app"
-ynh_secure_remove --file="/usr/bin/prosody"
-ynh_secure_remove --file="/usr/bin/prosodyctl"
-ynh_secure_remove --file="/usr/bin/prosody-migrator"
+ynh_safe_rm "/run/$app"
+ynh_safe_rm "/var/lib/$app"
+ynh_safe_rm "/usr/bin/prosody"
+ynh_safe_rm "/usr/bin/prosodyctl"
+ynh_safe_rm "/usr/bin/prosody-migrator"
 
 #=================================================
 # ENABLE METRONOME
 #=================================================
-ynh_script_progression --message="Enabling Metronome..." --weight=1
+ynh_script_progression "Enabling Metronome..."
 
 if systemctl list-unit-files metronome.service &>/dev/null
 then
 	systemctl enable metronome.service --quiet
-	ynh_systemd_action --service_name="metronome" --action="start"
+	ynh_systemctl --service="metronome" --action="start"
 fi
 
 #=================================================
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Removal of $app completed" --last
+ynh_script_progression "Removal of $app completed"
