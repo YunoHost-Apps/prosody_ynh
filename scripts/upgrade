@@ -4,116 +4,23 @@ source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
-# DISABLE METRONOME
-#=================================================
-ynh_script_progression "Disabling Metronome..."
-
-if systemctl list-unit-files metronome.service &>/dev/null
-then
-	ynh_systemctl --service="metronome" --action="stop"
-	systemctl disable metronome.service --quiet
-fi
-
-#=================================================
-# STOP SYSTEMD SERVICE
-#=================================================
-ynh_script_progression "Stopping $app's systemd service..."
-
-ynh_systemctl --service=$app --action="stop"
-
-#=================================================
-# DOWNLOAD, CHECK AND UNPACK SOURCE
+# SPECIAL HANDLING OF PREVIOUS BETA VERSIONS
 #=================================================
 
-# FIXME: this is still supported but the recommendation is now to *always* re-setup the app sources wether or not the upstream sources changed
-if ynh_app_upstream_version_changed
-then
-	ynh_script_progression "Upgrading source files..."
-
-	builddir="$(mktemp -d)"
-	# Download, check integrity, uncompress and patch the source from app.src
-	ynh_setup_source --dest_dir="$builddir"
-fi
+# Previous beta versions of prosody app were built from source.
+# We need to uninstall them properly before installing debian's package.
+current_version=$(yunohost app info prosody | grep version | awk '{print $2}')
+echo "${current_version}" | grep -qE "0.12.4~ynh([0-9]|10)" && ynh_die "Sorry but you cannot upgrade from version ${current_version}.
+You must uninstall and reinstall the app.
+Don't worry, no data will be lost."
 
 #=================================================
-# BUILD PROSODY
+# RESTART SYSTEMD SERVICE
 #=================================================
-# FIXME: this is still supported but the recommendation is now to *always* re-setup the app sources wether or not the upstream sources changed
-if ynh_app_upstream_version_changed
-then
-	ynh_script_progression "Building Prosody..."
 
-	update-alternatives --set lua-interpreter /usr/bin/lua${luaversion}
+ynh_script_progression "Restarting $app's systemd service..."
 
-	pushd "$builddir"
-		./configure --prefix=/usr
-		make
-		make install
-	popd
-
-	ynh_safe_rm "$builddir"
-fi
-
-#=================================================
-# UPDATE A CONFIG FILE
-#=================================================
-ynh_script_progression "Updating configuration..."
-
-mkdir -p $config_path
-mkdir -p $config_path/{certs,conf.avail,conf.d}
-
-ynh_config_add --template="prosody.cfg.lua" --destination="$config_path/prosody.cfg.lua"
-ynh_config_add --template="example.com.cfg.lua" --destination="$config_path/conf.avail/example.com.cfg.lua"
-#ynh_config_add --template="localhost.cfg.lua" --destination="$config_path/conf.avail/localhost.cfg.lua"
-#ln -s $config_path/conf.avail/localhost.cfg.lua $config_path/conf.d/
-
-#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown root:root "$config_path"
-#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 755 "$config_path"
-
-#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown root:$app "$config_path/conf.d"
-#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 754 "$config_path/conf.d"
-
-#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown root:$app "$config_path/conf.avail"
-#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 754 "$config_path/conf.avail"
-
-#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown root:$app "$config_path/certs"
-#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 750 "$config_path/certs"
-
-#=================================================
-# SETUP SYSTEMD
-#=================================================
-ynh_script_progression "Upgrading systemd configuration..."
-
-# Create a dedicated systemd config
-ynh_config_add_systemd
-
-#=================================================
-# SETUP LOGROTATE
-#=================================================
-ynh_script_progression "Upgrading logrotate configuration..."
-
-mkdir -p "/var/log/$app"
-#REMOVEME? Assuming ynh_config_add_logrotate is called, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 750 "/var/log/$app"
-#REMOVEME? Assuming ynh_config_add_logrotate is called, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod -R o-rwx "/var/log/$app"
-#REMOVEME? Assuming ynh_config_add_logrotate is called, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R $app:adm "/var/log/$app"
-chown -R $app:$app "/var/lib/$app"
-
-# Use logrotate to manage app-specific logfile(s)
-ynh_config_add_logrotate
-
-#=================================================
-# INTEGRATE SERVICE IN YUNOHOST
-#=================================================
-ynh_script_progression "Integrating service in YunoHost..."
-
-yunohost service add $app --log="/var/log/$app/$app.log"
-
-#=================================================
-# START SYSTEMD SERVICE
-#=================================================
-ynh_script_progression "Starting $app's systemd service..."
-
-ynh_systemctl --service=$app --action="start"
+ynh_systemctl --service=$app --action="restart"
 
 #=================================================
 # END OF SCRIPT

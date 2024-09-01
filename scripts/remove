@@ -16,16 +16,7 @@ then
 	yunohost service remove $app
 fi
 
-# Remove the dedicated systemd config
-ynh_config_remove_systemd
-
-# Remove the app-specific logrotate config
-ynh_config_remove_logrotate
-
-ynh_safe_rm "/etc/nginx/conf.d/$domain-extra-xmpp.conf"
-
-# reload nginx
-ynh_systemctl --service="nginx" --action="reload"
+DEBIAN_FRONTEND=noninteractive apt-get remove --assume-yes prosody
 
 #=================================================
 # SPECIFIC REMOVE
@@ -33,29 +24,6 @@ ynh_systemctl --service="nginx" --action="reload"
 # REMOVE VARIOUS FILES
 #=================================================
 ynh_script_progression "Removing various files..."
-
-# Remove a directory securely
-ynh_safe_rm "$config_path"
-
-# Remove the log files
-#REMOVEME? (Apps should not remove their log dir during remove ... this should only happen if --purge is used, and be handled by the core...) ynh_safe_rm "/var/log/$app"
-
-ynh_safe_rm "/run/$app"
-ynh_safe_rm "/var/lib/$app"
-ynh_safe_rm "/usr/bin/prosody"
-ynh_safe_rm "/usr/bin/prosodyctl"
-ynh_safe_rm "/usr/bin/prosody-migrator"
-
-#=================================================
-# ENABLE METRONOME
-#=================================================
-ynh_script_progression "Enabling Metronome..."
-
-if systemctl list-unit-files metronome.service &>/dev/null
-then
-	systemctl enable metronome.service --quiet
-	ynh_systemctl --service="metronome" --action="start"
-fi
 
 #=================================================
 # END OF SCRIPT

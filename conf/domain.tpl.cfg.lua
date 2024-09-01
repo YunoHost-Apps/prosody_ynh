@@ -43,7 +43,7 @@ Component "muc.__DOMAIN__" "muc"
     "muc_log";
     --"muc_log_mam";
     --"muc_log_http";
-    --"muc_vcard";
+    "vcard_muc";
     "muc_mam";
   }
 

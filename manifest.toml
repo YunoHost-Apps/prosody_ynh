@@ -5,7 +5,7 @@ name = "Prosody"
 description.en = "Modern XMPP communication server"
 description.fr = "Serveur de communication XMPP moderne"
 
-version = "0.12.4~ynh10"
+version = "0.12~ynh0"
 
 maintainers = ["yalh76", "anubister", "pitchum"]
 
@@ -31,9 +31,6 @@ helpers_version = "2.1"
     type = "domain"
     
 [resources]
-        [resources.sources.main]
-        url = "https://prosody.im/downloads/source/prosody-0.12.4.tar.gz"
-        sha256 = "47d712273c2f29558c412f6cdaec073260bbc26b7dda243db580330183d65856"
 
     [resources.system_user]
 
@@ -53,18 +50,18 @@ helpers_version = "2.1"
     component.default=5347
     telnet.default=5582
     #ports from https://github.com/YunoHost/issues/issues/1607
-    coturn.default=3478
-    coturntls.default=5349
-    coturn2.default=3479
-    coturn3.default=5350
-    coturn.exposed="TCP"
-    coturntls.exposed="TCP"
-    coturn2.exposed="TCP"
-    coturn3.exposed="TCP"
+#    coturn.default=3478
+#    coturntls.default=5349
+#    coturn2.default=3479
+#    coturn3.default=5350
+#    coturn.exposed="TCP"
+#    coturntls.exposed="TCP"
+#    coturn2.exposed="TCP"
+#    coturn3.exposed="TCP"
     #TODO:
     #yunohost firewall allow UDP -4 49152:65535
 
     [resources.permissions]
 
     [resources.apt]
-    packages = "libicu-dev, libidn11-dev, liblua5.2-dev, libssl-dev, lua-busted, lua5.2, lua5.2-expat, lua5.2-socket, openssl, txt2man, lua5.2-sec, lua5.2-unbound, lua-ldap, luarocks"
+    packages = ""

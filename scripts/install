@@ -17,53 +17,35 @@ fi
 #=================================================
 # DISABLE METRONOME
 #=================================================
-# it should not be present anymore in YNH12
-# but probably kept for people migrating from YNH11
-ynh_script_progression "Disabling Metronome..."
 
-if systemctl list-unit-files metronome.service &>/dev/null
-then
-	ynh_systemctl --service="metronome" --action="stop"
-	systemctl disable metronome.service --quiet
+if systemctl list-unit-files metronome.service &>/dev/null; then
+	ynh_script_progression "Metronome is still present. Uninstalling Metronome..."
+	apt-get --assume-yes remove metronome
 fi
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
-ynh_script_progression "Setting up source files..."
 
-builddir="$(mktemp -d)"
-# Download, check integrity, uncompress and patch the source from app.src
-ynh_setup_source --dest_dir="$builddir"
+ynh_script_progression "Installing prosody package from Debian..."
+
+DEBIAN_FRONTEND=noninteractive apt-get install --assume-yes prosody prosody-modules
 
 #=================================================
 # SPECIFIC SETUP
 #=================================================
-# BUILD PROSODY
-#=================================================
-ynh_script_progression "Building Prosody..."
 
-update-alternatives --set lua-interpreter /usr/bin/lua${luaversion}
-
-pushd "$builddir"
-	./configure --prefix=/usr
-	make
-	make install
-popd
-
-ynh_safe_rm "$builddir"
+# Add permision to read certs
+usermod -a -G ssl-cert prosody
 
 #=================================================
 # ADD A CONFIGURATION
 #=================================================
-ynh_script_progression "Adding $app's configuration..."
+
+ynh_script_progression "Adding a configuration file..."
 
 config_path=/etc/$app
-ynh_app_setting_set --key=config_path --value=$config_path
-mkdir -p $config_path
-mkdir -p $config_path/{certs,conf.avail,conf.d}
 
-ynh_config_add --template="prosody.cfg.lua" --destination="$config_path/prosody.cfg.lua"
 # Add domain configuration
 ynh_config_add --template="domain.tpl.cfg.lua" --destination="/etc/prosody/conf.d/$domain.cfg.lua"
 
@@ -96,27 +78,10 @@ chmod -R g+s "/var/xmpp-upload/"
 #=================================================
 # SETUP SYSTEMD
 #=================================================
-ynh_script_progression "Configuring $app's systemd service..."
-
-# Create a dedicated systemd config
-ynh_config_add_systemd
-
-# Add permision to read certs
-usermod -a -G ssl-cert prosody
 
 #=================================================
 # SETUP LOGROTATE
 #=================================================
-ynh_script_progression "Configuring log rotation..."
-
-mkdir -p "/var/log/$app"
-#REMOVEME? Assuming ynh_config_add_logrotate is called, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 750 "/var/log/$app"
-#REMOVEME? Assuming ynh_config_add_logrotate is called, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod -R o-rwx "/var/log/$app"
-#REMOVEME? Assuming ynh_config_add_logrotate is called, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R $app:adm "/var/log/$app"
-chown -R $app:$app "/var/lib/$app"
-
-# Use logrotate to manage application logfile(s)
-ynh_config_add_logrotate
 
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST
@@ -128,21 +93,11 @@ yunohost service add $app --log="/var/log/$app/$app.log"
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
-ynh_script_progression "Starting $app's systemd service..."
 
-# Start a systemd service
-ynh_systemctl --service=$app --action="start"
+ynh_script_progression "Restarting the systemd service..."
 
-# add http_upload, muc_log modules not included by default with Prosody
-/usr/bin/prosodyctl install --server=https://modules.prosody.im/rocks/ mod_http_upload
-/usr/bin/prosodyctl install --server=https://modules.prosody.im/rocks/ mod_muc_log
-/usr/bin/prosodyctl install --server=https://modules.prosody.im/rocks/ mod_vcard_muc
-
-# restart to take into account new modules
+# Restart the systemd service
 ynh_systemctl --service=$app --action="restart"
-
-# reload nginx
-ynh_systemctl --service="nginx" --action="reload"
 
 #=================================================
 # END OF SCRIPT
