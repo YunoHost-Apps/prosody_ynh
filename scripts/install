@@ -136,6 +136,7 @@ ynh_systemctl --service=$app --action="start"
 # add http_upload, muc_log modules not included by default with Prosody
 /usr/bin/prosodyctl install --server=https://modules.prosody.im/rocks/ mod_http_upload
 /usr/bin/prosodyctl install --server=https://modules.prosody.im/rocks/ mod_muc_log
+/usr/bin/prosodyctl install --server=https://modules.prosody.im/rocks/ mod_vcard_muc
 
 # restart to take into account new modules
 ynh_systemctl --service=$app --action="restart"

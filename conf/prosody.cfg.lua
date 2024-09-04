@@ -63,6 +63,7 @@ modules_enabled = {
 		"register"; -- Allow users to register on this server using a client and change passwords
 		"mam"; -- Store messages in an archive and allow users to access it
 		--"csi_simple"; -- Simple Mobile optimizations
+		"vcard_muc";
 
 	-- Admin interfaces
 		"admin_adhoc"; -- Allows administration via an XMPP client that supports ad-hoc commands
