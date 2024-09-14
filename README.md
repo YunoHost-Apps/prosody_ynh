@@ -6,6 +6,8 @@ It shall NOT be edited by hand.
 and aiming at providing the best XMPP support possible!
 Discussion on xmpp:yunohost-xmpp@muc.chapril.org?join ⚠️
 
+This app is in Beta maturity (reported to work by several people, though few manual operations are needed and some functionalities are still missing).
+
 Target is to provide at least:
   * A/V calls (https://github.com/YunoHost/issues/issues/1607) 
   * BOSH (https://forum.yunohost.org/t/unable-to-set-up-bosh-conf-nginx/12995)
@@ -32,6 +34,11 @@ Target is to provide at least:
   * update scripts/remove and others...
   * check app score
 
+# READ before install!
+Ideally all the README :) but this in particular:
+* You must create in Yunohost the subdomains `muc.` and `xmpp-upload.`
+* You must apply the workaround for this bug : https://github.com/anubister/prosody_ynh/issues/4#issuecomment-2318658501
+
 # Prosody for YunoHost
 
 [![Integration level](https://dash.yunohost.org/integration/prosody.svg)](https://dash.yunohost.org/appci/app/prosody) ![Working status](https://ci-apps.yunohost.org/ci/badges/prosody.status.svg) ![Maintenance status](https://ci-apps.yunohost.org/ci/badges/prosody.maintain.svg)
@@ -48,7 +55,7 @@ If you don't have YunoHost, please consult [the guide](https://yunohost.org/#/in
 Prosody is a modern XMPP communication server. It aims to be easy to set up and configure, and efficient with system resources. Additionally, for developers it aims to be easy to extend and give a flexible system on which to rapidly develop added functionality, or prototype new protocols.
 
 
-**Shipped version:** 0.12.4~ynh2
+**Shipped version:** 0.12.4~ynh10
 ## Documentation and resources
 
 * Official app website: <https://prosody.im/>
