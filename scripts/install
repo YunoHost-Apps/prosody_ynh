@@ -59,7 +59,6 @@ for domain in ${domains} ; do
 	ynh_config_add --template="../conf/nginx-extra-xmpp.conf" --destination="/etc/nginx/conf.d/${domain}-extra-xmpp.conf"
 
 	# create directory for file sharing uploads
-	ynh_script_progression "Preparing data dire for domain ${domain}"
 	mkdir -p "/var/xmpp-upload/${domain}/upload"
 	chown -R prosody:www-data /var/xmpp-upload/
 	chmod -R g+s /var/xmpp-upload/
