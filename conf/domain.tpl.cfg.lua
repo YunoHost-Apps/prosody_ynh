@@ -25,6 +25,11 @@ VirtualHost "__DOMAIN__"
     { "xmpp-upload.__DOMAIN__" },
   };
 
+  -- Set up A/V calls
+  turn_external_secret = "__TURN_PASSWORD__"
+  turn_external_host = "__DOMAIN__"
+  turn_external_port = __TURN_EXTERNAL_PORT__
+
 --  contact_info = {
 --    abuse = { "mailto:abuse@__DOMAIN__", "xmpp:admin@__DOMAIN__" };
 --    admin = { "mailto:root@__DOMAIN__", "xmpp:admin@__DOMAIN__" };

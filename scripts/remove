@@ -3,6 +3,8 @@
 source _common.sh
 source /usr/share/yunohost/helpers
 
+domains=$(yunohost domain list --exclude-subdomains | grep -Ev '^(domains|main):' | awk '{print $2}')
+
 #=================================================
 # STANDARD REMOVE
 #=================================================
@@ -15,6 +17,10 @@ then
 	ynh_script_progression "Removing $app service integration..."
 	yunohost service remove $app
 fi
+
+for domain in ${domains} ; do
+	rm /etc/prosody/conf.d/${domain}.cfg.lua
+done
 
 DEBIAN_FRONTEND=noninteractive apt-get remove --assume-yes prosody
 

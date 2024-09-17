@@ -1,0 +1,8 @@
+#! /bin/bash
+
+source /usr/share/yunohost/helpers
+
+domain=$1
+ynh_config_add --template="domain.tpl.cfg.lua" --destination="/etc/prosody/conf.avail/${domain}.cfg.lua"
+ln -sr /etc/prosody/conf.avail/${domain}.cfg.lua /etc/prosody/conf.d/
+systemctl restart prosody

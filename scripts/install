@@ -3,6 +3,9 @@
 source _common.sh
 source /usr/share/yunohost/helpers
 
+maindomain=$(yunohost domain main-domain | awk '{print $2}')
+domains=$(yunohost domain list --exclude-subdomains | grep -Ev '^(domains|main):' | awk '{print $2}')
+
 #=================================================
 # CHECKING DEPENDANCIES
 #=================================================
@@ -11,8 +14,11 @@ source /usr/share/yunohost/helpers
 if ! yunohost app list | grep -q "id: coturn"; then
         echo "Coturn is not installed. Installing... "
         yunohost tools update
-        yunohost app install https://github.com/anubister/coturn_ynh --force --args "domain=$domain"
+        yunohost app install https://github.com/anubister/coturn_ynh --force --args "maindomain=$maindomain"
 fi
+
+turn_password=$(ynh_app_setting_get --app="coturn" --key=turnserver_pwd)
+turn_external_port=$(ynh_app_setting_get --app="coturn" --key=port_turnserver)
 
 #=================================================
 # DISABLE METRONOME
@@ -44,36 +50,20 @@ usermod -a -G ssl-cert prosody
 
 ynh_script_progression "Adding a configuration file..."
 
-config_path=/etc/$app
+for domain in ${domains} ; do
+	# Add domain configuration
+	ynh_config_add --template="domain.tpl.cfg.lua" --destination="/etc/prosody/conf.avail/${domain}.cfg.lua"
+	ln -sr /etc/prosody/conf.avail/${domain}.cfg.lua /etc/prosody/conf.d/
 
-# Add domain configuration
-ynh_config_add --template="domain.tpl.cfg.lua" --destination="/etc/prosody/conf.d/$domain.cfg.lua"
+	# Add nginx config for xmpp subdomains
+	ynh_config_add --template="../conf/nginx-extra-xmpp.conf" --destination="/etc/nginx/conf.d/${domain}-extra-xmpp.conf"
 
-# Add nginx config for xmpp subdomains
-ynh_config_add --template="../conf/nginx-extra-xmpp.conf" --destination="/etc/nginx/conf.d/$domain-extra-xmpp.conf"
-
-# update password and port from coturn app
-turnpassword=$(ynh_app_setting_get --app="coturn" --key=turnserver_pwd)
-turnport=$(ynh_app_setting_get --app="coturn" --key=port_turnserver)
-ynh_replace --match="Some passphrase" --replace="$turnpassword" --file="$config_path/prosody.cfg.lua"
-ynh_replace --match="turn_external_port = 3478" --replace="turn_external_port = $turnport" --file="$config_path/prosody.cfg.lua"
-
-chown root:root "$config_path"
-chmod 755 "$config_path"
-
-chown root:$app "$config_path/conf.d"
-chmod 754 "$config_path/conf.d"
-
-chown root:$app "$config_path/conf.avail"
-chmod 754 "$config_path/conf.avail"
-
-chown root:$app "$config_path/certs"
-chmod 750 "$config_path/certs"
-
-# create directory for file sharing uploads
-mkdir -p "/var/xmpp-upload/$domain/upload"
-chown -R "$app:www-data" "/var/xmpp-upload/"
-chmod -R g+s "/var/xmpp-upload/"
+	# create directory for file sharing uploads
+	ynh_script_progression "Preparing data dire for domain ${domain}"
+	mkdir -p "/var/xmpp-upload/${domain}/upload"
+	chown -R prosody:www-data /var/xmpp-upload/
+	chmod -R g+s /var/xmpp-upload/
+done
 
 #=================================================
 # SETUP SYSTEMD
