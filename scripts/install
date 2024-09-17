@@ -20,7 +20,7 @@ fi
 
 if systemctl list-unit-files metronome.service &>/dev/null; then
 	ynh_script_progression "Metronome is still present. Uninstalling Metronome..."
-	apt-get --assume-yes remove metronome
+	DEBIAN_FRONTEND=noninteractive apt-get --assume-yes remove metronome
 fi
 
 #=================================================
@@ -80,8 +80,16 @@ chmod -R g+s "/var/xmpp-upload/"
 #=================================================
 
 #=================================================
-# SETUP LOGROTATE
+# MIGRATE DATA FROM METRONOME AND PURGE
 #=================================================
+
+if [ -d /var/lib/metronome/ ]; then
+	ynh_script_progression "Migrating data from metronome..."
+	mv /var/lib/metronome/* /var/lib/prosody/
+	rmdir /var/lib/metronome
+	chown -R prosody: /var/lib/prosody/
+	DEBIAN_FRONTEND=noninteractive apt-get --assume-yes --purge purge metronome
+fi
 
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST
