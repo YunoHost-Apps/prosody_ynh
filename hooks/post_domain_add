@@ -1,8 +1,18 @@
 #! /bin/bash
 
+domain=$1
+
+YNH_HELPERS_VERSION=2.1
 source /usr/share/yunohost/helpers
 
-domain=$1
-ynh_config_add --template="domain.tpl.cfg.lua" --destination="/etc/prosody/conf.avail/${domain}.cfg.lua"
+turn_external_port=$(ynh_app_setting_get --app="coturn" --key=port_turnserver)
+turn_password=$(ynh_app_setting_get --app="coturn" --key=turnserver_pwd)
+app=prosody
+
+echo "turn_external_port=${turn_external_port} turn_password=${turn_password}"
+
+ynh_config_add \
+  --template="/etc/yunohost/apps/prosody/conf/domain.tpl.cfg.lua" \
+  --destination="/etc/prosody/conf.avail/${domain}.cfg.lua"
 ln -sr /etc/prosody/conf.avail/${domain}.cfg.lua /etc/prosody/conf.d/
 systemctl restart prosody
