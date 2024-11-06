@@ -5,7 +5,7 @@
 
 # YunoHost 上的 Prosody
 
-[![集成程度](https://dash.yunohost.org/integration/prosody.svg)](https://dash.yunohost.org/appci/app/prosody) ![工作状态](https://ci-apps.yunohost.org/ci/badges/prosody.status.svg) ![维护状态](https://ci-apps.yunohost.org/ci/badges/prosody.maintain.svg)
+[![集成程度](https://dash.yunohost.org/integration/prosody.svg)](https://ci-apps.yunohost.org/ci/apps/prosody/) ![工作状态](https://ci-apps.yunohost.org/ci/badges/prosody.status.svg) ![维护状态](https://ci-apps.yunohost.org/ci/badges/prosody.maintain.svg)
 
 [![使用 YunoHost 安装 Prosody](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=prosody)
 
