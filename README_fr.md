@@ -5,7 +5,7 @@ Il NE doit PAS être modifié à la main.
 
 # Prosody pour YunoHost
 
-[![Niveau d’intégration](https://dash.yunohost.org/integration/prosody.svg)](https://dash.yunohost.org/appci/app/prosody) ![Statut du fonctionnement](https://ci-apps.yunohost.org/ci/badges/prosody.status.svg) ![Statut de maintenance](https://ci-apps.yunohost.org/ci/badges/prosody.maintain.svg)
+[![Niveau d’intégration](https://dash.yunohost.org/integration/prosody.svg)](https://ci-apps.yunohost.org/ci/apps/prosody/) ![Statut du fonctionnement](https://ci-apps.yunohost.org/ci/badges/prosody.status.svg) ![Statut de maintenance](https://ci-apps.yunohost.org/ci/badges/prosody.maintain.svg)
 
 [![Installer Prosody avec YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=prosody)
 

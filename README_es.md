@@ -5,7 +5,7 @@ No se debe editar a mano.
 
 # Prosody para Yunohost
 
-[![Nivel de integración](https://dash.yunohost.org/integration/prosody.svg)](https://dash.yunohost.org/appci/app/prosody) ![Estado funcional](https://ci-apps.yunohost.org/ci/badges/prosody.status.svg) ![Estado En Mantención](https://ci-apps.yunohost.org/ci/badges/prosody.maintain.svg)
+[![Nivel de integración](https://dash.yunohost.org/integration/prosody.svg)](https://ci-apps.yunohost.org/ci/apps/prosody/) ![Estado funcional](https://ci-apps.yunohost.org/ci/badges/prosody.status.svg) ![Estado En Mantención](https://ci-apps.yunohost.org/ci/badges/prosody.maintain.svg)
 
 [![Instalar Prosody con Yunhost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=prosody)
 
@@ -30,7 +30,7 @@ Prosody is a modern XMPP communication server. It aims to be easy to set up and 
 
 ## Información para desarrolladores
 
-Por favor enviar sus correcciones a la [`branch testing`](https://github.com/YunoHost-Apps/prosody_ynh/tree/testing
+Por favor enviar sus correcciones a la [rama `testing`](https://github.com/YunoHost-Apps/prosody_ynh/tree/testing).
 
 Para probar la rama `testing`, sigue asÍ:
 
