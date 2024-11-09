@@ -21,6 +21,7 @@ fi
 for domain in ${domains} ; do
 	rm /etc/prosody/conf.d/${domain}.cfg.lua
 	rm /etc/prosody/conf.avail/${domain}.cfg.lua
+	rm /etc/nginx/conf.d/${domain}-extra-xmpp.conf
 done
 
 DEBIAN_FRONTEND=noninteractive apt-get remove --assume-yes prosody
