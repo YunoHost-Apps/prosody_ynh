@@ -1,3 +1,13 @@
-#! /bin/bash
+# This script is expected to be called xx-$app
+app=$(basename $0 | cut -d- -f2)
+app_domain=$(yunohost app setting $app domain)
 
-echo "['xmpp-upload', 'muc']" > ${YNH_STDRETURN}
+if [[ "$domain" != "$app_domain" ]]
+then
+    exit 0
+fi
+
+cat << EOF >> $YNH_STDRETURN
+- muc
+- xmpp-upload
+EOF
