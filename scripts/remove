@@ -3,6 +3,7 @@
 source _common.sh
 source /usr/share/yunohost/helpers
 
+#TODO: does not work if there is only 1 root domain
 domains=$(yunohost domain list --exclude-subdomains | grep -Ev '^(domains|main):' | awk '{print $2}')
 
 #=================================================

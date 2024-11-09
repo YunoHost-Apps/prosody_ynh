@@ -75,6 +75,8 @@ ynh_script_progression "Adding a configuration file..."
 #=================================================
 
 #TODO: ask for import, ask for purging
+#TODO: make it non blocking? currently, if there is already some remains of a previous prosody install,
+#mv will fail leading to uninstall prosody with a partial migration of metronome datas...
 if [ -d /var/lib/metronome/ ]; then
 	ynh_script_progression "Migrating data from metronome..."
 	mv /var/lib/metronome/* /var/lib/prosody/
