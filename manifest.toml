@@ -22,11 +22,13 @@ multi_instance = false
 ldap = true
 sso = false
 disk = "75M"
-ram.build = "160M"
+ram.build = "10M"
 ram.runtime = "10M"
 helpers_version = "2.1"
 
 [install]
+    [install.domain]
+    type = "domain"
 
 [resources]
 

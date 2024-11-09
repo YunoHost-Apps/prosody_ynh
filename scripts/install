@@ -3,8 +3,9 @@
 source _common.sh
 source /usr/share/yunohost/helpers
 
-maindomain=$(yunohost domain main-domain | awk '{print $2}')
-domains=$(yunohost domain list --exclude-subdomains | grep -Ev '^(domains|main):' | awk '{print $2}')
+#maindomain=$(yunohost domain main-domain | awk '{print $2}')
+#domains=$(yunohost domain list --exclude-subdomains | grep -Ev '^(domains|main):' | awk '{print $2}')
+# we rather ask on which domain to install
 
 #=================================================
 # CHECKING DEPENDANCIES
@@ -14,7 +15,7 @@ domains=$(yunohost domain list --exclude-subdomains | grep -Ev '^(domains|main):
 if ! yunohost app list | grep -q "id: coturn"; then
         echo "Coturn is not installed. Installing... "
         yunohost tools update
-        yunohost app install https://github.com/anubister/coturn_ynh --force --args "maindomain=$maindomain"
+        yunohost app install https://github.com/anubister/coturn_ynh --force --args "domain=$domain"
 fi
 
 turn_password=$(ynh_app_setting_get --app="coturn" --key=turnserver_pwd)
@@ -23,7 +24,7 @@ turn_external_port=$(ynh_app_setting_get --app="coturn" --key=port_turnserver)
 #=================================================
 # DISABLE METRONOME
 #=================================================
-
+#TODO: rather check metronome_ynh and check app conflict management?
 if systemctl list-unit-files metronome.service &>/dev/null; then
 	ynh_script_progression "Metronome is still present. Uninstalling Metronome..."
 	DEBIAN_FRONTEND=noninteractive apt-get --assume-yes remove metronome
@@ -50,7 +51,7 @@ usermod -a -G ssl-cert prosody
 
 ynh_script_progression "Adding a configuration file..."
 
-for domain in ${domains} ; do
+
 	# Add domain configuration
 	ynh_config_add --template="domain.tpl.cfg.lua" --destination="/etc/prosody/conf.avail/${domain}.cfg.lua"
 	ln -sr /etc/prosody/conf.avail/${domain}.cfg.lua /etc/prosody/conf.d/
@@ -59,10 +60,11 @@ for domain in ${domains} ; do
 	ynh_config_add --template="../conf/nginx-extra-xmpp.conf" --destination="/etc/nginx/conf.d/${domain}-extra-xmpp.conf"
 
 	# create directory for file sharing uploads
+	#TODO: store app datas rather in /home/yunohost.app/prosody/ like metronome_ynh?
 	mkdir -p "/var/xmpp-upload/${domain}/upload"
 	chown -R prosody:www-data /var/xmpp-upload/
 	chmod -R g+s /var/xmpp-upload/
-done
+
 
 #=================================================
 # SETUP SYSTEMD
@@ -72,6 +74,7 @@ done
 # MIGRATE DATA FROM METRONOME AND PURGE
 #=================================================
 
+#TODO: ask for import, ask for purging
 if [ -d /var/lib/metronome/ ]; then
 	ynh_script_progression "Migrating data from metronome..."
 	mv /var/lib/metronome/* /var/lib/prosody/
