@@ -4,7 +4,7 @@ It shall NOT be edited by hand.
 -->
 ⚠️ This is a fork (work in progress) of the official Prosody app to install on Yunohost 12 and aiming at providing the best XMPP support possible!
 
-This app is in Beta maturity (reported to work by several people, though few manual operations are needed and some functionalities are still missing).
+This app is in Beta maturity (reported to work by several people, though few manual operations might be needed and some functionalities are still missing).
 
 🚀 Target is to provide at least:
   * A/V calls (https://github.com/YunoHost/issues/issues/1607) 
@@ -15,17 +15,19 @@ This app is in Beta maturity (reported to work by several people, though few man
 ...and ultimately an Advanced Server compliance level (https://xmpp.org/extensions/xep-0479.html).
 
 ✅ What works:
-  * install on brand new Yunohost 12
+  * install on Yunohost 12
   * LDAP auth
   * A/V calls
   * File upload
   * MUC
   * automatically install coturn if not yet present (https://github.com/anubister/coturn_ynh/ , a fork compatible with Yunohost 12)
-  * XEP-0163, XEP-0191, XEP-0215, XEP-0237, XEP-0280, XEP-0313, XEP-0363 (see 'xmpp_compliance' file)
+  * XEP-0163, XEP-0191, XEP-0215, XEP-0237, XEP-0280, XEP-0313, XEP-0363 (see 'xmpp_compliance' file), XEP-0421 TBC
+
 🐞 What does not work:
   * vjud (Users directory) (help welcomed!)
+
 🙋 TODO (help welcomed!):
-  * do migration from Metronome datas on Yunohost 11 to Prosody
+  * do migration from Metronome datas to Prosody
   * if applicable manage migration from upstream version of coturn app
   * usability by other apps:
     * [PeerTube](https://github.com/YunoHost-Apps/peertube_ynh): to be tested
@@ -35,18 +37,23 @@ This app is in Beta maturity (reported to work by several people, though few man
     * [Nextcloud](https://github.com/YunoHost-Apps/nextcloud_ynh): to be tested
     * [Libervia](https://salut-a-toi.org/): to be tested [non-working app](https://github.com/YunoHost-Apps/sat_ynh)
     * ...?
-  * check initial configuration (subdomains available, DNS, ?) : inform or block?
+  * check initial configuration (DNS, ?) : inform or block?
   * update scripts/remove and others...
-  * check app score
+  * check/improve app score
 
 # READ before install!
 Ideally all the README :) but this in particular:
-* You must create in Yunohost the subdomains `muc.` and `xmpp-upload.`
+* You must ensure that your DNS configuration includes the subdomains `muc.` and `xmpp-upload.`
+* You should **not** create Yunohost subdomains `muc.` and `xmpp-upload.`
 * You must apply the workaround for this bug : https://github.com/anubister/prosody_ynh/issues/4#issuecomment-2318658501
 
 
 💬 Further discussions, support on xmpp:yunohost-xmpp@muc.chapril.org?join
 Or in the [forum](https://forum.yunohost.org/c/apps/11).
+
+ℹ️  About this branch
+This package / branch installs from the Debian packages repository `prosody` and `prosody-modules` (no compilation on server-side).
+It installs on your desired (sub)domain selected during the installation.
 
 # Prosody for YunoHost
 
