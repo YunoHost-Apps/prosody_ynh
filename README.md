@@ -22,6 +22,7 @@ This app is in Beta maturity (reported to work by several people, though few man
   * A/V calls
   * File upload
   * MUC
+  * optional import of rosters, MUCs, bookmarks from Metronome (integrated service on Yunohost 11 or app on Yunohost 12)
   * automatically install coturn if not yet present (https://github.com/anubister/coturn_ynh/ , a fork compatible with Yunohost 12)
   * XEP-0163, XEP-0191, XEP-0215, XEP-0237, XEP-0280, XEP-0313, XEP-0363 (see 'xmpp_compliance' file), XEP-0421 TBC
 
@@ -29,7 +30,6 @@ This app is in Beta maturity (reported to work by several people, though few man
   * vjud (Users directory) (help welcomed!)
 
 🙋 TODO (help welcomed!):
-  * do migration from Metronome datas to Prosody
   * if applicable manage migration from upstream version of coturn app
   * usability by other apps:
     * [PeerTube](https://github.com/YunoHost-Apps/peertube_ynh): to be tested
@@ -48,7 +48,7 @@ Ideally all the README :) but this in particular:
 * You must ensure that your DNS configuration includes the subdomains `muc.` and `xmpp-upload.`
 * You should **not** create Yunohost subdomains `muc.` and `xmpp-upload.`
 * You must apply the workaround for this bug : https://github.com/anubister/prosody_ynh/issues/4#issuecomment-2318658501
-
+* You have to deinstall Metronome app before to install this app (using the same ports).
 
 💬 Further discussions, support on xmpp:yunohost-xmpp@muc.chapril.org?join
 Or in the [forum](https://forum.yunohost.org/c/apps/11).
