@@ -82,12 +82,20 @@ then
     ynh_script_progression "Try to import datas from Metronome has been requested..."
     if [ -d /home/yunohost.app/metronome/ ]
     then
-	ynh_script_progression "Datas from a previous metronome installation found, import to prosody as requested..."
+	ynh_script_progression "Datas from a metronome app installation found, import to prosody as requested..."
 	cp -r /home/yunohost.app/metronome/* /var/lib/prosody/
 	chown -R prosody: /var/lib/prosody/
 	#TODO: notify in post-install that metronome data should be purged or archived to avoid later unexpected overwritting on prosody datas
     else
-        ynh_script_progression "No metronome datas found, skipping import."
+        ynh_script_progression "No metronome datas from metronome app found, looking for datas from Yunohost 11..."
+        if [ -d /var/lib/metronome/ ]
+        then
+            ynh_script_progression "Datas from metronome (Yunohost 11) found, import to prosody as requested..."
+            cp -r /var/lib/metronome/* /var/lib/prosody/
+            chown -R prosody: /var/lib/prosody/
+        else
+            ynh_script_progression "No metronome data from Yunohost 11 found, skipping import."
+        fi
     fi
 fi
 
