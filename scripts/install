@@ -77,12 +77,18 @@ ynh_script_progression "Adding a configuration file..."
 #TODO: ask for import, ask for purging
 #TODO: make it non blocking? currently, if there is already some remains of a previous prosody install,
 #mv will fail leading to uninstall prosody with a partial migration of metronome datas...
-if [ -d /var/lib/metronome/ ]; then
-	ynh_script_progression "Migrating data from metronome..."
-	mv /var/lib/metronome/* /var/lib/prosody/
-	rmdir /var/lib/metronome
+if [ $import_from_metronome -eq 1 ]
+then
+    ynh_script_progression "Try to import datas from Metronome has been requested..."
+    if [ -d /home/yunohost.app/metronome/ ]
+    then
+	ynh_script_progression "Datas from a previous metronome installation found, import to prosody as requested..."
+	cp -r /home/yunohost.app/metronome/* /var/lib/prosody/
 	chown -R prosody: /var/lib/prosody/
-	DEBIAN_FRONTEND=noninteractive apt-get --assume-yes --purge purge metronome
+	#TODO: notify in post-install that metronome data should be purged or archived to avoid later unexpected overwritting on prosody datas
+    else
+        ynh_script_progression "No metronome datas found, skipping import."
+    fi
 fi
 
 #=================================================
