@@ -85,6 +85,9 @@ then
 	ynh_script_progression "Datas from a metronome app installation found, import to prosody as requested..."
 	cp -r /home/yunohost.app/metronome/* /var/lib/prosody/
 	chown -R prosody: /var/lib/prosody/
+	#Remove pep/ as not supported by Prosody (see bug #12)
+        #TODO: could be preferable to remove from all domains imported from Metronome?
+        rm -rf "/var/lib/prosody/${domain//./%2e}/pep/"
 	#TODO: notify in post-install that metronome data should be purged or archived to avoid later unexpected overwritting on prosody datas
     else
         ynh_script_progression "No metronome datas from metronome app found, looking for datas from Yunohost 11..."
@@ -93,6 +96,10 @@ then
             ynh_script_progression "Datas from metronome (Yunohost 11) found, import to prosody as requested..."
             cp -r /var/lib/metronome/* /var/lib/prosody/
             chown -R prosody: /var/lib/prosody/
+            #Remove pep/ as not supported by Prosody (see bug #12)
+            #TODO: could be preferable to remove from all domains imported from Metronome?
+            rm -rf "/var/lib/prosody/${domain//./%2e}/pep/"
+            #TODO: notify in post-install that metronome data should be purged or archived to avoid later unexpected overwritting on prosody datas
         else
             ynh_script_progression "No metronome data from Yunohost 11 found, skipping import."
         fi
@@ -114,6 +121,8 @@ ynh_script_progression "Restarting the systemd service..."
 
 # Restart the systemd service
 ynh_systemctl --service=$app --action="restart"
+
+#TODO: shouldn't nginx be here reloaded in order to take into account -extra-xmpp.conf?
 
 #=================================================
 # END OF SCRIPT
