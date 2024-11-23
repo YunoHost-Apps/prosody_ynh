@@ -3,7 +3,8 @@
 source _common.sh
 source /usr/share/yunohost/helpers
 
-domains=$(yunohost domain list --exclude-subdomains | grep -Ev '^(domains|main):' | awk '{print $2}')
+#TODO: does not work if there is only 1 root domain
+#domains=$(yunohost domain list --exclude-subdomains | grep -Ev '^(domains|main):' | awk '{print $2}')
 
 #=================================================
 # STANDARD REMOVE
@@ -18,13 +19,19 @@ then
 	yunohost service remove $app
 fi
 
-for domain in ${domains} ; do
-	rm /etc/prosody/conf.d/${domain}.cfg.lua
-	rm /etc/prosody/conf.avail/${domain}.cfg.lua
-	rm /etc/nginx/conf.d/${domain}-extra-xmpp.conf
-done
+# Remove the dedicated systemd config
+ynh_remove_systemd_config
+
+# Remove the app-specific logrotate config
+ynh_remove_logrotate
+
+rm /etc/prosody/conf.d/$domain.cfg.lua
+rm /etc/prosody/conf.avail/$domain.cfg.lua
+rm /etc/nginx/conf.d/$domain-extra-xmpp.conf
 
 DEBIAN_FRONTEND=noninteractive apt-get remove --assume-yes prosody
+
+yunohost tools regen-conf nginx
 
 #=================================================
 # SPECIFIC REMOVE
@@ -38,3 +45,5 @@ ynh_script_progression "Removing various files..."
 #=================================================
 
 ynh_script_progression "Removal of $app completed"
+
+#TODO: notify that dependancy on coturn_ynh is not managed (kept)

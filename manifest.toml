@@ -5,7 +5,9 @@ name = "Prosody"
 description.en = "Modern XMPP communication server"
 description.fr = "Serveur de communication XMPP moderne"
 
-version = "0.12~ynh0"
+# as long as this app is not official, we have to ensure it has an higher revision number as the official app
+# otherwise it will be updated to the official one, with undesired effects
+version = "0.12.4~ynh100"
 
 maintainers = ["yalh76", "anubister", "pitchum"]
 
@@ -29,6 +31,15 @@ helpers_version = "2.1"
 [install]
     [install.domain]
     type = "domain"
+
+    [install.import_from_metronome]
+    ask.en = "Try to import datas from a previous Metronome installation?"
+    ask.fr = "Essayer d'importer les données d'une précédente installation de Metronome ?"
+    help.en = "If you were previously using the metronome (the app on Yunohost 12 or integrated service on Yunohost 11) and want to import MUCs, rosters, bookmarks into Prosody. Do not activate if you were previously already using an other version of Prosody."
+    help.fr = "Si vous utilisez précédemment metronome (l'app dans Yunohost 12 ou le service intégré à Yunohost 11) et voulez importer MUCs, rosters, bookmarks dans Prosody. Ne pas activer si vous utilisiez déjà une version de Prosody."
+    type = "boolean"
+    default = false
+
 
 [resources]
 
