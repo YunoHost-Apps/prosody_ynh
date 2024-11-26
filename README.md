@@ -4,7 +4,7 @@ It shall NOT be edited by hand.
 -->
 # Prosody for YunoHost
 
-⚠️ This is a fork (work in progress) of the official Prosody app to install on Yunohost 12 and aiming at providing the best XMPP support possible!
+⚠️ This is a fork of the official Prosody app to install on Yunohost 12 and aiming at providing the best XMPP support possible!
 
 This app is in Beta maturity (reported to work by several people, though few manual operations might be needed and some functionalities are still missing).
 
@@ -47,8 +47,12 @@ This app is in Beta maturity (reported to work by several people, though few man
 Ideally all the README :) but this in particular:
 * You must ensure that your DNS configuration includes the subdomains `muc.` and `xmpp-upload.`
 * You should **not** create Yunohost subdomains `muc.` and `xmpp-upload.`
-* You must apply the workaround for this bug : https://github.com/anubister/prosody_ynh/issues/4#issuecomment-2318658501
+* (to be confirmed) You must apply the workaround for this bug : https://github.com/anubister/prosody_ynh/issues/4#issuecomment-2318658501
 * You have to deinstall Metronome app before to install this app (using the same ports).
+
+# Additionnal infos
+* Users connect on XMPP with their email address. Ensure in the Yunohost Users configuration panel they have an email address matching the domain on which you install Prosody. If not add an email alias.
+
 
 💬 Further discussions, support on xmpp:yunohost-xmpp@muc.chapril.org?join
 Or in the [forum](https://forum.yunohost.org/c/apps/11).
