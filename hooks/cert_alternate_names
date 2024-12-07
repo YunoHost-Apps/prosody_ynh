@@ -9,5 +9,6 @@ fi
 
 cat << EOF >> $YNH_STDRETURN
 - muc
+- pubsub
 - xmpp-upload
 EOF
