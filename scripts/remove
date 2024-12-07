@@ -33,6 +33,9 @@ DEBIAN_FRONTEND=noninteractive apt-get remove --assume-yes prosody
 
 yunohost tools regen-conf nginx
 
+ynh_script_progression "Reloading nginx..."
+ynh_systemctl --service="nginx" --action="reload"
+
 #=================================================
 # SPECIFIC REMOVE
 #=================================================

@@ -19,8 +19,10 @@ Don't worry, no data will be lost."
 #=================================================
 
 ynh_script_progression "Restarting $app's systemd service..."
-
 ynh_systemctl --service=$app --action="restart"
+
+ynh_script_progression "Reloading nginx..."
+ynh_systemctl --service="nginx" --action="reload"
 
 #=================================================
 # END OF SCRIPT

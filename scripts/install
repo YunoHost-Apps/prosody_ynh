@@ -122,7 +122,8 @@ ynh_script_progression "Restarting the systemd service..."
 # Restart the systemd service
 ynh_systemctl --service=$app --action="restart"
 
-#TODO: shouldn't nginx be here reloaded in order to take into account -extra-xmpp.conf?
+ynh_script_progression "Reloading nginx..."
+ynh_systemctl --service="nginx" --action="reload"
 
 #=================================================
 # END OF SCRIPT
