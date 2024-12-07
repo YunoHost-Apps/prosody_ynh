@@ -4,26 +4,18 @@ source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
-# STANDARD REMOVE
-#=================================================
 # REMOVE SERVICE INTEGRATION IN YUNOHOST
 #=================================================
 ynh_script_progression "Removing system configurations related to $app..."
 
-if ynh_hide_warnings yunohost service status $app >/dev/null
-then
-	ynh_script_progression "Removing $app service integration..."
+if ynh_hide_warnings yunohost service status $app >/dev/null; then
 	yunohost service remove $app
 fi
 
-# Remove the dedicated systemd config
 ynh_config_remove_systemd
 
-# Remove the app-specific logrotate config
 ynh_config_remove_logrotate
 
-#=================================================
-# SPECIFIC REMOVE
 #=================================================
 # REMOVE VARIOUS FILES
 #=================================================
@@ -33,7 +25,6 @@ ynh_script_progression "Removing various files..."
 ynh_safe_rm "$config_path"
 
 # Remove the log files
-
 ynh_safe_rm "/run/$app"
 ynh_safe_rm "/var/lib/$app"
 ynh_safe_rm "/usr/bin/prosody"

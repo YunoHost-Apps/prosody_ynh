@@ -24,8 +24,6 @@ builddir="$(mktemp -d)"
 ynh_setup_source --dest_dir="$builddir"
 
 #=================================================
-# SPECIFIC SETUP
-#=================================================
 # BUILD PROSODY
 #=================================================
 ynh_script_progression "Building Prosody..."
@@ -55,17 +53,17 @@ ynh_config_add --template="example.com.cfg.lua" --destination="$config_path/conf
 #ynh_config_add --template="localhost.cfg.lua" --destination="$config_path/conf.avail/localhost.cfg.lua"
 #ln -s $config_path/conf.avail/localhost.cfg.lua $config_path/conf.d/
 
-#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown root:root "$config_path"
-#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 755 "$config_path"
+chown root:root "$config_path"
+chmod 755 "$config_path"
 
-#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown root:$app "$config_path/conf.d"
-#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 754 "$config_path/conf.d"
+chown root:$app "$config_path/conf.d"
+chmod 754 "$config_path/conf.d"
 
-#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown root:$app "$config_path/conf.avail"
-#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 754 "$config_path/conf.avail"
+chown root:$app "$config_path/conf.avail"
+chmod 754 "$config_path/conf.avail"
 
-#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown root:$app "$config_path/certs"
-#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 750 "$config_path/certs"
+chown root:$app "$config_path/certs"
+chmod 750 "$config_path/certs"
 
 #=================================================
 # SETUP SYSTEMD
@@ -81,9 +79,9 @@ ynh_config_add_systemd
 ynh_script_progression "Configuring log rotation..."
 
 mkdir -p "/var/log/$app"
-#REMOVEME? Assuming ynh_config_add_logrotate is called, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 750 "/var/log/$app"
-#REMOVEME? Assuming ynh_config_add_logrotate is called, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod -R o-rwx "/var/log/$app"
-#REMOVEME? Assuming ynh_config_add_logrotate is called, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R $app:adm "/var/log/$app"
+chmod 750 "/var/log/$app"
+chmod -R o-rwx "/var/log/$app"
+chown -R $app:adm "/var/log/$app"
 chown -R $app:$app "/var/lib/$app"
 
 # Use logrotate to manage application logfile(s)
@@ -101,7 +99,6 @@ yunohost service add $app --log="/var/log/$app/$app.log"
 #=================================================
 ynh_script_progression "Starting $app's systemd service..."
 
-# Start a systemd service
 ynh_systemctl --service=$app --action="start"
 
 #=================================================

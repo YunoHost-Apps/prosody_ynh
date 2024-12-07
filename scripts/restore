@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Keep this path for calling _common.sh inside the execution's context of backup and restore scripts
 source ../settings/scripts/_common.sh
 source /usr/share/yunohost/helpers
 
@@ -27,17 +26,17 @@ mkdir -p $config_path/{certs,conf.avail,conf.d}
 
 #ln -s $config_path/conf.avail/localhost.cfg.lua $config_path/conf.d/
 
-#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown root:root "$config_path"
-#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 755 "$config_path"
+chown root:root "$config_path"
+chmod 755 "$config_path"
 
-#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown root:$app "$config_path/conf.d"
-#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 754 "$config_path/conf.d"
+chown root:$app "$config_path/conf.d"
+chmod 754 "$config_path/conf.d"
 
-#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown root:$app "$config_path/conf.avail"
-#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 754 "$config_path/conf.avail"
+chown root:$app "$config_path/conf.avail"
+chmod 754 "$config_path/conf.avail"
 
-#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown root:$app "$config_path/certs"
-#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 750 "$config_path/certs"
+chown root:$app "$config_path/certs"
+chmod 750 "$config_path/certs"
 
 #=================================================
 # RESTORE THE DATA DIRECTORY
@@ -64,9 +63,9 @@ systemctl enable $app.service --quiet
 ynh_script_progression "Restoring the logrotate configuration..."
 
 mkdir -p "/var/log/$app"
-#REMOVEME? Assuming ynh_config_add_logrotate is called, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 750 "/var/log/$app"
-#REMOVEME? Assuming ynh_config_add_logrotate is called, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod -R o-rwx "/var/log/$app"
-#REMOVEME? Assuming ynh_config_add_logrotate is called, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R $app:adm "/var/log/$app"
+chmod 750 "/var/log/$app"
+chmod -R o-rwx "/var/log/$app"
+chown -R $app:adm "/var/log/$app"
 
 ynh_restore "/etc/logrotate.d/$app"
 
