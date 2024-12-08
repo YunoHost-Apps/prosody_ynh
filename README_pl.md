@@ -1,22 +1,22 @@
 <!--
-注意：此 README 由 <https://github.com/YunoHost/apps/tree/master/tools/readme_generator> 自动生成
-请勿手动编辑。
+To README zostało automatycznie wygenerowane przez <https://github.com/YunoHost/apps/tree/master/tools/readme_generator>
+Nie powinno być ono edytowane ręcznie.
 -->
 
-# YunoHost 上的 Prosody
+# Prosody dla YunoHost
 
-[![集成程度](https://apps.yunohost.org/badge/integration/prosody)](https://ci-apps.yunohost.org/ci/apps/prosody/)
-![工作状态](https://apps.yunohost.org/badge/state/prosody)
-![维护状态](https://apps.yunohost.org/badge/maintained/prosody)
+[![Poziom integracji](https://apps.yunohost.org/badge/integration/prosody)](https://ci-apps.yunohost.org/ci/apps/prosody/)
+![Status działania](https://apps.yunohost.org/badge/state/prosody)
+![Status utrzymania](https://apps.yunohost.org/badge/maintained/prosody)
 
-[![使用 YunoHost 安装 Prosody](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=prosody)
+[![Zainstaluj Prosody z YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=prosody)
 
-*[阅读此 README 的其它语言版本。](./ALL_README.md)*
+*[Przeczytaj plik README w innym języku.](./ALL_README.md)*
 
-> *通过此软件包，您可以在 YunoHost 服务器上快速、简单地安装 Prosody。*  
-> *如果您还没有 YunoHost，请参阅[指南](https://yunohost.org/install)了解如何安装它。*
+> *Ta aplikacja pozwala na szybką i prostą instalację Prosody na serwerze YunoHost.*  
+> *Jeżeli nie masz YunoHost zapoznaj się z [poradnikiem](https://yunohost.org/install) instalacji.*
 
-## 概况
+## Przegląd
 
 Prosody is a modern XMPP communication server. It aims to be easy to set up and configure, and efficient with system resources. Additionally, for developers it aims to be easy to extend and give a flexible system on which to rapidly develop added functionality, or prototype new protocols.
 
@@ -76,25 +76,25 @@ It installs on your desired (sub)domain selected during the installation.
 
 
 
-**分发版本：** 0.12.4~ynh100
-## 文档与资源
+**Dostarczona wersja:** 0.12.4~ynh100
+## Dokumentacja i zasoby
 
-- 官方应用网站： <https://prosody.im/>
-- 官方管理文档： <https://prosody.im/doc>
-- 上游应用代码库： <https://hg.prosody.im/>
-- YunoHost 商店： <https://apps.yunohost.org/app/prosody>
-- 报告 bug： <https://github.com/YunoHost-Apps/prosody_ynh/issues>
+- Oficjalna strona aplikacji: <https://prosody.im/>
+- Oficjalna dokumentacja dla administratora: <https://prosody.im/doc>
+- Repozytorium z kodem źródłowym: <https://hg.prosody.im/>
+- Sklep YunoHost: <https://apps.yunohost.org/app/prosody>
+- Zgłaszanie błędów: <https://github.com/YunoHost-Apps/prosody_ynh/issues>
 
-## 开发者信息
+## Informacje od twórców
 
-请向 [`testing` 分支](https://github.com/YunoHost-Apps/prosody_ynh/tree/testing) 发送拉取请求。
+Wyślij swój pull request do [gałęzi `testing`](https://github.com/YunoHost-Apps/prosody_ynh/tree/testing).
 
-如要尝试 `testing` 分支，请这样操作：
+Aby wypróbować gałąź `testing` postępuj zgodnie z instrukcjami:
 
 ```bash
 sudo yunohost app install https://github.com/YunoHost-Apps/prosody_ynh/tree/testing --debug
-或
+lub
 sudo yunohost app upgrade prosody -u https://github.com/YunoHost-Apps/prosody_ynh/tree/testing --debug
 ```
 
-**有关应用打包的更多信息：** <https://yunohost.org/packaging_apps>
+**Więcej informacji o tworzeniu paczek aplikacji:** <https://yunohost.org/packaging_apps>
