@@ -5,9 +5,11 @@ name = "Prosody"
 description.en = "Modern XMPP communication server"
 description.fr = "Serveur de communication XMPP moderne"
 
-version = "0.12.4~ynh3"
+# as long as this app is not official, we have to ensure it has an higher revision number as the official app
+# otherwise it will be updated to the official one, with undesired effects
+version = "0.12.4~ynh100"
 
-maintainers = ["yalh76"]
+maintainers = ["yalh76", "anubister", "pitchum"]
 
 [upstream]
 license = "MIT"
@@ -16,24 +18,30 @@ admindoc = "https://prosody.im/doc"
 code = "https://hg.prosody.im/"
 
 [integration]
-yunohost = ">= 11.2"
+yunohost = ">= 12.0"
 architectures = "all"
 multi_instance = false
-
-ldap = false
-
+ldap = true
 sso = false
-
-disk = "50M"
-ram.build = "50M"
-ram.runtime = "50M"
+disk = "75M"
+ram.build = "10M"
+ram.runtime = "10M"
+helpers_version = "2.1"
 
 [install]
+    [install.domain]
+    type = "domain"
+
+    [install.import_from_metronome]
+    ask.en = "Try to import datas from a previous Metronome installation?"
+    ask.fr = "Essayer d'importer les données d'une précédente installation de Metronome ?"
+    help.en = "If you were previously using the metronome (the app on Yunohost 12 or integrated service on Yunohost 11) and want to import MUCs, rosters, bookmarks into Prosody. Do not activate if you were previously already using an other version of Prosody."
+    help.fr = "Si vous utilisez précédemment metronome (l'app dans Yunohost 12 ou le service intégré à Yunohost 11) et voulez importer MUCs, rosters, bookmarks dans Prosody. Ne pas activer si vous utilisiez déjà une version de Prosody."
+    type = "boolean"
+    default = false
+
 
 [resources]
-        [resources.sources.main]
-        url = "https://prosody.im/downloads/source/prosody-0.12.4.tar.gz"
-        sha256 = "47d712273c2f29558c412f6cdaec073260bbc26b7dda243db580330183d65856"
 
     [resources.system_user]
 
@@ -42,22 +50,25 @@ ram.runtime = "50M"
     [resources.data_dir]
 
     [resources.ports]
-    file.default=5000
-    client.default=5222
-    server.default=5269
-    http.default=5280
-    https.default=5281
-    component.default=5347
-    telnet.default=5582
+    # 5222 and 5223 are for the two flavor of TLS
+    client.default = 5222
+    client.exposed = "TCP"
+    client.fixed = true
+    client2.default = 5223
+    client2.exposed = "TCP"
+    client2.fixed = true
+    server.default = 5269
+    server.exposed = "TCP"
+    server.fixed = true
+
+    # FIXME : to be rediscussed ? Either they should be fixed, or the value $port_<name> should be used somewhere
+    http.default = 5280
+    file.default = 5000
+    component.default = 5347
+    telnet.default = 5582
+
 
     [resources.permissions]
 
     [resources.apt]
-    packages = "libicu-dev, libidn11-dev, libssl-dev, openssl, txt2man, make, gcc"
-    packages_from_raw_bash = """
-    if [[ $YNH_DEBIAN_VERSION == "bullseye" ]]; then
-        echo "lua5.2, lua5.2-expat, lua5.2-socket, lua5.2-sec, lua5.2-unbound, liblua5.2-dev, lua-busted";
-    elif [[ $YNH_DEBIAN_VERSION == "bookworm" ]]; then
-        echo "lua5.4, lua5.4-expat, lua5.4-socket, lua5.4-sec, lua5.4-unbound, liblua5.4-dev, lua-busted";
-    fi
-    """
+    packages = ""
