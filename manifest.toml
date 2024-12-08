@@ -50,27 +50,23 @@ helpers_version = "2.1"
     [resources.data_dir]
 
     [resources.ports]
-    file.default=5000
-    client.default=5222
-    client.exposed="TCP"
-    server.default=5269
-    server.exposed="TCP"
-    http.default=5280
-    https.default=5281
-    https.exposed="TCP"
-    component.default=5347
-    telnet.default=5582
-    #ports from https://github.com/YunoHost/issues/issues/1607
-#    coturn.default=3478
-#    coturntls.default=5349
-#    coturn2.default=3479
-#    coturn3.default=5350
-#    coturn.exposed="TCP"
-#    coturntls.exposed="TCP"
-#    coturn2.exposed="TCP"
-#    coturn3.exposed="TCP"
-    #TODO:
-    #yunohost firewall allow UDP -4 49152:65535
+    # 5222 and 5223 are for the two flavor of TLS
+    client.default = 5222
+    client.exposed = "TCP"
+    client.fixed = true
+    client2.default = 5223
+    client2.exposed = "TCP"
+    client2.fixed = true
+    server.default = 5269
+    server.exposed = "TCP"
+    server.fixed = true
+
+    # FIXME : to be rediscussed ? Either they should be fixed, or the value $port_<name> should be used somewhere
+    http.default = 5280
+    file.default = 5000
+    component.default = 5347
+    telnet.default = 5582
+
 
     [resources.permissions]
 
