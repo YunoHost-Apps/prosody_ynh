@@ -45,22 +45,22 @@ Prosody is a modern XMPP communication server. It aims to be easy to set up and 
   * if applicable manage migration from upstream version of coturn app
   * usability by other apps:
     * [PeerTube](https://github.com/YunoHost-Apps/peertube_ynh): to be tested
-    * [Movim](https://github.com/YunoHost-Apps/movim_ynh): app broken?
-    * [Converse.js](https://github.com/YunoHost-Apps/converse_ynh): seems to work
+    * [Movim](https://github.com/YunoHost-Apps/movim_ynh): (app currently broken)
+    * [Converse.js](https://github.com/YunoHost-Apps/converse_ynh): reported to work
     * [Jitsi](https://github.com/YunoHost-Apps/jitsi_ynh): to be tested
     * [Nextcloud](https://github.com/YunoHost-Apps/nextcloud_ynh): to be tested
     * [Libervia](https://salut-a-toi.org/): to be tested [non-working app](https://github.com/YunoHost-Apps/sat_ynh)
     * ...?
-  * check initial configuration (DNS, ?) : inform or block?
+  * check initial configuration (DNS, ?) : inform or block? -> to add in `doc/PRE_INSTALL.md`
   * update scripts/remove and others...
   * check/improve app score
 
 # READ before install!
 Ideally all the README :) but this in particular:
-* You must ensure that your DNS configuration includes the subdomains `muc.` and `xmpp-upload.`
-* You should **not** create Yunohost subdomains `muc.` and `xmpp-upload.`
+* You must ensure that your DNS configuration includes the subdomains `muc.`, `xmpp-upload.` and `pubsub.`
+* You should **not** create Yunohost subdomains `muc.`, `xmpp-upload.` and `pubsub.`
 * (to be confirmed) You must apply the workaround for this bug : https://github.com/anubister/prosody_ynh/issues/4#issuecomment-2318658501
-* You have to deinstall Metronome app before to install this app (using the same ports).
+* You have to deinstall Metronome app before to install this app (as Metronome is using the same ports).
 
 # Additionnal infos
 * Users connect on XMPP with their email address. Ensure in the Yunohost Users configuration panel they have an email address matching the domain on which you install Prosody. If not add an email alias.
