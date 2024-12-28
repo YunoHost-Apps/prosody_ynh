@@ -50,6 +50,7 @@ Prosody is a modern XMPP communication server. It aims to be easy to set up and 
     * [Jitsi](https://github.com/YunoHost-Apps/jitsi_ynh): to be tested
     * [Nextcloud](https://github.com/YunoHost-Apps/nextcloud_ynh): to be tested
     * [Libervia](https://salut-a-toi.org/): to be tested [non-working app](https://github.com/YunoHost-Apps/sat_ynh)
+    * [biboumi](https://github.com/YunoHost-Apps/biboumi_ynh): currently [not working](https://github.com/YunoHost-Apps/biboumi_ynh/issues/29)
     * ...?
   * check initial configuration (DNS, ?) : inform or block?
   * update scripts/remove and others...
@@ -57,8 +58,8 @@ Prosody is a modern XMPP communication server. It aims to be easy to set up and 
 
 # READ before install!
 Ideally all the README :) but this in particular:
-* You must ensure that your DNS configuration includes the subdomains `muc.` and `xmpp-upload.`
-* You should **not** create Yunohost subdomains `muc.` and `xmpp-upload.`
+* You must ensure that your DNS configuration includes the subdomains `muc.`, `xmpp-upload.` and `pubsub.`
+* You should **not** create Yunohost subdomains `muc.`, `xmpp-upload.` and `pubsub.`
 * (to be confirmed) You must apply the workaround for this bug : https://github.com/anubister/prosody_ynh/issues/4#issuecomment-2318658501
 * You have to deinstall Metronome app before to install this app (using the same ports).
 
