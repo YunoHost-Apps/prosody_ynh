@@ -7,7 +7,7 @@ description.fr = "Serveur de communication XMPP moderne"
 
 # as long as this app is not official, we have to ensure it has an higher revision number as the official app
 # otherwise it will be updated to the official one, with undesired effects
-version = "0.12.4~ynh100"
+version = "0.12.4~ynh101"
 
 maintainers = ["yalh76", "anubister", "pitchum"]
 
