@@ -16,6 +16,10 @@ VirtualHost "__DOMAIN__"
        },
   }
 
+  modules_enabled = {
+    "mam";
+  }
+
   -- Discovery items
   disco_items = {
     { "muc.__DOMAIN__" },
