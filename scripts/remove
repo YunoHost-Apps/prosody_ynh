@@ -19,12 +19,6 @@ then
 	yunohost service remove $app
 fi
 
-# Remove the dedicated systemd config
-ynh_remove_systemd_config
-
-# Remove the app-specific logrotate config
-ynh_remove_logrotate
-
 rm /etc/prosody/conf.d/$domain.cfg.lua
 rm /etc/prosody/conf.avail/$domain.cfg.lua
 rm /etc/nginx/conf.d/$domain-extra-xmpp.conf

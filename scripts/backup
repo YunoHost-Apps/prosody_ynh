@@ -16,9 +16,10 @@ ynh_backup "$config_path"
 # BACKUP THE DATA DIR
 #=================================================
 
-ynh_backup "$data_dir"
-
-ynh_backup "/var/lib/$app"
+for item in /var/lib/prosody/*; do
+    [[ $item == *.sock ]] && continue # do not backup socket file
+    ynh_backup $item
+done
 
 #=================================================
 # SPECIFIC BACKUP
@@ -27,12 +28,6 @@ ynh_backup "/var/lib/$app"
 #=================================================
 
 ynh_backup "/etc/logrotate.d/$app"
-
-#=================================================
-# BACKUP SYSTEMD
-#=================================================
-
-ynh_backup "/etc/systemd/system/$app.service"
 
 #=================================================
 # END OF SCRIPT
