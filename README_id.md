@@ -77,7 +77,7 @@ It installs on your desired (sub)domain selected during the installation.
 
 
 
-**Versi terkirim:** 0.12.4~ynh100
+**Versi terkirim:** 0.12.4~ynh101
 ## Dokumentasi dan sumber daya
 
 - Website aplikasi resmi: <https://prosody.im/>

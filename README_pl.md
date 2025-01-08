@@ -77,7 +77,7 @@ It installs on your desired (sub)domain selected during the installation.
 
 
 
-**Dostarczona wersja:** 0.12.4~ynh100
+**Dostarczona wersja:** 0.12.4~ynh101
 ## Dokumentacja i zasoby
 
 - Oficjalna strona aplikacji: <https://prosody.im/>

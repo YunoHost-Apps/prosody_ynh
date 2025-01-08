@@ -77,7 +77,7 @@ It installs on your desired (sub)domain selected during the installation.
 
 
 
-**Shipped version:** 0.12.4~ynh100
+**Shipped version:** 0.12.4~ynh101
 ## Documentation and resources
 
 - Official app website: <https://prosody.im/>

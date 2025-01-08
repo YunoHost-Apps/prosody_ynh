@@ -77,7 +77,7 @@ It installs on your desired (sub)domain selected during the installation.
 
 
 
-**分发版本：** 0.12.4~ynh100
+**分发版本：** 0.12.4~ynh101
 ## 文档与资源
 
 - 官方应用网站： <https://prosody.im/>

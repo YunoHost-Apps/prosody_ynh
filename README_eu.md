@@ -77,7 +77,7 @@ It installs on your desired (sub)domain selected during the installation.
 
 
 
-**Paketatutako bertsioa:** 0.12.4~ynh100
+**Paketatutako bertsioa:** 0.12.4~ynh101
 ## Dokumentazioa eta baliabideak
 
 - Aplikazioaren webgune ofiziala: <https://prosody.im/>
