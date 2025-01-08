@@ -10,7 +10,7 @@ source /usr/share/yunohost/helpers
 # Previous beta versions of prosody app were built from source.
 # We need to uninstall them properly before installing debian's package.
 current_version=$(yunohost app info prosody | grep version | awk '{print $2}')
-echo "${current_version}" | grep -qE "0.12.4~ynh([0-9]|10)" && ynh_die "Sorry but you cannot upgrade from version ${current_version}.
+echo "${current_version}" | grep -qE "0.12.4~ynh1([0-9]{2})" || ynh_die "Sorry but you cannot upgrade from version ${current_version} because it was built from source and new version must be installed from Debian packages.
 You must uninstall and reinstall the app.
 Don't worry, no data will be lost."
 
