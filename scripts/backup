@@ -24,7 +24,7 @@ done
 # BACKUP LOGROTATE
 #=================================================
 
-ynh_backup "/etc/logrotate.d/$app"
+#ynh_backup "/etc/logrotate.d/$app"
 
 #=================================================
 # END OF SCRIPT
