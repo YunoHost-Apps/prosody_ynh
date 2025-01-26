@@ -20,7 +20,7 @@ ynh_safe_rm /etc/nginx/conf.d/$domain-extra-xmpp.conf
 
 DEBIAN_FRONTEND=noninteractive apt-get remove --assume-yes prosody
 
-ynh_script_progression "Reloading nginx..."
+ynh_script_progression "Reloading NGINX..."
 
 ynh_systemctl --service="nginx" --action="reload"
 
