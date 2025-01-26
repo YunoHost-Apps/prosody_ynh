@@ -19,7 +19,7 @@
 Prosody is a modern XMPP communication server. It aims to be easy to set up and configure, and efficient with system resources. Additionally, for developers it aims to be easy to extend and give a flexible system on which to rapidly develop added functionality, or prototype new protocols.
 
 
-**分发版本：** 0.12.4~ynh3
+**分发版本：** 0.12.5~ynh1
 ## 文档与资源
 
 - 官方应用网站： <https://prosody.im/>
