@@ -15,6 +15,7 @@ fi
 #=================================================
 # CHECKING DEPENDANCIES
 #=================================================
+
 # (waiting for packaging v3)
 # we need 'coturn' to support A/V calls
 if ! yunohost app list | grep -q "id: coturn"; then
@@ -29,6 +30,7 @@ turn_external_port=$(ynh_app_setting_get --app="coturn" --key=port_turnserver_tl
 #=================================================
 # DISABLE METRONOME
 #=================================================
+
 #TODO: rather check metronome_ynh and check app conflict management?
 if systemctl list-unit-files metronome.service &>/dev/null; then
 	ynh_script_progression "Metronome is still present. Uninstalling Metronome..."
@@ -38,7 +40,6 @@ fi
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
-
 ynh_script_progression "Installing prosody package from Debian..."
 
 ynh_apt_install_dependencies prosody prosody-modules
@@ -53,7 +54,6 @@ usermod -a -G ssl-cert prosody
 #=================================================
 # ADD A CONFIGURATION
 #=================================================
-
 ynh_script_progression "Adding $app's configuration..."
 
 	# Add domain configuration
@@ -69,10 +69,6 @@ ynh_script_progression "Adding $app's configuration..."
 	mkdir -p "/var/xmpp-upload/${domain}/upload"
 	chown -R prosody:www-data /var/xmpp-upload/
 	chmod -R g+s /var/xmpp-upload/
-
-#=================================================
-# SETUP SYSTEMD
-#=================================================
 
 #=================================================
 # MIGRATE DATA FROM METRONOME AND PURGE
@@ -120,13 +116,10 @@ yunohost service add $app --log="/var/log/$app/$app.log" --needs_exposed_ports $
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
-
 ynh_script_progression "Restarting the systemd service..."
 
-# Restart the systemd service
 ynh_systemctl  --action="restart"
 
-ynh_script_progression "Reloading nginx..."
 ynh_systemctl --service="nginx" --action="reload"
 
 # add mod_cloud_notify_extensions modules not included in Debian bookworm prosody-modules package (only in bookworm-backports)

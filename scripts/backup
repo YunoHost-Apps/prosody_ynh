@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Keep this path for calling _common.sh inside the execution's context of backup and restore scripts
 source ../settings/scripts/_common.sh
 source /usr/share/yunohost/helpers
 
@@ -21,8 +20,6 @@ for item in /var/lib/prosody/*; do
     ynh_backup $item
 done
 
-#=================================================
-# SPECIFIC BACKUP
 #=================================================
 # BACKUP LOGROTATE
 #=================================================
