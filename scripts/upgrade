@@ -15,13 +15,12 @@ You must uninstall and reinstall the app.
 Don't worry, no data will be lost."
 
 #=================================================
-# RESTART SYSTEMD SERVICE
+# START SYSTEMD SERVICE
 #=================================================
+ynh_script_progression "Starting $app's systemd service..."
 
-ynh_script_progression "Restarting $app's systemd service..."
 ynh_systemctl  --action="restart"
 
-ynh_script_progression "Reloading nginx..."
 ynh_systemctl --service="nginx" --action="reload"
 
 #=================================================
