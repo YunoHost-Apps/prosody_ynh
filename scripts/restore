@@ -66,7 +66,7 @@ yunohost service add $app --log="/var/log/$app/$app.log"
 ynh_script_progression "Restarting the systemd service..."
 
 # Restart the systemd service
-ynh_systemctl --service=$app --action="restart"
+ynh_systemctl  --action="restart"
 
 #=================================================
 # RESTORE CUSTOM NGINX CONFIG

@@ -54,8 +54,7 @@ usermod -a -G ssl-cert prosody
 # ADD A CONFIGURATION
 #=================================================
 
-ynh_script_progression "Adding a configuration file..."
-
+ynh_script_progression "Adding $app's configuration..."
 
 	# Add domain configuration
 	ynh_config_add --template="domain.tpl.cfg.lua" --destination="/etc/prosody/conf.avail/${domain}.cfg.lua"
@@ -70,7 +69,6 @@ ynh_script_progression "Adding a configuration file..."
 	mkdir -p "/var/xmpp-upload/${domain}/upload"
 	chown -R prosody:www-data /var/xmpp-upload/
 	chmod -R g+s /var/xmpp-upload/
-
 
 #=================================================
 # SETUP SYSTEMD
@@ -126,7 +124,7 @@ yunohost service add $app --log="/var/log/$app/$app.log" --needs_exposed_ports $
 ynh_script_progression "Restarting the systemd service..."
 
 # Restart the systemd service
-ynh_systemctl --service=$app --action="restart"
+ynh_systemctl  --action="restart"
 
 ynh_script_progression "Reloading nginx..."
 ynh_systemctl --service="nginx" --action="reload"
