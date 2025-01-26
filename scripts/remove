@@ -26,7 +26,7 @@ DEBIAN_FRONTEND=noninteractive apt-get purge --assume-yes prosody
 ynh_safe_rm "/usr/share/yunohost/hooks/conf_regen/98-nginx_$app"
 YNH_HELPERS_VERSION=1 yunohost tools regen-conf nginx
 
-ynh_script_progression "Reloading nginx..."
+ynh_script_progression "Reloading NGINX..."
 
 ynh_systemctl --service="nginx" --action="reload"
 
