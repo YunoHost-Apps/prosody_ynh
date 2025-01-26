@@ -18,11 +18,13 @@ admindoc = "https://prosody.im/doc"
 code = "https://hg.prosody.im/"
 
 [integration]
-yunohost = ">= 12.0"
+yunohost = ">= 12.0.9"
 architectures = "all"
 multi_instance = false
+
 ldap = true
 sso = false
+
 disk = "75M"
 ram.build = "10M"
 ram.runtime = "10M"
