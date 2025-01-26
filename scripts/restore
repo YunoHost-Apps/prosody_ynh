@@ -22,7 +22,6 @@ ynh_script_progression "Restoring the config directory..."
 
 ynh_restore "$config_path"
 
-
 #=================================================
 # RESTORE THE DATA DIRECTORY
 #=================================================
@@ -50,7 +49,7 @@ yunohost service add $app --log="/var/log/$app/$app.log"
 ynh_script_progression "Restarting the systemd service..."
 
 # Restart the systemd service
-ynh_systemctl --service=$app --action="restart"
+ynh_systemctl  --action="restart"
 
 ynh_script_progression "Reloading nginx..."
 ynh_systemctl --service="nginx" --action="reload"
