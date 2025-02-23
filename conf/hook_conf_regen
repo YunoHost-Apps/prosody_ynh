@@ -12,9 +12,9 @@ nginx_domain_conf="${pending_dir}/../nginx/etc/nginx/conf.d/$domain.conf"
 [[ "$action" == "pre" ]] || exit 0
 [[ -e "$nginx_domain_conf" ]] || exit 0
 
-# Add muc.$domain and xmpp-upload.$domain to the HTTP server
+# Add muc, pubsub, xmpp-upload subdomains to the HTTP server
 # such that we can obtain the SSL cert via acme-challenge
-sed -zE "s/(listen \S*80;\n\s*server_name) [^\n]*;/\1 $domain muc.$domain xmpp-upload.$domain;/g" -i "$nginx_domain_conf"
+sed -zE "s/(listen \S*80;\n\s*server_name) [^\n]*;/\1 $domain muc.$domain pubsub.$domain xmpp-upload.$domain;/g" -i "$nginx_domain_conf"
 
 cat << EOF >> $nginx_domain_conf
 
