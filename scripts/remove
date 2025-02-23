@@ -24,6 +24,13 @@ rm /etc/prosody/conf.avail/$domain.cfg.lua
 
 DEBIAN_FRONTEND=noninteractive apt-get remove --assume-yes prosody
 
+#=================================================
+# CLEANUP NGINX CONFIG
+#=================================================
+
+ynh_safe_rm "/usr/share/yunohost/hooks/conf_regen/98-nginx_$app"
+YNH_HELPERS_VERSION=1 yunohost tools regen-conf nginx
+
 ynh_script_progression "Reloading nginx..."
 ynh_systemctl --service="nginx" --action="reload"
 
