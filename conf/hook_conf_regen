@@ -17,6 +17,8 @@ nginx_domain_conf="${pending_dir}/../nginx/etc/nginx/conf.d/$domain.conf"
 sed -zE "s/(listen \S*80;\n\s*server_name) [^\n]*;/\1 $domain muc.$domain xmpp-upload.$domain;/g" -i "$nginx_domain_conf"
 
 cat << EOF >> $nginx_domain_conf
+
+
 # vhost dedicated to XMPP http_upload
 server {
     listen 443 ssl http2;
@@ -27,9 +29,9 @@ server {
     location /upload/ {
         alias /var/xmpp-upload/$domain/upload/;
         # Pass all requests to prosody, except for GET and HEAD requests.
-        #limit_except GET HEAD {
-        proxy_pass http://localhost:5280;
-        #}
+        limit_except GET HEAD {
+            proxy_pass http://localhost:5280;
+        }
 
         include proxy_params;
         add_header 'Access-Control-Allow-Origin' '*';
