@@ -8,7 +8,7 @@ source /usr/share/yunohost/helpers
 # we rather ask on which domain to install
 
 # Checking for prosody remains (not purged)(#11)
-if ! dpkg-query -s prosody >/dev/null 2>&1; then
+if dpkg-query -s prosody >/dev/null 2>&1; then
 	echo "Warning : Prosody already present or not purged, installation will probably not work."
 fi
 
@@ -20,7 +20,7 @@ fi
 if ! yunohost app list | grep -q "id: coturn"; then
         echo "Coturn is not installed. Installing... "
         yunohost tools update
-        yunohost app install https://github.com/anubister/coturn_ynh --force --args "domain=$domain"
+        yunohost app install coturn --force --args "domain=$domain"
 fi
 
 turn_password=$(ynh_app_setting_get --app="coturn" --key=turnserver_pwd)
