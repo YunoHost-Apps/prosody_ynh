@@ -8,7 +8,7 @@ source /usr/share/yunohost/helpers
 # we rather ask on which domain to install
 
 # Checking for prosody remains (not purged)(#11)
-if ! dpkg-query -s prosody >/dev/null 2>&1; then
+if dpkg-query -s prosody >/dev/null 2>&1; then
 	echo "Warning : Prosody already present or not purged, installation will probably not work."
 fi
 
