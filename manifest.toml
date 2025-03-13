@@ -72,5 +72,6 @@ helpers_version = "2.1"
 
     [resources.permissions]
 
+    # dependencies for prosodyctl install
     [resources.apt]
-    packages = ""
+    packages = "luarocks"
