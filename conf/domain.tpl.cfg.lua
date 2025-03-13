@@ -18,6 +18,8 @@ VirtualHost "__DOMAIN__"
 
   modules_enabled = {
     "mam";
+    "cloud_notify";
+    "smacks";
   }
 
   modules_disabled = {
