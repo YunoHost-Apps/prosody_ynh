@@ -72,6 +72,9 @@ helpers_version = "2.1"
 
     [resources.permissions]
 
-    # dependencies for prosodyctl install
+    # Dependencies for prosodyctl install
+    # Installation of Recommends are disabled by default by some VPS providers
+    # therefore requiring explicitely here recommends for packages prosody and prosody-modules:
+    # lua5.4-event, lua5.4-readline, lua5.4-unbound, lua-ldap
     [resources.apt]
-    packages = "liblua5.4-dev, lua-busted, lua5.4, lua5.4-expat, lua5.4-socket, openssl, txt2man, lua5.4-sec, lua5.4-unbound, lua-ldap, luarocks"
+    packages = "liblua5.4-dev, lua-busted, lua5.4, lua5.4-event, lua5.4-readline, lua5.4-expat, lua5.4-socket, openssl, txt2man, lua5.4-sec, lua5.4-unbound, lua-ldap, luarocks"
