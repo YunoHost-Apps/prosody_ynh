@@ -1,6 +1,3 @@
-Server is running Prosody 0.12.3
-
-Compliance report for krokro.org
 RFC 6121: Roster Versioning                                      PASSED
 XEP-0045: Multi-User Chat                                        PASSED
 XEP-0065: SOCKS5 Bytestreams (Proxy)                             FAILED
