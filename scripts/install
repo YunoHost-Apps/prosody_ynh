@@ -15,6 +15,7 @@ fi
 #=================================================
 # CHECKING DEPENDANCIES
 #=================================================
+
 # (waiting for packaging v3)
 # we need 'coturn' to support A/V calls
 if ! yunohost app list | grep -q "id: coturn"; then
@@ -29,6 +30,7 @@ turn_external_port=$(ynh_app_setting_get --app="coturn" --key=port_turnserver)
 #=================================================
 # DISABLE METRONOME
 #=================================================
+
 #TODO: rather check metronome_ynh and check app conflict management?
 if systemctl list-unit-files metronome.service &>/dev/null; then
 	ynh_script_progression "Metronome is still present. Uninstalling Metronome..."
@@ -38,7 +40,6 @@ fi
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
-
 ynh_script_progression "Installing prosody package from Debian..."
 
 DEBIAN_FRONTEND=noninteractive apt-get install --assume-yes prosody prosody-modules
@@ -53,27 +54,20 @@ usermod -a -G ssl-cert prosody
 #=================================================
 # ADD A CONFIGURATION
 #=================================================
-
-ynh_script_progression "Adding a configuration file..."
-
+ynh_script_progression "Adding $app's configuration..."
 
 	# Add domain configuration
 	ynh_config_add --template="domain.tpl.cfg.lua" --destination="/etc/prosody/conf.avail/${domain}.cfg.lua"
 	ln -sr /etc/prosody/conf.avail/${domain}.cfg.lua /etc/prosody/conf.d/
 
-	# Add nginx config for xmpp subdomains
-	ynh_config_add --template="../conf/nginx-extra-xmpp.conf" --destination="/etc/nginx/conf.d/${domain}-extra-xmpp.conf"
+	# Add NGINX config for XMPP subdomains
+	ynh_config_add --template="nginx-extra-xmpp.conf" --destination="/etc/nginx/conf.d/${domain}-extra-xmpp.conf"
 
 	# create directory for file sharing uploads
 	#TODO: store app datas rather in /home/yunohost.app/prosody/ like metronome_ynh?
 	mkdir -p "/var/xmpp-upload/${domain}/upload"
 	chown -R prosody:www-data /var/xmpp-upload/
 	chmod -R g+s /var/xmpp-upload/
-
-
-#=================================================
-# SETUP SYSTEMD
-#=================================================
 
 #=================================================
 # MIGRATE DATA FROM METRONOME AND PURGE
@@ -87,7 +81,7 @@ then
     ynh_script_progression "Try to import datas from Metronome has been requested..."
     if [[ -d /home/yunohost.app/metronome/ && ! -z "$(ls /home/yunohost.app/metronome/)" ]]
     then
-	ynh_script_progression "Datas from a metronome app installation found, import to prosody as requested..."
+	ynh_script_progression "Datas from a Metronome app installation found, import to Prosody as requested..."
 	cp -r /home/yunohost.app/metronome/* /var/lib/prosody/
 	chown -R prosody: /var/lib/prosody/
 	#Remove pep/ as not supported by Prosody (see bug #12)
@@ -95,10 +89,10 @@ then
 	rm -rf "/var/lib/prosody/${domain//./%2e}/pep/"
 	#TODO: notify in post-install that metronome data should be purged or archived to avoid later unexpected overwritting on prosody datas
     else
-        ynh_script_progression "No metronome datas from metronome app found, looking for datas from Yunohost 11..."
+        ynh_script_progression "No Metronome datas from Metronome app found, looking for datas from YunoHost 11..."
         if [[ -d /var/lib/metronome/ && ! -z "$(ls /var/lib/metronome/)" ]]
         then
-            ynh_script_progression "Datas from metronome (Yunohost 11) found, import to prosody as requested..."
+            ynh_script_progression "Datas from Metronome (YunoHost 11) found, import to Prosody as requested..."
             cp -r /var/lib/metronome/* /var/lib/prosody/
             chown -R prosody: /var/lib/prosody/
             #Remove pep/ as not supported by Prosody (see bug #12)
@@ -106,7 +100,7 @@ then
             rm -rf "/var/lib/prosody/${domain//./%2e}/pep/"
             #TODO: notify in post-install that metronome data should be purged or archived to avoid later unexpected overwritting on prosody datas
         else
-            ynh_script_progression "No metronome data from Yunohost 11 found, skipping import."
+            ynh_script_progression "No Metronome data from YunoHost 11 found, skipping import."
         fi
     fi
 fi
@@ -121,13 +115,10 @@ yunohost service add $app --log="/var/log/$app/$app.log"
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
-
 ynh_script_progression "Restarting the systemd service..."
 
-# Restart the systemd service
-ynh_systemctl --service=$app --action="restart"
+ynh_systemctl  --action="restart"
 
-ynh_script_progression "Reloading nginx..."
 ynh_systemctl --service="nginx" --action="reload"
 
 # add mod_cloud_notify_extensions modules not included in Debian bookworm prosody-modules package (only in bookworm-backports)
