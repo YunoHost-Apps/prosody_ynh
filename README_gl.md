@@ -35,24 +35,23 @@ Prosody is a modern XMPP communication server. It aims to be easy to set up and 
   * File upload
   * MUC
   * optional import of rosters, MUCs, bookmarks from Metronome (integrated service on Yunohost 11 or app on Yunohost 12) (pep is not supported, #12)
-  * automatically install coturn if not yet present (https://github.com/anubister/coturn_ynh/ , a fork compatible with Yunohost 12)
+  * automatically install coturn if not yet present
   * XEP-0163, XEP-0191, XEP-0215, XEP-0237, XEP-0280, XEP-0313, XEP-0363 (see 'xmpp_compliance' file), XEP-0421 TBC
 
 🐞 What does not work:
   * vjud (Users directory) (help welcomed!)
 
 🙋 TODO (help welcomed!):
-  * if applicable manage migration from upstream version of coturn app
   * usability by other apps:
     * [PeerTube](https://github.com/YunoHost-Apps/peertube_ynh): to be tested
     * [Movim](https://github.com/YunoHost-Apps/movim_ynh): app broken?
-    * [Converse.js](https://github.com/YunoHost-Apps/converse_ynh): seems to work
-    * [Jitsi](https://github.com/YunoHost-Apps/jitsi_ynh): to be tested
+    * [Converse.js](https://github.com/YunoHost-Apps/converse_ynh): seems to work 🥳
+    * [Jitsi](https://github.com/YunoHost-Apps/jitsi_ynh): reported [to work](https://forum.yunohost.org/t/jitsi-install-fails-with-prosody-testing/35879) 🥳
     * [Nextcloud](https://github.com/YunoHost-Apps/nextcloud_ynh): to be tested
     * [Libervia](https://salut-a-toi.org/): to be tested [non-working app](https://github.com/YunoHost-Apps/sat_ynh)
     * [biboumi](https://github.com/YunoHost-Apps/biboumi_ynh): currently [not working](https://github.com/YunoHost-Apps/biboumi_ynh/issues/29)
     * ...?
-  * check initial configuration (DNS, ?) : inform or block?
+  * check initial configuration (DNS, ?) : information via PRE_INSTALL.md
   * update scripts/remove and others...
   * check/improve app score
 
@@ -60,7 +59,6 @@ Prosody is a modern XMPP communication server. It aims to be easy to set up and 
 Ideally all the README :) but this in particular:
 * You must ensure that your DNS configuration includes the subdomains `muc.`, `xmpp-upload.` and `pubsub.`
 * You should **not** create Yunohost subdomains `muc.`, `xmpp-upload.` and `pubsub.`
-* (to be confirmed) You must apply the workaround for this bug : https://github.com/anubister/prosody_ynh/issues/4#issuecomment-2318658501
 * You have to deinstall Metronome app before to install this app (using the same ports).
 
 # Additionnal infos
@@ -76,8 +74,7 @@ It installs on your desired (sub)domain selected during the installation.
 
 
 
-
-**Versión proporcionada:** 0.12.4~ynh101
+**Versión proporcionada:** 0.12.4~ynh102
 ## Documentación e recursos
 
 - Web oficial da app: <https://prosody.im/>
