@@ -7,6 +7,11 @@ source /usr/share/yunohost/helpers
 #domains=$(yunohost domain list --exclude-subdomains | grep -Ev '^(domains|main):' | awk '{print $2}')
 # we rather ask on which domain to install
 
+# Checking for prosody remains (not purged)(#11)
+if dpkg-query -s prosody >/dev/null 2>&1; then
+	echo "Warning : Prosody already present or not purged, installation will probably not work."
+fi
+
 #=================================================
 # CHECKING DEPENDANCIES
 #=================================================
@@ -15,7 +20,7 @@ source /usr/share/yunohost/helpers
 if ! yunohost app list | grep -q "id: coturn"; then
         echo "Coturn is not installed. Installing... "
         yunohost tools update
-        yunohost app install https://github.com/anubister/coturn_ynh --force --args "domain=$domain"
+        yunohost app install coturn --force --args "domain=$domain"
 fi
 
 turn_password=$(ynh_app_setting_get --app="coturn" --key=turnserver_pwd)
@@ -124,6 +129,12 @@ ynh_systemctl --service=$app --action="restart"
 
 ynh_script_progression "Reloading nginx..."
 ynh_systemctl --service="nginx" --action="reload"
+
+# add mod_cloud_notify_extensions modules not included in Debian bookworm prosody-modules package (only in bookworm-backports)
+/usr/bin/prosodyctl install --server=https://modules.prosody.im/rocks/ mod_cloud_notify_extensions
+
+# restart to take into account new modules
+ynh_systemctl --service=$app --action="restart"
 
 #=================================================
 # END OF SCRIPT
