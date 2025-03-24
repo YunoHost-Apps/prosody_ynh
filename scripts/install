@@ -62,7 +62,8 @@ ynh_script_progression "Adding a configuration file..."
 	ln -sr /etc/prosody/conf.avail/${domain}.cfg.lua /etc/prosody/conf.d/
 
 	# Add nginx config for xmpp subdomains
-	ynh_config_add --template="../conf/nginx-extra-xmpp.conf" --destination="/etc/nginx/conf.d/${domain}-extra-xmpp.conf"
+	cp -R "../conf/hook_conf_regen" "/usr/share/yunohost/hooks/conf_regen/98-nginx_$app"
+	YNH_HELPERS_VERSION=1 yunohost tools regen-conf nginx
 
 	# create directory for file sharing uploads
 	#TODO: store app datas rather in /home/yunohost.app/prosody/ like metronome_ynh?
