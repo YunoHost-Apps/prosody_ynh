@@ -3,7 +3,7 @@ Este archivo README esta generado automaticamente<https://github.com/YunoHost/ap
 No se debe editar a mano.
 -->
 
-# Prosody para Yunohost
+# Prosody para YunoHost
 
 [![Nivel de integración](https://apps.yunohost.org/badge/integration/prosody)](https://ci-apps.yunohost.org/ci/apps/prosody/)
 ![Estado funcional](https://apps.yunohost.org/badge/state/prosody)

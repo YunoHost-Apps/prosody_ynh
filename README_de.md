@@ -1,22 +1,22 @@
 <!--
-Ohart ongi: README hau automatikoki sortu da <https://github.com/YunoHost/apps/tree/master/tools/readme_generator>ri esker
-EZ editatu eskuz.
+N.B.: Diese README wurde automatisch von <https://github.com/YunoHost/apps/tree/master/tools/readme_generator> generiert.
+Sie darf NICHT von Hand bearbeitet werden.
 -->
 
-# Prosody YunoHost-erako
+# Prosody für YunoHost
 
-[![Integrazio maila](https://apps.yunohost.org/badge/integration/prosody)](https://ci-apps.yunohost.org/ci/apps/prosody/)
-![Funtzionamendu egoera](https://apps.yunohost.org/badge/state/prosody)
-![Mantentze egoera](https://apps.yunohost.org/badge/maintained/prosody)
+[![Integrations-Level](https://apps.yunohost.org/badge/integration/prosody)](https://ci-apps.yunohost.org/ci/apps/prosody/)
+![Funktionsstatus](https://apps.yunohost.org/badge/state/prosody)
+![Wartungsstatus](https://apps.yunohost.org/badge/maintained/prosody)
 
-[![Instalatu Prosody YunoHost-ekin](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=prosody)
+[![Prosody mit YunoHost installieren](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=prosody)
 
-*[Irakurri README hau beste hizkuntzatan.](./ALL_README.md)*
+*[Dieses README in anderen Sprachen lesen.](./ALL_README.md)*
 
-> *Pakete honek Prosody YunoHost zerbitzari batean azkar eta zailtasunik gabe instalatzea ahalbidetzen dizu.*  
-> *YunoHost ez baduzu, kontsultatu [gida](https://yunohost.org/install) nola instalatu ikasteko.*
+> *Mit diesem Paket können Sie Prosody schnell und einfach auf einem YunoHost-Server installieren.*  
+> *Wenn Sie YunoHost nicht haben, lesen Sie bitte [die Anleitung](https://yunohost.org/install), um zu erfahren, wie Sie es installieren.*
 
-## Aurreikuspena
+## Übersicht
 
 Prosody is a modern XMPP communication server. It aims to be easy to set up and configure, and efficient with system resources. Additionally, for developers it aims to be easy to extend and give a flexible system on which to rapidly develop added functionality, or prototype new protocols.
 
@@ -74,25 +74,25 @@ It installs on your desired (sub)domain selected during the installation.
 
 
 
-**Paketatutako bertsioa:** 0.12.4~ynh102
-## Dokumentazioa eta baliabideak
+**Ausgelieferte Version:** 0.12.4~ynh102
+## Dokumentation und Ressourcen
 
-- Aplikazioaren webgune ofiziala: <https://prosody.im/>
-- Administratzaileen dokumentazio ofiziala: <https://prosody.im/doc>
-- Jatorrizko aplikazioaren kode-gordailua: <https://hg.prosody.im/>
-- YunoHost Denda: <https://apps.yunohost.org/app/prosody>
-- Eman errore baten berri: <https://github.com/YunoHost-Apps/prosody_ynh/issues>
+- Offizielle Website der App: <https://prosody.im/>
+- Offizielle Verwaltungsdokumentation: <https://prosody.im/doc>
+- Upstream App Repository: <https://hg.prosody.im/>
+- YunoHost-Shop: <https://apps.yunohost.org/app/prosody>
+- Einen Fehler melden: <https://github.com/YunoHost-Apps/prosody_ynh/issues>
 
-## Garatzaileentzako informazioa
+## Entwicklerinformationen
 
-Bidali `pull request`a [`testing` abarrera](https://github.com/YunoHost-Apps/prosody_ynh/tree/testing).
+Bitte senden Sie Ihren Pull-Request an den [`testing` branch](https://github.com/YunoHost-Apps/prosody_ynh/tree/testing).
 
-`testing` abarra probatzeko, honakoa egin:
+Um den `testing` Branch auszuprobieren, gehen Sie bitte wie folgt vor:
 
 ```bash
 sudo yunohost app install https://github.com/YunoHost-Apps/prosody_ynh/tree/testing --debug
-edo
+oder
 sudo yunohost app upgrade prosody -u https://github.com/YunoHost-Apps/prosody_ynh/tree/testing --debug
 ```
 
-**Informazio gehiago aplikazioaren paketatzeari buruz:** <https://yunohost.org/packaging_apps>
+**Weitere Informationen zur App-Paketierung:** <https://yunohost.org/packaging_apps>
