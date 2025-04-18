@@ -51,4 +51,3 @@ Or in the [forum](https://forum.yunohost.org/c/apps/11).
 ℹ️  About this branch
 This package / branch installs from the Debian packages repository `prosody` and `prosody-modules` (no compilation on server-side).
 It installs on your desired (sub)domain selected during the installation.
-
