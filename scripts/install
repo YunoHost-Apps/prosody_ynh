@@ -1,119 +1,144 @@
 #!/bin/bash
 
-#=================================================
-# GENERIC START
-#=================================================
-# IMPORT GENERIC HELPERS
-#=================================================
-
 source _common.sh
 source /usr/share/yunohost/helpers
+
+#maindomain=$(yunohost domain main-domain | awk '{print $2}')
+#domains=$(yunohost domain list --exclude-subdomains | grep -Ev '^(domains|main):' | awk '{print $2}')
+# we rather ask on which domain to install
+
+# Checking for prosody remains (not purged)(#11)
+if dpkg-query -s prosody >/dev/null 2>&1; then
+	echo "Warning : Prosody already present or not purged, installation will probably not work."
+fi
+
+#=================================================
+# CHECKING DEPENDANCIES
+#=================================================
+# (waiting for packaging v3)
+# we need 'coturn' to support A/V calls
+if ! yunohost app list | grep -q "id: coturn"; then
+        echo "Coturn is not installed. Installing... "
+        yunohost tools update
+        yunohost app install coturn --force --args "domain=$domain"
+fi
+
+turn_password=$(ynh_app_setting_get --app="coturn" --key=turnserver_pwd)
+turn_external_port=$(ynh_app_setting_get --app="coturn" --key=port_turnserver)
 
 #=================================================
 # DISABLE METRONOME
 #=================================================
-ynh_script_progression --message="Disabling Metronome..."
-
-if systemctl list-unit-files metronome.service &>/dev/null
-then
-	ynh_systemd_action --service_name="metronome" --action="stop"
-	systemctl disable metronome.service --quiet
+#TODO: rather check metronome_ynh and check app conflict management?
+if systemctl list-unit-files metronome.service &>/dev/null; then
+	ynh_script_progression "Metronome is still present. Uninstalling Metronome..."
+	DEBIAN_FRONTEND=noninteractive apt-get --assume-yes remove metronome
 fi
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
-ynh_script_progression --message="Setting up source files..."
 
-builddir="$(mktemp -d)"
-# Download, check integrity, uncompress and patch the source from app.src
-ynh_setup_source --dest_dir="$builddir"
+ynh_script_progression "Installing prosody package from Debian..."
+
+DEBIAN_FRONTEND=noninteractive apt-get install --assume-yes prosody prosody-modules
 
 #=================================================
 # SPECIFIC SETUP
 #=================================================
-# BUILD PROSODY
-#=================================================
-ynh_script_progression --message="Building Prosody..."
 
-update-alternatives --set lua-interpreter /usr/bin/lua${luaversion}
-
-pushd "$builddir"
-	./configure --prefix=/usr
-	make
-	make install
-popd
-
-ynh_secure_remove --file="$builddir"
+# Add permision to read certs
+usermod -a -G ssl-cert prosody
 
 #=================================================
 # ADD A CONFIGURATION
 #=================================================
-ynh_script_progression --message="Adding a configuration file..."
 
-config_path=/etc/$app
-ynh_app_setting_set --app=$app --key=config_path --value=$config_path
-mkdir -p $config_path
-mkdir -p $config_path/{certs,conf.avail,conf.d}
+ynh_script_progression "Adding a configuration file..."
 
-ynh_add_config --template="../conf/prosody.cfg.lua" --destination="$config_path/prosody.cfg.lua"
-ynh_add_config --template="../conf/example.com.cfg.lua" --destination="$config_path/conf.avail/example.com.cfg.lua"
-#ynh_add_config --template="../conf/localhost.cfg.lua" --destination="$config_path/conf.avail/localhost.cfg.lua"
-#ln -s $config_path/conf.avail/localhost.cfg.lua $config_path/conf.d/
 
-chown root:root "$config_path"
-chmod 755 "$config_path"
+	# Add domain configuration
+	ynh_config_add --template="domain.tpl.cfg.lua" --destination="/etc/prosody/conf.avail/${domain}.cfg.lua"
+	ln -sr /etc/prosody/conf.avail/${domain}.cfg.lua /etc/prosody/conf.d/
 
-chown root:$app "$config_path/conf.d"
-chmod 754 "$config_path/conf.d"
+	# Add nginx config for xmpp subdomains
+	cp -R "../conf/hook_conf_regen" "/usr/share/yunohost/hooks/conf_regen/98-nginx_$app"
+	YNH_HELPERS_VERSION=1 yunohost tools regen-conf nginx
 
-chown root:$app "$config_path/conf.avail"
-chmod 754 "$config_path/conf.avail"
+	# create directory for file sharing uploads
+	#TODO: store app datas rather in /home/yunohost.app/prosody/ like metronome_ynh?
+	mkdir -p "/var/xmpp-upload/${domain}/upload"
+	chown -R prosody:www-data /var/xmpp-upload/
+	chmod -R g+s /var/xmpp-upload/
 
-chown root:$app "$config_path/certs"
-chmod 750 "$config_path/certs"
 
 #=================================================
 # SETUP SYSTEMD
 #=================================================
-ynh_script_progression --message="Configuring a systemd service..."
-
-# Create a dedicated systemd config
-ynh_add_systemd_config
 
 #=================================================
-# GENERIC FINALIZATION
+# MIGRATE DATA FROM METRONOME AND PURGE
 #=================================================
-# SETUP LOGROTATE
-#=================================================
-ynh_script_progression --message="Configuring log rotation..."
 
-mkdir -p "/var/log/$app"
-chmod 750 "/var/log/$app"
-chmod -R o-rwx "/var/log/$app"
-chown -R $app:adm "/var/log/$app"
-chown -R $app:$app "/var/lib/$app"
-
-# Use logrotate to manage application logfile(s)
-ynh_use_logrotate
+#TODO: ask for import, ask for purging
+#TODO: make it non blocking? currently, if there is already some remains of a previous prosody install,
+#mv will fail leading to uninstall prosody with a partial migration of metronome datas...
+if [ $import_from_metronome -eq 1 ]
+then
+    ynh_script_progression "Try to import datas from Metronome has been requested..."
+    if [[ -d /home/yunohost.app/metronome/ && ! -z "$(ls /home/yunohost.app/metronome/)" ]]
+    then
+	ynh_script_progression "Datas from a metronome app installation found, import to prosody as requested..."
+	cp -r /home/yunohost.app/metronome/* /var/lib/prosody/
+	chown -R prosody: /var/lib/prosody/
+	#Remove pep/ as not supported by Prosody (see bug #12)
+	#TODO: could be preferable to remove from all domains imported from Metronome?
+	rm -rf "/var/lib/prosody/${domain//./%2e}/pep/"
+	#TODO: notify in post-install that metronome data should be purged or archived to avoid later unexpected overwritting on prosody datas
+    else
+        ynh_script_progression "No metronome datas from metronome app found, looking for datas from Yunohost 11..."
+        if [[ -d /var/lib/metronome/ && ! -z "$(ls /var/lib/metronome/)" ]]
+        then
+            ynh_script_progression "Datas from metronome (Yunohost 11) found, import to prosody as requested..."
+            cp -r /var/lib/metronome/* /var/lib/prosody/
+            chown -R prosody: /var/lib/prosody/
+            #Remove pep/ as not supported by Prosody (see bug #12)
+            #TODO: could be preferable to remove from all domains imported from Metronome?
+            rm -rf "/var/lib/prosody/${domain//./%2e}/pep/"
+            #TODO: notify in post-install that metronome data should be purged or archived to avoid later unexpected overwritting on prosody datas
+        else
+            ynh_script_progression "No metronome data from Yunohost 11 found, skipping import."
+        fi
+    fi
+fi
 
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST
 #=================================================
-ynh_script_progression --message="Integrating service in YunoHost..."
+ynh_script_progression "Integrating service in YunoHost..."
 
-yunohost service add $app --log="/var/log/$app/$app.log"
+yunohost service add $app --log="/var/log/$app/$app.log" --needs_exposed_ports $port_client $port_client2 $port_server
 
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
-ynh_script_progression --message="Starting a systemd service..."
 
-# Start a systemd service
-ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/$app.log"
+ynh_script_progression "Restarting the systemd service..."
+
+# Restart the systemd service
+ynh_systemctl --service=$app --action="restart"
+
+ynh_script_progression "Reloading nginx..."
+ynh_systemctl --service="nginx" --action="reload"
+
+# add mod_cloud_notify_extensions modules not included in Debian bookworm prosody-modules package (only in bookworm-backports)
+/usr/bin/prosodyctl install --server=https://modules.prosody.im/rocks/ mod_cloud_notify_extensions
+
+# restart to take into account new modules
+ynh_systemctl --service=$app --action="restart"
 
 #=================================================
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Installation of $app completed"
+ynh_script_progression "Installation of $app completed"

@@ -1,0 +1,29 @@
+RFC 6121: Roster Versioning                                      PASSED
+XEP-0045: Multi-User Chat                                        PASSED
+XEP-0065: SOCKS5 Bytestreams (Proxy)                             FAILED
+XEP-0115: Entity Capabilities                                    PASSED
+XEP-0153: vCard-Based Avatar (MUC)                               PASSED
+XEP-0160: Best Practices for Handling Offline Messages           PASSED
+XEP-0163: Personal Eventing Protocol                             PASSED
+XEP-0191: Blocking Command                                       PASSED
+XEP-0198: Stream Management                                      PASSED
+XEP-0215: External Service Discovery (STUN)                      PASSED
+XEP-0215: External Service Discovery (TURN)                      PASSED
+XEP-0280: Message Carbons                                        PASSED
+XEP-0313: Message Archive Management                             PASSED
+XEP-0313: Message Archive Management (Multi-User Chat)           PASSED
+XEP-0352: Client State Indication                                PASSED
+XEP-0357: Push Notifications                                     PASSED
+XEP-0363: HTTP File Upload                                       PASSED
+XEP-0368: SRV records for XMPP over TLS                          FAILED
+XEP-0384: OMEMO Encryption                                       PASSED
+XEP-0398: User Avatar to vCard-Based Avatars Conversion          PASSED
+
+Informational tests:
+XEP-0077: In-Band Registration                                   PASSED
+XEP-0156: Discovering Alternative XMPP Connection Methods (HTTP) FAILED
+XEP-0157: Contact Addresses for XMPP Services (Abuse)            FAILED
+XEP-0280: Message Carbons - Recommended Rules                    PASSED
+XEP-0313: Message Archive Management (extended usage)            PASSED
+XEP-0363: HTTP File Upload (CORS Headers)                        PASSED
+XEP-0402: PEP Native Bookmarks                                   PASSED

@@ -1,0 +1,6 @@
+#! /bin/bash
+
+domain=$1
+rm /etc/prosody/conf.d/${domain}.cfg.lua
+rm /etc/prosody/conf.avail/${domain}.cfg.lua
+systemctl restart prosody

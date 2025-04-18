@@ -1,138 +1,40 @@
 #!/bin/bash
 
-#=================================================
-# GENERIC START
-#=================================================
-# IMPORT GENERIC HELPERS
-#=================================================
-
 source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
-# CHECK VERSION
+# SPECIAL HANDLING OF PREVIOUS BETA VERSIONS
 #=================================================
 
-upgrade_type=$(ynh_check_app_version_changed)
+# Previous beta versions of prosody app were built from source.
+# We need to uninstall them properly before installing debian's package.
+current_version=$(yunohost app info prosody | grep version | awk '{print $2}')
+echo "${current_version}" | grep -qE "0.12.4~ynh1([0-9]{2})" || ynh_die "Sorry but you cannot upgrade from version ${current_version} because it was built from source and new version must be installed from Debian packages.
+You must uninstall and reinstall the app.
+Don't worry, no data will be lost."
 
 #=================================================
-# DISABLE METRONOME
-#=================================================
-ynh_script_progression --message="Disabling Metronome..."
-
-if systemctl list-unit-files metronome.service &>/dev/null
-then
-	ynh_systemd_action --service_name="metronome" --action="stop"
-	systemctl disable metronome.service --quiet
-fi
-
-#=================================================
-# STANDARD UPGRADE STEPS
-#=================================================
-# STOP SYSTEMD SERVICE
-#=================================================
-ynh_script_progression --message="Stopping a systemd service..."
-
-ynh_systemd_action --service_name=$app --action="stop" --log_path="/var/log/$app/$app.log"
-
-#=================================================
-# DOWNLOAD, CHECK AND UNPACK SOURCE
+# CONFIGURE NGINX
 #=================================================
 
-if [ "$upgrade_type" == "UPGRADE_APP" ]
-then
-	ynh_script_progression --message="Upgrading source files..."
+ynh_script_progression --message="Configuring Nginx for muc, pubsub and xmpp-upload domains..."
 
-	builddir="$(mktemp -d)"
-	# Download, check integrity, uncompress and patch the source from app.src
-	ynh_setup_source --dest_dir="$builddir"
-fi
+cp -R "../conf/hook_conf_regen" "/usr/share/yunohost/hooks/conf_regen/98-nginx_$app"
+YNH_HELPERS_VERSION=1 yunohost tools regen-conf nginx
 
 #=================================================
-# SPECIFIC UPGRADE
+# RESTART SYSTEMD SERVICE
 #=================================================
-# BUILD PROSODY
-#=================================================
-if [ "$upgrade_type" == "UPGRADE_APP" ]
-then
-	ynh_script_progression --message="Building Prosody..."
 
-	update-alternatives --set lua-interpreter /usr/bin/lua${luaversion}
+ynh_script_progression "Restarting $app's systemd service..."
+ynh_systemctl --service=$app --action="restart"
 
-	pushd "$builddir"
-		./configure --prefix=/usr
-		make
-		make install
-	popd
-
-	ynh_secure_remove --file="$builddir"
-fi
-
-#=================================================
-# UPDATE A CONFIG FILE
-#=================================================
-ynh_script_progression --message="Updating a configuration file..."
-
-mkdir -p $config_path
-mkdir -p $config_path/{certs,conf.avail,conf.d}
-
-ynh_add_config --template="../conf/prosody.cfg.lua" --destination="$config_path/prosody.cfg.lua"
-ynh_add_config --template="../conf/example.com.cfg.lua" --destination="$config_path/conf.avail/example.com.cfg.lua"
-#ynh_add_config --template="../conf/localhost.cfg.lua" --destination="$config_path/conf.avail/localhost.cfg.lua"
-#ln -s $config_path/conf.avail/localhost.cfg.lua $config_path/conf.d/
-
-chown root:root "$config_path"
-chmod 755 "$config_path"
-
-chown root:$app "$config_path/conf.d"
-chmod 754 "$config_path/conf.d"
-
-chown root:$app "$config_path/conf.avail"
-chmod 754 "$config_path/conf.avail"
-
-chown root:$app "$config_path/certs"
-chmod 750 "$config_path/certs"
-
-#=================================================
-# SETUP SYSTEMD
-#=================================================
-ynh_script_progression --message="Upgrading systemd configuration..."
-
-# Create a dedicated systemd config
-ynh_add_systemd_config
-
-#=================================================
-# GENERIC FINALIZATION
-#=================================================
-# SETUP LOGROTATE
-#=================================================
-ynh_script_progression --message="Upgrading logrotate configuration..."
-
-mkdir -p "/var/log/$app"
-chmod 750 "/var/log/$app"
-chmod -R o-rwx "/var/log/$app"
-chown -R $app:adm "/var/log/$app"
-chown -R $app:$app "/var/lib/$app"
-
-# Use logrotate to manage app-specific logfile(s)
-ynh_use_logrotate --non-append
-
-#=================================================
-# INTEGRATE SERVICE IN YUNOHOST
-#=================================================
-ynh_script_progression --message="Integrating service in YunoHost..."
-
-yunohost service add $app --log="/var/log/$app/$app.log"
-
-#=================================================
-# START SYSTEMD SERVICE
-#=================================================
-ynh_script_progression --message="Starting a systemd service..."
-
-ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/$app.log"
+ynh_script_progression "Reloading nginx..."
+ynh_systemctl --service="nginx" --action="reload"
 
 #=================================================
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Upgrade of $app completed"
+ynh_script_progression "Upgrade of $app completed"
