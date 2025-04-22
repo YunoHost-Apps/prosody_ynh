@@ -4,14 +4,14 @@ It shall NOT be edited by hand.
 -->
 
 <h1>
-  <img src="https://raw.githubusercontent.com/YunoHost/apps/master/logos/prosody.png" width="32px" alt="Logo of Prosody">
+  <img src="https://raw.githubusercontent.com/YunoHost/apps/main/logos/prosody.png" width="32px" alt="Logo of Prosody">
   Prosody, packaged for YunoHost
 </h1>
 
 Modern XMPP communication server
 
 [![🌐 Official app website](https://img.shields.io/badge/Official_app_website-darkgreen?style=for-the-badge)](https://prosody.im/)
-![Version: 0.12.4~ynh3](https://img.shields.io/badge/Version-0.12.4~ynh3-rgba(0,150,0,1)?style=for-the-badge)
+[![Version: 0.12.4~ynh102](https://img.shields.io/badge/Version-0.12.4~ynh102-rgba(0,150,0,1)?style=for-the-badge)](https://ci-apps.yunohost.org/ci/apps/prosody/)
 
 <div align="center">
 <a href="https://apps.yunohost.org/app/prosody"><img height="100px" src="https://github.com/YunoHost/yunohost-artwork/raw/refs/heads/main/badges/neopossum-badges/badge_more_info_on_the_appstore.svg"/></a>
