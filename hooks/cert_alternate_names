@@ -1,0 +1,14 @@
+# This script is expected to be called xx-$app
+app=$(basename $0 | cut -d- -f2)
+app_domain=$(yunohost app setting $app domain)
+
+if [[ "$domain" != "$app_domain" ]]
+then
+    exit 0
+fi
+
+cat << EOF >> $YNH_STDRETURN
+- muc
+- pubsub
+- xmpp-upload
+EOF

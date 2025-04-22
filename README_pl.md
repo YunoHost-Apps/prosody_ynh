@@ -1,3 +1,23 @@
+<!--
+To README zostało automatycznie wygenerowane przez <https://github.com/YunoHost/apps/tree/master/tools/readme_generator>
+Nie powinno być ono edytowane ręcznie.
+-->
+
+# Prosody dla YunoHost
+
+[![Poziom integracji](https://apps.yunohost.org/badge/integration/prosody)](https://ci-apps.yunohost.org/ci/apps/prosody/)
+![Status działania](https://apps.yunohost.org/badge/state/prosody)
+![Status utrzymania](https://apps.yunohost.org/badge/maintained/prosody)
+
+[![Zainstaluj Prosody z YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=prosody)
+
+*[Przeczytaj plik README w innym języku.](./ALL_README.md)*
+
+> *Ta aplikacja pozwala na szybką i prostą instalację Prosody na serwerze YunoHost.*  
+> *Jeżeli nie masz YunoHost zapoznaj się z [poradnikiem](https://yunohost.org/install) instalacji.*
+
+## Przegląd
+
 Prosody is a modern XMPP communication server. It aims to be easy to set up and configure, and efficient with system resources. Additionally, for developers it aims to be easy to extend and give a flexible system on which to rapidly develop added functionality, or prototype new protocols.
 
 🚀 Target is to provide at least:
@@ -51,3 +71,28 @@ Or in the [forum](https://forum.yunohost.org/c/apps/11).
 ℹ️  About this branch
 This package / branch installs from the Debian packages repository `prosody` and `prosody-modules` (no compilation on server-side).
 It installs on your desired (sub)domain selected during the installation.
+
+
+
+**Dostarczona wersja:** 0.12.4~ynh102
+## Dokumentacja i zasoby
+
+- Oficjalna strona aplikacji: <https://prosody.im/>
+- Oficjalna dokumentacja dla administratora: <https://prosody.im/doc>
+- Repozytorium z kodem źródłowym: <https://hg.prosody.im/>
+- Sklep YunoHost: <https://apps.yunohost.org/app/prosody>
+- Zgłaszanie błędów: <https://github.com/YunoHost-Apps/prosody_ynh/issues>
+
+## Informacje od twórców
+
+Wyślij swój pull request do [gałęzi `testing`](https://github.com/YunoHost-Apps/prosody_ynh/tree/testing).
+
+Aby wypróbować gałąź `testing` postępuj zgodnie z instrukcjami:
+
+```bash
+sudo yunohost app install https://github.com/YunoHost-Apps/prosody_ynh/tree/testing --debug
+lub
+sudo yunohost app upgrade prosody -u https://github.com/YunoHost-Apps/prosody_ynh/tree/testing --debug
+```
+
+**Więcej informacji o tworzeniu paczek aplikacji:** <https://yunohost.org/packaging_apps>
