@@ -38,7 +38,7 @@ usermod -a -G ssl-cert prosody
 #=================================================
 ynh_script_progression "Restoring the config directory..."
 
-ynh_restore "$config_path"
+ynh_restore "/etc/prosody"
 chmod 755 /etc/prosody
 
 #=================================================
