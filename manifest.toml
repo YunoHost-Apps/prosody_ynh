@@ -17,6 +17,7 @@ code = "https://hg.prosody.im/"
 
 [integration]
 yunohost = ">= 12.0.9"
+helpers_version = "2.1"
 architectures = "all"
 multi_instance = false
 
@@ -26,7 +27,6 @@ sso = false
 disk = "75M"
 ram.build = "10M"
 ram.runtime = "10M"
-helpers_version = "2.1"
 
 [install]
     [install.domain]
