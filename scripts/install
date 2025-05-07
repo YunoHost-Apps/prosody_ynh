@@ -41,7 +41,7 @@ fi
 
 ynh_script_progression "Installing prosody package from Debian..."
 
-DEBIAN_FRONTEND=noninteractive apt-get install --assume-yes prosody prosody-modules
+ynh_apt_install_dependencies prosody prosody-modules
 
 #=================================================
 # SPECIFIC SETUP
