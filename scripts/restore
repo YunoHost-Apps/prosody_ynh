@@ -16,12 +16,27 @@ then
 fi
 
 #=================================================
+# DOWNLOAD, CHECK AND UNPACK SOURCE
+#=================================================
+
+ynh_script_progression "Installing prosody package from Debian..."
+
+ynh_apt_install_dependencies prosody prosody-modules
+
+#=================================================
+# SPECIFIC SETUP
+#=================================================
+
+# Add permision to read certs
+usermod -a -G ssl-cert prosody
+
+#=================================================
 # RESTORE THE CONFIG DIR
 #=================================================
 ynh_script_progression "Restoring the config directory..."
 
 ynh_restore "$config_path"
-
+chmod 755 /etc/prosody
 
 #=================================================
 # RESTORE THE DATA DIRECTORY
@@ -29,6 +44,7 @@ ynh_restore "$config_path"
 ynh_script_progression "Restoring the data directory..."
 
 ynh_restore "/var/lib/$app" || true
+chmod 755 "/var/lib/$app"
 
 #=================================================
 # RESTORE THE LOGROTATE CONFIGURATION
