@@ -56,7 +56,7 @@ ynh_systemctl --service=$app --action="restart"
 # RESTORE CUSTOM NGINX CONFIG
 #=================================================
 
-cp -R "../conf/hook_conf_regen" "/usr/share/yunohost/hooks/conf_regen/98-nginx_$app"
+cp -R "$YNH_APP_BASEDIR/conf/hook_conf_regen" "/usr/share/yunohost/hooks/conf_regen/98-nginx_$app"
 YNH_HELPERS_VERSION=1 yunohost tools regen-conf nginx
 
 ynh_script_progression "Reloading nginx..."
