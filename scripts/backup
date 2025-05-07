@@ -10,7 +10,7 @@ ynh_print_info "Declaring files to be backed up..."
 # BACKUP THE CONFIG DIR
 #=================================================
 
-ynh_backup "$config_path"
+ynh_backup "/etc/prosody"
 
 #=================================================
 # BACKUP THE DATA DIR
@@ -21,8 +21,6 @@ for item in /var/lib/prosody/*; do
     ynh_backup $item
 done
 
-#=================================================
-# SPECIFIC BACKUP
 #=================================================
 # BACKUP LOGROTATE
 #=================================================

@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#=================================================
+# IMPORT GENERIC HELPERS
+#=================================================
+
 # Keep this path for calling _common.sh inside the execution's context of backup and restore scripts
 source ../settings/scripts/_common.sh
 source /usr/share/yunohost/helpers
@@ -18,7 +22,6 @@ fi
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
-
 ynh_script_progression "Installing prosody package from Debian..."
 
 ynh_apt_install_dependencies prosody prosody-modules
@@ -75,7 +78,6 @@ ynh_systemctl --service=$app --action="restart"
 cp -R "$YNH_APP_BASEDIR/conf/hook_conf_regen" "/usr/share/yunohost/hooks/conf_regen/98-nginx_$app"
 YNH_HELPERS_VERSION=1 yunohost tools regen-conf nginx
 
-ynh_script_progression "Reloading nginx..."
 ynh_systemctl --service="nginx" --action="reload"
 
 #=================================================
