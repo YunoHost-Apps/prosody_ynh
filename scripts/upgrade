@@ -15,22 +15,22 @@ You must uninstall and reinstall the app.
 Don't worry, no data will be lost."
 
 #=================================================
-# CONFIGURE NGINX
+# REAPPLY SYSTEM CONFIGURATIONS
 #=================================================
-
-ynh_script_progression --message="Configuring Nginx for muc, pubsub and xmpp-upload domains..."
+ynh_script_progression "Upgrading system configurations related to $app..."
 
 cp -R "../conf/hook_conf_regen" "/usr/share/yunohost/hooks/conf_regen/98-nginx_$app"
 YNH_HELPERS_VERSION=1 yunohost tools regen-conf nginx
 
-#=================================================
-# RESTART SYSTEMD SERVICE
-#=================================================
+yunohost service add $app --log=/var/log/$app/$app.log --needs_exposed_ports $port_client $port_client2 $port_server
 
-ynh_script_progression "Restarting $app's systemd service..."
+#=================================================
+# START SYSTEMD SERVICE
+#=================================================
+ynh_script_progression "Starting $app's systemd service..."
+
 ynh_systemctl --service=$app --action="restart"
 
-ynh_script_progression "Reloading nginx..."
 ynh_systemctl --service="nginx" --action="reload"
 
 #=================================================
