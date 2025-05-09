@@ -7,6 +7,11 @@ source /usr/share/yunohost/helpers
 #domains=$(yunohost domain list --exclude-subdomains | grep -Ev '^(domains|main):' | awk '{print $2}')
 # we rather ask on which domain to install
 
+# Checking for prosody remains (not purged)(#11)
+if dpkg-query -s prosody >/dev/null 2>&1; then
+	echo "Warning : Prosody already present or not purged, installation will probably not work."
+fi
+
 #=================================================
 # CHECKING DEPENDANCIES
 #=================================================
@@ -16,11 +21,11 @@ source /usr/share/yunohost/helpers
 if ! yunohost app list | grep -q "id: coturn"; then
         echo "Coturn is not installed. Installing... "
         yunohost tools update
-        yunohost app install https://github.com/anubister/coturn_ynh --force --args "domain=$domain"
+        yunohost app install coturn --force --args "domain=$domain"
 fi
 
 turn_password=$(ynh_app_setting_get --app="coturn" --key=turnserver_pwd)
-turn_external_port=$(ynh_app_setting_get --app="coturn" --key=port_turnserver)
+turn_external_port=$(ynh_app_setting_get --app="coturn" --key=port_turnserver_tls)
 
 #=================================================
 # DISABLE METRONOME
@@ -37,7 +42,7 @@ fi
 #=================================================
 ynh_script_progression "Installing prosody package from Debian..."
 
-DEBIAN_FRONTEND=noninteractive apt-get install --assume-yes prosody prosody-modules
+ynh_apt_install_dependencies prosody prosody-modules
 
 #=================================================
 # SPECIFIC SETUP
@@ -55,8 +60,9 @@ ynh_script_progression "Adding $app's configuration..."
 	ynh_config_add --template="domain.tpl.cfg.lua" --destination="/etc/prosody/conf.avail/${domain}.cfg.lua"
 	ln -sr /etc/prosody/conf.avail/${domain}.cfg.lua /etc/prosody/conf.d/
 
-	# Add NGINX config for XMPP subdomains
-	ynh_config_add --template="nginx-extra-xmpp.conf" --destination="/etc/nginx/conf.d/${domain}-extra-xmpp.conf"
+	# Add nginx config for xmpp subdomains
+	cp -R "../conf/hook_conf_regen" "/usr/share/yunohost/hooks/conf_regen/98-nginx_$app"
+	YNH_HELPERS_VERSION=1 yunohost tools regen-conf nginx
 
 	# create directory for file sharing uploads
 	#TODO: store app datas rather in /home/yunohost.app/prosody/ like metronome_ynh?
@@ -81,7 +87,7 @@ then
 	chown -R prosody: /var/lib/prosody/
 	#Remove pep/ as not supported by Prosody (see bug #12)
 	#TODO: could be preferable to remove from all domains imported from Metronome?
-	rm -rf "/var/lib/prosody/${domain//./%2e}/pep/"
+	ynh_secure_remove --file="/var/lib/prosody/${domain//./%2e}/pep/"
 	#TODO: notify in post-install that metronome data should be purged or archived to avoid later unexpected overwritting on prosody datas
     else
         ynh_script_progression "No Metronome datas from Metronome app found, looking for datas from YunoHost 11..."
@@ -92,7 +98,7 @@ then
             chown -R prosody: /var/lib/prosody/
             #Remove pep/ as not supported by Prosody (see bug #12)
             #TODO: could be preferable to remove from all domains imported from Metronome?
-            rm -rf "/var/lib/prosody/${domain//./%2e}/pep/"
+             ynh_secure_remove --file="/var/lib/prosody/${domain//./%2e}/pep/"
             #TODO: notify in post-install that metronome data should be purged or archived to avoid later unexpected overwritting on prosody datas
         else
             ynh_script_progression "No Metronome data from YunoHost 11 found, skipping import."
@@ -105,7 +111,7 @@ fi
 #=================================================
 ynh_script_progression "Integrating service in YunoHost..."
 
-yunohost service add $app --log="/var/log/$app/$app.log"
+yunohost service add $app --log="/var/log/$app/$app.log" --needs_exposed_ports $port_client $port_client2 $port_server
 
 #=================================================
 # START SYSTEMD SERVICE
@@ -115,6 +121,12 @@ ynh_script_progression "Restarting the systemd service..."
 ynh_systemctl  --action="restart"
 
 ynh_systemctl --service="nginx" --action="reload"
+
+# add mod_cloud_notify_extensions modules not included in Debian bookworm prosody-modules package (only in bookworm-backports)
+/usr/bin/prosodyctl install --server=https://modules.prosody.im/rocks/ mod_cloud_notify_extensions
+
+# restart to take into account new modules
+ynh_systemctl --service=$app --action="restart"
 
 #=================================================
 # END OF SCRIPT

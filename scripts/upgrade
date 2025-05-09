@@ -17,6 +17,14 @@ Don't worry, no data will be lost."
 #=================================================
 # REAPPLY SYSTEM CONFIGURATIONS
 #=================================================
+ynh_script_progression --message="Configuring Nginx for muc, pubsub and xmpp-upload domains..."
+
+cp -R "../conf/hook_conf_regen" "/usr/share/yunohost/hooks/conf_regen/98-nginx_$app"
+YNH_HELPERS_VERSION=1 yunohost tools regen-conf nginx
+
+#=================================================
+# RESTART SYSTEMD SERVICE
+#=================================================
 ynh_script_progression "Upgrading system configurations related to $app..."
 
 yunohost service add $app --log="/var/log/$app/$app.log"

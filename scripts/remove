@@ -14,11 +14,17 @@ if ynh_hide_warnings yunohost service status $app >/dev/null; then
 	yunohost service remove $app
 fi
 
-ynh_safe_rm /etc/prosody/conf.d/$domain.cfg.lua
-ynh_safe_rm /etc/prosody/conf.avail/$domain.cfg.lua
-ynh_safe_rm /etc/nginx/conf.d/$domain-extra-xmpp.conf
+ynh_safe_rm  /etc/prosody/conf.d/$domain.cfg.lua
+ynh_safe_rm  /etc/prosody/conf.avail/$domain.cfg.lua
 
-DEBIAN_FRONTEND=noninteractive apt-get remove --assume-yes prosody
+DEBIAN_FRONTEND=noninteractive apt-get purge --assume-yes prosody
+
+#=================================================
+# CLEANUP NGINX CONFIG
+#=================================================
+
+ynh_safe_rm "/usr/share/yunohost/hooks/conf_regen/98-nginx_$app"
+YNH_HELPERS_VERSION=1 yunohost tools regen-conf nginx
 
 ynh_script_progression "Reloading NGINX..."
 

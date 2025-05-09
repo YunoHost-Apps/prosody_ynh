@@ -5,7 +5,7 @@ domain=$1
 YNH_HELPERS_VERSION=2.1
 source /usr/share/yunohost/helpers
 
-turn_external_port=$(ynh_app_setting_get --app="coturn" --key=port_turnserver)
+turn_external_port=$(ynh_app_setting_get --app="coturn" --key=port_turnserver_tls)
 turn_password=$(ynh_app_setting_get --app="coturn" --key=turnserver_pwd)
 app=prosody
 

@@ -18,6 +18,9 @@ VirtualHost "__DOMAIN__"
 
   modules_enabled = {
     "mam";
+    "cloud_notify";
+    "smacks";
+    "turn_external";
   }
 
   modules_disabled = {
@@ -53,9 +56,6 @@ Component "muc.__DOMAIN__" "muc"
 
   modules_enabled = {
     --"muc_limits";
-    "muc_log";
-    --"muc_log_mam";
-    --"muc_log_http";
     "vcard_muc";
     "muc_mam";
   }
