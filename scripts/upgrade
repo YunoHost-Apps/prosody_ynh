@@ -27,7 +27,7 @@ YNH_HELPERS_VERSION=1 yunohost tools regen-conf nginx
 #=================================================
 ynh_script_progression "Upgrading system configurations related to $app..."
 
-yunohost service add $app --log="/var/log/$app/$app.log"
+yunohost service add $app --log="/var/log/$app/$app.log" --needs_exposed_ports $port_client $port_client2 $port_server
 
 #=================================================
 # START SYSTEMD SERVICE
