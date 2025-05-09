@@ -9,7 +9,7 @@ ynh_print_info "Declaring files to be backed up..."
 # BACKUP THE CONFIG DIR
 #=================================================
 
-ynh_backup "$config_path"
+ynh_backup "/etc/prosody"
 
 #=================================================
 # BACKUP THE DATA DIR

@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#=================================================
+# IMPORT GENERIC HELPERS
+#=================================================
+
 source _common.sh
 source /usr/share/yunohost/helpers
 
@@ -9,7 +13,7 @@ source /usr/share/yunohost/helpers
 
 # Checking for prosody remains (not purged)(#11)
 if dpkg-query -s prosody >/dev/null 2>&1; then
-	echo "Warning : Prosody already present or not purged, installation will probably not work."
+	echo "Warning: Prosody already present or not purged, installation will probably not work."
 fi
 
 #=================================================
