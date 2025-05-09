@@ -28,7 +28,7 @@ YNH_HELPERS_VERSION=1 yunohost tools regen-conf nginx
 #=================================================
 ynh_script_progression "Starting $app's systemd service..."
 
-ynh_systemctl  --action="restart"
+ynh_systemctl --action="restart"
 
 ynh_systemctl --service="nginx" --action="reload"
 

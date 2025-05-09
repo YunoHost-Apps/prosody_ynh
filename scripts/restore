@@ -17,7 +17,6 @@ fi
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
-
 ynh_script_progression "Installing prosody package from Debian..."
 
 ynh_apt_install_dependencies prosody prosody-modules
