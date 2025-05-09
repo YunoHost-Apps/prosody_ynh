@@ -57,14 +57,14 @@ chmod 755 "/var/lib/$app"
 #=================================================
 ynh_script_progression "Integrating service in YunoHost..."
 
-yunohost service add $app --log="/var/log/$app/$app.log"
+yunohost service add $app --log="/var/log/$app/$app.log" --needs_exposed_ports $port_client $port_client2 $port_server
 
 #=================================================
 # RELOAD NGINX AND PHP-FPM OR THE APP SERVICE
 #=================================================
 ynh_script_progression "Reloading NGINX web server and $app's service..."
 
-ynh_systemctl  --action="restart"
+ynh_systemctl --action="restart"
 
 #=================================================
 # RESTORE CUSTOM NGINX CONFIG
