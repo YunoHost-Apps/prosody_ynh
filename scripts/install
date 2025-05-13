@@ -93,7 +93,7 @@ then
 	chown -R prosody: /var/lib/prosody/
 	#Remove pep/ as not supported by Prosody (see bug #12)
 	#TODO: could be preferable to remove from all domains imported from Metronome?
-	ynh_secure_remove --file="/var/lib/prosody/${domain//./%2e}/pep/"
+	ynh_safe_rm "/var/lib/prosody/${domain//./%2e}/pep/"
 	#TODO: notify in post-install that metronome data should be purged or archived to avoid later unexpected overwritting on prosody datas
     else
         ynh_script_progression "No metronome datas from metronome app found, looking for datas from Yunohost 11..."
@@ -104,7 +104,7 @@ then
             chown -R prosody: /var/lib/prosody/
             #Remove pep/ as not supported by Prosody (see bug #12)
             #TODO: could be preferable to remove from all domains imported from Metronome?
-             ynh_secure_remove --file="/var/lib/prosody/${domain//./%2e}/pep/"
+             ynh_safe_rm "/var/lib/prosody/${domain//./%2e}/pep/"
             #TODO: notify in post-install that metronome data should be purged or archived to avoid later unexpected overwritting on prosody datas
         else
             ynh_script_progression "No metronome data from Yunohost 11 found, skipping import."
