@@ -5,7 +5,7 @@ name = "Prosody"
 description.en = "Modern XMPP communication server"
 description.fr = "Serveur de communication XMPP moderne"
 
-version = "0.12.4~ynh102"
+version = "0.12.5~ynh1"
 
 maintainers = ["yalh76", "anubister", "pitchum"]
 
@@ -16,7 +16,7 @@ admindoc = "https://prosody.im/doc"
 code = "https://hg.prosody.im/"
 
 [integration]
-yunohost = ">= 12.0.9"
+yunohost = ">= 12.0.9.2"
 architectures = "all"
 multi_instance = false
 
@@ -42,6 +42,9 @@ helpers_version = "2.1"
 
 
 [resources]
+        [resources.sources.main]
+        url = "https://prosody.im/downloads/source/prosody-0.12.5.tar.gz"
+        sha256 = "778fb7707a0f10399595ba7ab9c66dd2a2288c0ae3a7fe4ab78f97d462bd399f"
 
     [resources.system_user]
 
