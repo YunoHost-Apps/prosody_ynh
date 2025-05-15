@@ -9,7 +9,7 @@ Cons:
 Pros:
 
 - for Yunohost users:
-  - no compilation needed on server
+  - no compilation needed on server (thus able to install on old / low-performance devices)
   - stability and security of Debian packaging
 - for the maintainers of the app in Yunohost:
   - automatically benefit from all the hard work already done by Debian maintainers
