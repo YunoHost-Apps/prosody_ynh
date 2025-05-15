@@ -2,8 +2,8 @@ Prosody is a modern XMPP communication server. It aims to be easy to set up and 
 
 ℹ️  **Important note**
 
-This app installs prosody from Debian packages.
-Basically, this means that you will not benefit from the latest versions of prosody.
+This app installs Prosody from Debian packages.
+Basically, this means that you will not benefit from the latest versions of Prosody but benefit the stability and security of the Debian packaging.
 Read more about this choice in [RATIONALE.md](https://github.com/YunoHost-Apps/prosody_ynh/tree/master/doc/RATIONALE.md)
 
 🚀 Target is to provide at least:
@@ -53,4 +53,3 @@ Ideally all the README :) but this in particular:
 
 💬 Further discussions, support on xmpp:yunohost-xmpp@muc.chapril.org?join
 Or in the [forum](https://forum.yunohost.org/c/apps/11).
-
