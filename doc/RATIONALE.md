@@ -2,14 +2,15 @@
 
 Cons:
 
-- for yunohost users:
+- for Yunohost users:
   - cannot benefit of all the latest features available upstream
 
 
 Pros:
 
-- for yunohost users:
+- for Yunohost users:
   - no compilation needed on server
-- for the maintainers of the app in yunohost:
+  - stability and security of Debian packaging
+- for the maintainers of the app in Yunohost:
   - automatically benefit from all the hard work already done by Debian maintainers
-  - focus their energy on improving integration in yunohost instead of fixed problems already fixed by Debian
+  - focus their energy on improving integration in Yunohost instead of fixing problems already fixed by Debian
