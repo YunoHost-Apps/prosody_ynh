@@ -4,6 +4,8 @@ version = "1.0"
 name.en = "Advanced prosody configuration"
 name.fr = "Paramétrage prosody avancé"
 
+services = [ "prosody", ]
+
     [main.http_upload]
     name.en = "File sharing"
     name.fr = "Partage de fichiers"
