@@ -84,10 +84,10 @@ Component "xmpp-upload.__DOMAIN__" "http_upload"
   --http_file_base_path = "/upload"
   --http_file_size_limit = 50*1024*1024
   --http_file_quota = 50*1024*1024
-  http_upload_file_size_limit = 50 * 1024 * 1024 -- bytes (limited by http_max_content_size (default 10M))
-  http_upload_quota = 1 * 1024 * 1024 * 1024 -- bytes
-  http_upload_expires_after = 60 * 60 * 24 * 7 -- a week in seconds
-  
+  http_upload_file_size_limit = 50 * 1024 * 1024
+  http_upload_quota = 1 * 1024 * 1024 * 1024
+  http_upload_expire_after = 60 * 60 * 24 * 7
+
 ---Set up a VJUD service
 --FIXME: vjud does not load even if vcard is installed/enabled
 --Component "vjud.__DOMAIN__" "vjud"
