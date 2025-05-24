@@ -16,7 +16,7 @@ Prosody is a modern XMPP communication server. It aims to be easy to set up and 
   * MUC
   * optional import of rosters, MUCs, bookmarks from Metronome (integrated service on Yunohost 11 or app on Yunohost 12) (pep is not supported, #12)
   * automatically install coturn if not yet present
-  * XEP-0163, XEP-0191, XEP-0215, XEP-0237, XEP-0280, XEP-0313, XEP-0363 (see 'xmpp_compliance' file), XEP-0421 TBC
+  * XEP-0156, XEP-0163, XEP-0191, XEP-0215, XEP-0237, XEP-0280, XEP-0313, XEP-0363 (see 'xmpp_compliance' file), XEP-0421 TBC
 
 🐞 What does not work:
   * vjud (Users directory) (help welcomed!)
