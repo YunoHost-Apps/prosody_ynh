@@ -22,6 +22,11 @@ _configure_prosody() {
     ynh_config_add --template="domain.tpl.cfg.lua" --destination="/etc/prosody/conf.avail/${domain}.cfg.lua"
     ln -srf /etc/prosody/conf.avail/${domain}.cfg.lua /etc/prosody/conf.d/
 
+    # Add content for /.well-known/host-meta (XEP-0156: Discovering Alternative XMPP Connection Methods)
+    ynh_script_progression "Creating content fr \"/.well-known/host-meta\""
+    ynh_config_add --template="nginx_well-known_host-meta.xml" --destination="/var/www/.well-known/${domain}/host-meta"
+    chmod 644 /var/www/.well-known/${domain}/host-meta
+
     # Add nginx config for xmpp subdomains
     ynh_script_progression "Configuring Nginx for extra domains (muc, pubsub, xmpp-upload, ...) and extra URLs (bosh, websocket)..."
     ynh_config_add --template="nginx_prosody.conf" --destination="/etc/nginx/conf.d/${domain}.d/prosody.conf"
