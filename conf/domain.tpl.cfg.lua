@@ -21,6 +21,8 @@ VirtualHost "__DOMAIN__"
     "cloud_notify";
     "smacks";
     "turn_external";
+    "bosh";
+    "websocket";
   }
 
   modules_disabled = {
@@ -45,6 +47,11 @@ VirtualHost "__DOMAIN__"
 --    abuse = { "mailto:abuse@__DOMAIN__", "xmpp:admin@__DOMAIN__" };
 --    admin = { "mailto:root@__DOMAIN__", "xmpp:admin@__DOMAIN__" };
 --  };
+
+  http_paths = {
+    bosh = "/xmpp-bosh";
+  }
+
 
 ------ Components ------
 -- You can specify components to add hosts that provide special services,
