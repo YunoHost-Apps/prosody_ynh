@@ -16,25 +16,6 @@ nginx_domain_conf="${pending_dir}/../nginx/etc/nginx/conf.d/$domain.conf"
 # such that we can obtain the SSL cert via acme-challenge
 sed -zE "s/(listen \S*80;\n\s*server_name) [^\n]*;/\1 $domain muc.$domain pubsub.$domain xmpp-upload.$domain;/g" -i "$nginx_domain_conf"
 
-# Basic bash reimplementation of prosody's function store_encode.
-# This is a custom percent-encoding function.
-# cf. https://hg.prosody.im/0.12/file/tip/util/datamanager.lua#l60
-store_encode() {
-  string=$1
-  while [ -n "$string" ]; do
-    tail=${string#?}
-    head=${string%$tail}
-    case $head in
-      [_%0-9A-Za-z]) printf %c "$head";;
-      *) printf %%%02x "'$head"
-    esac
-    string=$tail
-  done
-  echo
-}
-
-xmpp_upload_dir=/var/lib/prosody/$(store_encode "xmpp-upload.${domain}")/http_file_share/
-
 cat << EOF >> $nginx_domain_conf
 
 
@@ -46,11 +27,7 @@ server {
     root /dev/null;
 
     location /upload/ {
-        alias ${xmpp_upload_dir};
-        # Pass all requests to prosody, except for GET and HEAD requests.
-        limit_except GET HEAD {
-            proxy_pass http://localhost:5280;
-        }
+        proxy_pass http://localhost:5280;
 
         include proxy_params;
         add_header 'Access-Control-Allow-Origin' '*';
