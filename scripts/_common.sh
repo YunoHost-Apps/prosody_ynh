@@ -22,6 +22,10 @@ _configure_prosody() {
     ynh_config_add --template="domain.tpl.cfg.lua" --destination="/etc/prosody/conf.avail/${domain}.cfg.lua"
     ln -srf /etc/prosody/conf.avail/${domain}.cfg.lua /etc/prosody/conf.d/
 
+    # Make sure data is migrated to the new http_file_share datastorage format
+    ynh_systemctl --service=$app --action="restart"
+    prosodyctl mod_migrate_http_upload xmpp-upload.${domain} ${domain}
+
     # Add content for /.well-known/host-meta (XEP-0156: Discovering Alternative XMPP Connection Methods)
     ynh_print_info "Creating content for \"/.well-known/host-meta\""
     ynh_config_add --template="nginx_well-known_host-meta.xml" --destination="/var/www/.well-known/${domain}/host-meta"
@@ -33,13 +37,6 @@ _configure_prosody() {
 
     cp -R "../conf/hook_conf_regen" "/usr/share/yunohost/hooks/conf_regen/98-nginx_$app"
     YNH_HELPERS_VERSION=1 yunohost tools regen-conf nginx
-
-    # Create directory for file sharing uploads
-    ynh_print_info "Setting up HTTP upload folder..."
-
-    mkdir -p "/var/xmpp-upload/${domain}/upload"
-    chown -R prosody:www-data /var/xmpp-upload/
-    chmod -R g+s /var/xmpp-upload/
 }
 
 _setup_initial_app_permissions() {
