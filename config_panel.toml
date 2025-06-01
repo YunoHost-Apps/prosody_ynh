@@ -6,11 +6,11 @@ name.fr = "Paramétrage prosody avancé"
 
 services = [ "prosody", ]
 
-    [main.http_upload]
+    [main.upload]
     name.en = "File sharing"
     name.fr = "Partage de fichiers"
 
-        [main.http_upload.http_upload_file_size_limit]
+        [main.upload.http_file_share_size_limit]
         ask.en = "Maximum uploaded file size"
         ask.fr = "Taille maximale d'un fichier partagé"
         type = "select"
@@ -23,7 +23,7 @@ services = [ "prosody", ]
         choices."1024 * 1024 * 1024" = "1GB"
         bind = ":/etc/prosody/conf.avail/__DOMAIN__.cfg.lua"
 
-        [main.http_upload.http_upload_quota]
+        [main.upload.http_file_share_global_quota]
         ask.en = "Maximum storage size per user"
         ask.fr = "Espace maximum de stockage par compte utilisateur"
         type = "select"
@@ -38,7 +38,7 @@ services = [ "prosody", ]
         choices."1000 * 1024 * 1024 * 1024" = "1TB"
         bind = ":/etc/prosody/conf.avail/__DOMAIN__.cfg.lua"
 
-        [main.http_upload.http_upload_expire_after]
+        [main.upload.http_file_share_expires_after]
         ask.en = "File retention duration"
         ask.fr = "Durée de rétention des fichiers"
         type = "select"
