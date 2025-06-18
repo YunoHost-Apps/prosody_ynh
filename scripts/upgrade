@@ -19,6 +19,7 @@ Don't worry, no data will be lost."
 #=================================================
 
 # Add config files for prosody and nginx
+ynh_script_progression "Configuring prosody and nginx..."
 _configure_prosody
 
 #=================================================
