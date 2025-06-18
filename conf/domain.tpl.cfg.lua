@@ -6,15 +6,7 @@ VirtualHost "__DOMAIN__"
   }
   authentication = "ldap"
   ldap_base = "ou=users,dc=yunohost,dc=org"
-  ldap = {
-     hostname      = "localhost",
-     user = {
-       basedn        = "ou=users,dc=yunohost,dc=org",
-       filter        = "(&(objectClass=posixAccount)(mail=*@__DOMAIN__)(permission=cn=xmpp.main,ou=permission,dc=yunohost,dc=org))",
-       usernamefield = "mail",
-       namefield     = "cn",
-       },
-  }
+  ldap_filter = "(&(|(mail=$user@$host)(uid=$user))(permission=cn=xmpp.main,ou=permission,dc=yunohost,dc=org))"
 
   modules_enabled = {
     "mam";
