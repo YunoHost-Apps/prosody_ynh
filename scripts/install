@@ -52,6 +52,7 @@ usermod -a -G ssl-cert prosody
 #=================================================
 
 # Add config files for prosody and nginx
+ynh_script_progression "Configuring prosody and nginx..."
 _configure_prosody
 
 #=================================================
