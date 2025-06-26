@@ -12,8 +12,6 @@ _configure_prosody() {
     turn_password=$(ynh_app_setting_get --app="coturn" --key=turnserver_pwd)
     turn_external_port=$(ynh_app_setting_get --app="coturn" --key=port_turnserver_tls)
 
-    ynh_script_progression "Adding prosody configuration files..."
-
     # Add 00.cfg.lua, needed to customize some settings acrros all prosody vhosts
     ynh_config_add --template="00.cfg.lua" --destination="/etc/prosody/conf.avail/00.cfg.lua"
     ln -srf /etc/prosody/conf.avail/00.cfg.lua /etc/prosody/conf.d/
@@ -39,15 +37,3 @@ _configure_prosody() {
     chown -R prosody:www-data /var/xmpp-upload/
     chmod -R g+s /var/xmpp-upload/
 }
-
-#=================================================
-# PERSONAL HELPERS
-#=================================================
-
-#=================================================
-# EXPERIMENTAL HELPERS
-#=================================================
-
-#=================================================
-# FUTURE OFFICIAL HELPERS
-#=================================================
