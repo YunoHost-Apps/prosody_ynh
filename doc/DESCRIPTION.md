@@ -1,5 +1,11 @@
 Prosody is a modern XMPP communication server. It aims to be easy to set up and configure, and efficient with system resources. Additionally, for developers it aims to be easy to extend and give a flexible system on which to rapidly develop added functionality, or prototype new protocols.
 
+ℹ️  **Important note**
+
+This app installs Prosody from Debian packages.
+Basically, this means that you will not benefit from the latest versions of Prosody but benefit the stability and security of the Debian packaging.
+Read more about this choice in [RATIONALE.md](https://github.com/YunoHost-Apps/prosody_ynh/tree/master/doc/RATIONALE.md)
+
 🚀 Target is to provide at least:
   * A/V calls (https://github.com/YunoHost/issues/issues/1607) 
   * BOSH (https://forum.yunohost.org/t/unable-to-set-up-bosh-conf-nginx/12995)
@@ -47,7 +53,3 @@ Ideally all the README :) but this in particular:
 
 💬 Further discussions, support on xmpp:yunohost-xmpp@muc.chapril.org?join
 Or in the [forum](https://forum.yunohost.org/c/apps/11).
-
-ℹ️  About this branch
-This package / branch installs from the Debian packages repository `prosody` and `prosody-modules` (no compilation on server-side).
-It installs on your desired (sub)domain selected during the installation.
