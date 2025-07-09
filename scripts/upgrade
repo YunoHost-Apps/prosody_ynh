@@ -22,6 +22,8 @@ Don't worry, no data will be lost."
 ynh_script_progression "Configuring prosody and nginx..."
 _configure_prosody
 
+yunohost service add $app --log="/var/log/$app/$app.log" --needs_exposed_ports $port_client $port_client2 $port_server
+
 #=================================================
 # RESTART SYSTEMD SERVICE
 #=================================================
