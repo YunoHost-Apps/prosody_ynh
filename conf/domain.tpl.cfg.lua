@@ -6,7 +6,7 @@ VirtualHost "__DOMAIN__"
   }
   authentication = "ldap"
   ldap_base = "ou=users,dc=yunohost,dc=org"
-  ldap_filter = "(&(|(mail=$user@$host)(uid=$user))(permission=cn=xmpp.main,ou=permission,dc=yunohost,dc=org))"
+  ldap_filter = "(&(|(mail=$user@$host)(uid=$user))(permission=cn=__APP__.main,ou=permission,dc=yunohost,dc=org))"
 
   modules_enabled = {
     "mam";
