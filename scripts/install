@@ -100,6 +100,9 @@ fi
 #=================================================
 ynh_script_progression "Integrating service in YunoHost..."
 
+# Make sure our app is allowed for all authenticated users by default.
+_setup_initial_app_permissions quiet
+
 yunohost service add $app --log="/var/log/$app/$app.log" --needs_exposed_ports $port_client $port_client2 $port_server
 
 #=================================================
