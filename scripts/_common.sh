@@ -42,6 +42,27 @@ _configure_prosody() {
     chmod -R g+s /var/xmpp-upload/
 }
 
+_setup_initial_app_permissions() {
+    # Before fixing issue #55 (https://github.com/YunoHost-Apps/prosody_ynh/issues/55) all
+    # yunohost users were allowed to use prosody, regardless of actual yunohost permissions.
+    # This workaround ensures that the permission mechanism is now really in use, even when
+    # upgrading from an older version of the app.
+
+    local verbosity=${1:-verbose}
+
+    if [ "$(ynh_app_setting_get --app=prosody --key=_is_workaround_for_missing_permissions_already_applied)" != "yes" ] ; then
+        test "${verbosity}" != "quiet" && ynh_print_warn "Applying workaround for missing yunohost permissions..."
+
+        yunohost user permission add prosody all_users
+
+        test "${verbosity}" != "quiet" && ynh_print_warn "From now on, only yunohost users with 'prosody' permission can use this service."
+        test "${verbosity}" != "quiet" && ynh_print_warn "Right now, this includes **all** valid yunohost users. You may customize this if you want."
+
+        # Prevent applying this workaround again in the future
+        ynh_app_setting_set --app=prosody --key=_is_workaround_for_missing_permissions_already_applied --value=yes
+    fi
+}
+
 #=================================================
 # PERSONAL HELPERS
 #=================================================
