@@ -14,8 +14,8 @@ echo "${current_version}" | grep -qE "0.12.4~ynh1([0-9]{2})" || ynh_die "Sorry b
 You must uninstall and reinstall the app.
 Don't worry, no data will be lost."
 
-# Handle Handle special legacy situation regarding app's permissions
-_workaround_missing_permissions
+# Make sure our app is allowed for all authenticated users by default.
+_setup_initial_app_permissions
 
 #=================================================
 # ADD CONFIGURATION FILES
