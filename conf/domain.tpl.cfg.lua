@@ -15,6 +15,7 @@ VirtualHost "__DOMAIN__"
     "turn_external";
     "bosh";
     "websocket";
+    "bookmarks";
   }
 
   modules_disabled = {
