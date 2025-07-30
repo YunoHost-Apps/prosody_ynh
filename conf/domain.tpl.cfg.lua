@@ -15,10 +15,12 @@ VirtualHost "__DOMAIN__"
     "turn_external";
     "bosh";
     "websocket";
+    "csi_battery_saver";
   }
 
   modules_disabled = {
     "register";
+    "csi_simple"; -- Replaced by "csi_battery_saver"
   }
 
   -- Discovery items
