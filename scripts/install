@@ -37,8 +37,10 @@ fi
 #=================================================
 
 ynh_script_progression "Installing prosody package from Debian..."
+# and declare the package dependency to prosody & prosody-modules
 
-ynh_apt_install_dependencies prosody prosody-modules
+deps=$(ynh_read_manifest "resources.apt.packages")
+ynh_apt_install_dependencies "$deps, prosody, prosody-modules"
 
 #=================================================
 # SPECIFIC SETUP

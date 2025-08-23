@@ -18,6 +18,13 @@ Don't worry, no data will be lost."
 _setup_initial_app_permissions
 
 #=================================================
+# DECLARE PROSODY & PROSODY-MODULES DEPENDENCIES
+#=================================================
+
+deps=$(ynh_read_manifest "resources.apt.packages")
+ynh_apt_install_dependencies "$deps, prosody, prosody-modules"
+
+#=================================================
 # ADD CONFIGURATION FILES
 #=================================================
 
