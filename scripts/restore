@@ -36,7 +36,8 @@ usermod -a -G ssl-cert prosody
 ynh_script_progression "Restoring the config directory..."
 
 ynh_restore "$config_path"
-chmod 755 /etc/prosody
+chown -R "$app:$app" "$config_path"
+chmod 755 "$config_path"
 
 #=================================================
 # RESTORE THE DATA DIRECTORY
@@ -44,6 +45,7 @@ chmod 755 /etc/prosody
 ynh_script_progression "Restoring the data directory..."
 
 ynh_restore "/var/lib/$app" || true
+chown -R "$app:$app" "/var/lib/$app"
 chmod 755 "/var/lib/$app"
 
 #=================================================
