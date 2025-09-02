@@ -1,0 +1,63 @@
+version = "1.0"
+
+[main]
+name.en = "Advanced Prosody configuration"
+name.fr = "Paramétrage Prosody avancé"
+
+services = [ "prosody", ]
+
+    [main.upload]
+    name.en = "File sharing"
+    name.fr = "Partage de fichiers"
+
+        [main.upload.http_file_share_size_limit]
+        ask.en = "Maximum uploaded file size"
+        ask.fr = "Taille maximale d'un fichier partagé"
+        type = "select"
+        choices."10 * 1024 * 1024" = "10MiB"
+        choices."20 * 1024 * 1024" = "20MiB"
+        choices."50 * 1024 * 1024" = "50MiB"
+        choices."100 * 1024 * 1024" = "100MiB"
+        choices."200 * 1024 * 1024" = "200MiB"
+        choices."500 * 1024 * 1024" = "500MiB"
+        choices."1024 * 1024 * 1024" = "1GiB"
+        bind = ":/etc/prosody/conf.avail/__DOMAIN__.cfg.lua"
+
+        [main.upload.http_file_share_global_quota]
+        ask.en = "Maximum storage size per user"
+        ask.fr = "Espace maximum de stockage par compte utilisateur"
+        type = "select"
+        choices."100 * 1024 * 1024" = "100MiB"
+        choices."200 * 1024 * 1024" = "200MiB"
+        choices."500 * 1024 * 1024" = "500MiB"
+        choices."1024 * 1024 * 1024" = "1GiB"
+        choices."2 * 1024 * 1024 * 1024" = "2GiB"
+        choices."5 * 1024 * 1024 * 1024" = "5GiB"
+        choices."100 * 1024 * 1024 * 1024" = "100GiB"
+        choices."500 * 1024 * 1024 * 1024" = "500GiB"
+        choices."1000 * 1024 * 1024 * 1024" = "1TiB"
+        bind = ":/etc/prosody/conf.avail/__DOMAIN__.cfg.lua"
+
+        [main.upload.http_file_share_expires_after]
+        ask.en = "File retention duration"
+        ask.fr = "Durée de rétention des fichiers"
+        type = "select"
+        choices."60 * 60 * 24 * 7" = "1 week"
+        choices."60 * 60 * 24 * 92" = "3 months"
+        choices."60 * 60 * 24 * 365" = "1 year"
+        choices."60 * 60 * 24 * 365 * 2" = "2 years"
+        choices."60 * 60 * 24 * 365 * 5" = "5 years"
+        choices."60 * 60 * 24 * 365 * 50" = "50 years"
+        bind = ":/etc/prosody/conf.avail/__DOMAIN__.cfg.lua"
+
+    [main.room_default_config]
+    name.en = "Room default settings"
+    name.fr = "Paramètres par défaut des salons"
+
+        [main.room_default_config.persistent]
+        ask.en = "Make rooms persistent by default"
+        ask.fr = "Rendre les salons persistants par défaut"
+        type = "boolean"
+        yes = "true"
+        no = "false"
+        bind = ":/etc/prosody/conf.avail/__DOMAIN__.cfg.lua"
