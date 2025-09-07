@@ -39,7 +39,9 @@ fi
 #=================================================
 ynh_script_progression "Installing prosody package from Debian..."
 
-ynh_apt_install_dependencies prosody prosody-modules
+# and declare the package dependency to prosody & prosody-modules
+deps=$(ynh_read_manifest "resources.apt.packages")
+ynh_apt_install_dependencies "$deps, prosody, prosody-modules"
 
 #=================================================
 # SPECIFIC SETUP
@@ -51,6 +53,7 @@ usermod -a -G ssl-cert prosody
 #=================================================
 # ADD CONFIGURATION FILES
 #=================================================
+ynh_script_progression "Configuring prosody and NGINX..."
 
 # Add config files for prosody and nginx
 _configure_prosody
@@ -96,6 +99,9 @@ fi
 #=================================================
 ynh_script_progression "Integrating service in YunoHost..."
 
+# Make sure our app is allowed for all authenticated users by default.
+_setup_initial_app_permissions quiet
+
 yunohost service add $app --log="/var/log/$app/$app.log" --needs_exposed_ports $port_client $port_client2 $port_server
 
 #=================================================
@@ -106,7 +112,6 @@ ynh_script_progression "Restarting the systemd service..."
 # Restart the systemd service
 ynh_systemctl --service=$app --action="restart"
 
-ynh_script_progression "Reloading nginx..."
 ynh_systemctl --service="nginx" --action="reload"
 
 # add mod_cloud_notify_extensions modules not included in Debian bookworm prosody-modules package (only in bookworm-backports)

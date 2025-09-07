@@ -1,5 +1,11 @@
 Prosody is a modern XMPP communication server. It aims to be easy to set up and configure, and efficient with system resources. Additionally, for developers it aims to be easy to extend and give a flexible system on which to rapidly develop added functionality, or prototype new protocols.
 
+ℹ️  **Important note**
+
+This app installs Prosody from Debian packages.
+Basically, this means that you will not benefit from the latest versions of Prosody but benefit the stability and security of the Debian packaging.
+Read more about this choice in [RATIONALE.md](https://github.com/YunoHost-Apps/prosody_ynh/tree/master/doc/RATIONALE.md)
+
 🚀 Target is to provide at least:
   * A/V calls (https://github.com/YunoHost/issues/issues/1607) 
   * BOSH (https://forum.yunohost.org/t/unable-to-set-up-bosh-conf-nginx/12995)
@@ -9,7 +15,7 @@ Prosody is a modern XMPP communication server. It aims to be easy to set up and 
 ...and ultimately an Advanced Server compliance level (https://xmpp.org/extensions/xep-0479.html).
 
 ✅ What works:
-  * install on Yunohost 12
+  * install on YunoHost 12
   * LDAP auth
   * A/V calls
   * File upload
@@ -26,7 +32,7 @@ Prosody is a modern XMPP communication server. It aims to be easy to set up and 
     * [PeerTube](https://github.com/YunoHost-Apps/peertube_ynh): to be tested
     * [Movim](https://github.com/YunoHost-Apps/movim_ynh): app broken?
     * [Converse.js](https://github.com/YunoHost-Apps/converse_ynh): seems to work 🥳
-    * [Jitsi](https://github.com/YunoHost-Apps/jitsi_ynh): reported [to work](https://forum.yunohost.org/t/jitsi-install-fails-with-prosody-testing/35879) 🥳
+    * [Jitsi](https://github.com/YunoHost-Apps/jitsi_ynh): reported [to work](https://forum.yunohost.org/t/jitsi-install-fails-with-prosody-testing/35879) 🥳 (you must install first the Prosody app, then the Jitsi app)
     * [Nextcloud](https://github.com/YunoHost-Apps/nextcloud_ynh): to be tested
     * [Libervia](https://salut-a-toi.org/): to be tested [non-working app](https://github.com/YunoHost-Apps/sat_ynh)
     * [biboumi](https://github.com/YunoHost-Apps/biboumi_ynh): currently [not working](https://github.com/YunoHost-Apps/biboumi_ynh/issues/29)
@@ -47,7 +53,3 @@ Ideally all the README :) but this in particular:
 
 💬 Further discussions, support on xmpp:yunohost-xmpp@muc.chapril.org?join
 Or in the [forum](https://forum.yunohost.org/c/apps/11).
-
-ℹ️  About this branch
-This package / branch installs from the Debian packages repository `prosody` and `prosody-modules` (no compilation on server-side).
-It installs on your desired (sub)domain selected during the installation.

@@ -21,7 +21,6 @@ _configure_prosody() {
     ln -srf /etc/prosody/conf.avail/${domain}.cfg.lua /etc/prosody/conf.d/
 
     # Add content for /.well-known/host-meta (XEP-0156: Discovering Alternative XMPP Connection Methods)
-
     ynh_config_add --template="nginx_well-known_host-meta.xml" --destination="/var/www/.well-known/${domain}/host-meta"
     chmod 644 /var/www/.well-known/${domain}/host-meta
 

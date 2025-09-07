@@ -14,12 +14,25 @@ echo "${current_version}" | grep -qE "0.12.4~ynh1([0-9]{2})" || ynh_die "Sorry b
 You must uninstall and reinstall the app.
 Don't worry, no data will be lost."
 
+# Make sure our app is allowed for all authenticated users by default.
+_setup_initial_app_permissions
+
+#=================================================
+# DECLARE PROSODY & PROSODY-MODULES DEPENDENCIES
+#=================================================
+
+deps=$(ynh_read_manifest "resources.apt.packages")
+ynh_apt_install_dependencies "$deps, prosody, prosody-modules"
+
 #=================================================
 # ADD CONFIGURATION FILES
 #=================================================
+ynh_script_progression "Configuring Prosody and NGINX..."
 
 # Add config files for prosody and nginx
 _configure_prosody
+
+yunohost service add $app --log="/var/log/$app/$app.log" --needs_exposed_ports $port_client $port_client2 $port_server
 
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST
