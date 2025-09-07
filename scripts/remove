@@ -33,12 +33,6 @@ ynh_script_progression "Reloading nginx..."
 ynh_systemctl --service="nginx" --action="reload"
 
 #=================================================
-# REMOVE VARIOUS FILES
-#=================================================
-
-ynh_script_progression "Removing various files..."
-
-#=================================================
 # END OF SCRIPT
 #=================================================
 

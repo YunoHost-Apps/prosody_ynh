@@ -35,7 +35,7 @@ fi
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
-ynh_script_progression "Installing prosody package from Debian..."
+ynh_script_progression "Installing Prosody package from Debian..."
 
 # and declare the package dependency to prosody & prosody-modules
 deps=$(ynh_read_manifest "resources.apt.packages")
@@ -51,7 +51,7 @@ usermod -a -G ssl-cert prosody
 #=================================================
 # ADD CONFIGURATION FILES
 #=================================================
-ynh_script_progression "Configuring prosody and NGINX..."
+ynh_script_progression "Configuring Prosody and NGINX..."
 
 # Add config files for prosody and nginx
 _configure_prosody
