@@ -5,7 +5,7 @@ name = "Prosody"
 description.en = "Modern XMPP communication server"
 description.fr = "Serveur de communication XMPP moderne"
 
-version = "0.12.4~ynh103"
+version = "0.12.4~ynh104"
 
 maintainers = ["yalh76", "anubister", "pitchum"]
 
