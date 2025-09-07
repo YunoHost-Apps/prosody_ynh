@@ -27,9 +27,9 @@ ynh_apt_install_dependencies "$deps, prosody, prosody-modules"
 #=================================================
 # ADD CONFIGURATION FILES
 #=================================================
+ynh_script_progression "Configuring Prosody and NGINX..."
 
 # Add config files for prosody and nginx
-ynh_script_progression "Configuring prosody and nginx..."
 _configure_prosody
 
 yunohost service add $app --log="/var/log/$app/$app.log" --needs_exposed_ports $port_client $port_client2 $port_server
@@ -37,11 +37,10 @@ yunohost service add $app --log="/var/log/$app/$app.log" --needs_exposed_ports $
 #=================================================
 # RESTART SYSTEMD SERVICE
 #=================================================
-
 ynh_script_progression "Restarting $app's systemd service..."
+
 ynh_systemctl --service=$app --action="restart"
 
-ynh_script_progression "Reloading nginx..."
 ynh_systemctl --service="nginx" --action="reload"
 
 #=================================================

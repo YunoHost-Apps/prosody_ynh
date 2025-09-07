@@ -15,7 +15,7 @@ Read more about this choice in [RATIONALE.md](https://github.com/YunoHost-Apps/p
 ...and ultimately an Advanced Server compliance level (https://xmpp.org/extensions/xep-0479.html).
 
 ✅ What works:
-  * install on Yunohost 12
+  * install on YunoHost 12
   * LDAP auth
   * A/V calls
   * File upload
