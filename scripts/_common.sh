@@ -62,15 +62,3 @@ _setup_initial_app_permissions() {
         ynh_app_setting_set --app=prosody --key=_is_workaround_for_missing_permissions_already_applied --value=yes
     fi
 }
-
-#=================================================
-# PERSONAL HELPERS
-#=================================================
-
-#=================================================
-# EXPERIMENTAL HELPERS
-#=================================================
-
-#=================================================
-# FUTURE OFFICIAL HELPERS
-#=================================================
