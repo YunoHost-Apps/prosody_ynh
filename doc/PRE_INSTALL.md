@@ -8,4 +8,4 @@ muc 3600 IN CNAME __DOMAIN__.
 xmpp-upload 3600 IN CNAME __DOMAIN__.
 pubsub 3600 IN CNAME __DOMAIN__.
 ```
-- to *not* have manually created in Yunohost the subdomains `muc.`, `xmpp-upload.` or `pubsub.`.
+- to *not* have manually created in YunoHost the subdomains `muc.`, `xmpp-upload.` or `pubsub.`.
