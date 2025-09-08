@@ -18,7 +18,7 @@ fi
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
-ynh_script_progression "Installing prosody package from Debian..."
+ynh_script_progression "Installing Prosody package from Debian..."
 
 # and declare the package dependency to prosody & prosody-modules
 deps=$(ynh_read_manifest "resources.apt.packages")

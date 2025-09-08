@@ -37,7 +37,7 @@ fi
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
-ynh_script_progression "Installing prosody package from Debian..."
+ynh_script_progression "Installing Prosody package from Debian..."
 
 # and declare the package dependency to prosody & prosody-modules
 deps=$(ynh_read_manifest "resources.apt.packages")
@@ -53,7 +53,7 @@ usermod -a -G ssl-cert prosody
 #=================================================
 # ADD CONFIGURATION FILES
 #=================================================
-ynh_script_progression "Configuring prosody and NGINX..."
+ynh_script_progression "Configuring Prosody and NGINX..."
 
 # Add config files for prosody and nginx
 _configure_prosody
@@ -70,7 +70,7 @@ then
     ynh_script_progression "Try to import datas from Metronome has been requested..."
     if [[ -d /home/yunohost.app/metronome/ && ! -z "$(ls /home/yunohost.app/metronome/)" ]]
     then
-	ynh_script_progression "Datas from a metronome app installation found, import to prosody as requested..."
+	ynh_script_progression "Datas from a Metronome app installation found, import to Prosody as requested..."
 	cp -r /home/yunohost.app/metronome/* /var/lib/prosody/
 	chown -R prosody: /var/lib/prosody/
 	#Remove pep/ as not supported by Prosody (see bug #12)
@@ -78,10 +78,10 @@ then
 	ynh_safe_rm "/var/lib/prosody/${domain//./%2e}/pep/"
 	#TODO: notify in post-install that metronome data should be purged or archived to avoid later unexpected overwritting on prosody datas
     else
-        ynh_script_progression "No metronome datas from metronome app found, looking for datas from Yunohost 11..."
+        ynh_script_progression "No Metronome datas from Metronome app found, looking for datas from YunoHost 11..."
         if [[ -d /var/lib/metronome/ && ! -z "$(ls /var/lib/metronome/)" ]]
         then
-            ynh_script_progression "Datas from metronome (Yunohost 11) found, import to prosody as requested..."
+            ynh_script_progression "Datas from Metronome (YunoHost 11) found, import to Prosody as requested..."
             cp -r /var/lib/metronome/* /var/lib/prosody/
             chown -R prosody: /var/lib/prosody/
             #Remove pep/ as not supported by Prosody (see bug #12)
@@ -89,7 +89,7 @@ then
              ynh_safe_rm "/var/lib/prosody/${domain//./%2e}/pep/"
             #TODO: notify in post-install that metronome data should be purged or archived to avoid later unexpected overwritting on prosody datas
         else
-            ynh_script_progression "No metronome data from Yunohost 11 found, skipping import."
+            ynh_script_progression "No Metronome data from YunoHost 11 found, skipping import."
         fi
     fi
 fi
