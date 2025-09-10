@@ -77,17 +77,18 @@ Component "pubsub.__DOMAIN__" "pubsub"
   unrestricted_node_creation = true -- Anyone can create a PubSub node (from any server)
 
 ---Set up a HTTP Upload service
-Component "xmpp-upload.__DOMAIN__" "http_upload"
+Component "xmpp-upload.__DOMAIN__" "http_file_share"
   name = "__DOMAIN__ Sharing Service"
-  http_upload_path = "/var/xmpp-upload/__DOMAIN__/upload/"
   http_external_url = "https://xmpp-upload.__DOMAIN__"
-  --http_file_base_path = "/upload"
-  --http_file_size_limit = 50*1024*1024
-  --http_file_quota = 50*1024*1024
-  http_upload_file_size_limit = 50 * 1024 * 1024 -- bytes (limited by http_max_content_size (default 10M))
-  http_upload_quota = 1 * 1024 * 1024 * 1024 -- bytes
-  http_upload_expires_after = 60 * 60 * 24 * 7 -- a week in seconds
-  
+  http_file_share_size_limit = 50 * 1024 * 1024
+  http_file_share_global_quota = 1 * 1024 * 1024 * 1024
+  http_file_share_expires_after = 60 * 60 * 24 * 7
+
+  http_paths = {
+    file_share = "/upload";
+  }
+
+
 ---Set up a VJUD service
 --FIXME: vjud does not load even if vcard is installed/enabled
 --Component "vjud.__DOMAIN__" "vjud"
