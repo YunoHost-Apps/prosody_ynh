@@ -25,3 +25,13 @@ Atomic commits:
 - make git history easier to read
 - avoid meaningless conflicts/merges
 - are easier to revert if needed
+
+
+### Write meaningful commit messages
+
+The commit message should reflect the intentions behind the modifications.
+This makes it easier to read history.
+
+Please avoid commit messages like "Update README".
+Instead, write something like "Add build instructions" or "Improve project description"
+or "Add warning about required dependencies".
