@@ -35,9 +35,16 @@ _configure_prosody
 yunohost service add $app --log="/var/log/$app/$app.log" --needs_exposed_ports $port_client $port_client2 $port_server
 
 #=================================================
-# RESTART SYSTEMD SERVICE
+# INTEGRATE SERVICE IN YUNOHOST
 #=================================================
-ynh_script_progression "Restarting $app's systemd service..."
+ynh_script_progression "Integrating service in YunoHost..."
+
+yunohost service add $app --log="/var/log/$app/$app.log" --needs_exposed_ports $port_client $port_client2 $port_server
+
+#=================================================
+# START SYSTEMD SERVICE
+#=================================================
+ynh_script_progression "Starting $app's systemd service..."
 
 ynh_systemctl --service=$app --action="restart"
 

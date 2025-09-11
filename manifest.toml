@@ -60,6 +60,12 @@ ram.runtime = "10M"
     server.exposed = "TCP"
     server.fixed = true
 
+    # To be rediscussed ? Either they should be fixed, or the value $port_<name> should be used somewhere
+    http.default = 5280
+    file.default = 5000
+    component.default = 5347
+    telnet.default = 5582
+
     [resources.permissions]
 
     # Dependencies for prosodyctl install

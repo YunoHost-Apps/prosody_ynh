@@ -15,6 +15,7 @@ fi
 #=================================================
 # CHECKING DEPENDANCIES
 #=================================================
+
 # (waiting for packaging v3)
 # we need 'coturn' to support A/V calls
 if ! yunohost app list | grep -q "id: coturn"; then
@@ -26,6 +27,7 @@ fi
 #=================================================
 # DISABLE METRONOME
 #=================================================
+
 #TODO: rather check metronome_ynh and check app conflict management?
 if systemctl list-unit-files metronome.service &>/dev/null; then
 	ynh_script_progression "Metronome is still present. Uninstalling Metronome..."
