@@ -4,7 +4,7 @@ Prosody is a modern XMPP communication server. It aims to be easy to set up and 
 
 This app installs Prosody from Debian packages.
 Basically, this means that you will not benefit from the latest versions of Prosody but benefit the stability and security of the Debian packaging.
-Read more about this choice in [RATIONALE.md](https://github.com/YunoHost-Apps/prosody_ynh/tree/master/doc/RATIONALE.md)
+Read more about this choice in [RATIONALE.md](https://github.com/YunoHost-Apps/prosody_ynh/tree/master/doc/RATIONALE.md).
 
 🚀 Target is to provide at least:
   * A/V calls (https://github.com/YunoHost/issues/issues/1607) 
@@ -30,22 +30,31 @@ Read more about this choice in [RATIONALE.md](https://github.com/YunoHost-Apps/p
 🙋 TODO (help welcomed!):
   * usability by other apps:
     * [PeerTube](https://github.com/YunoHost-Apps/peertube_ynh): to be tested
-    * [Movim](https://github.com/YunoHost-Apps/movim_ynh): app broken?
+    * [Movim](https://github.com/YunoHost-Apps/movim_ynh): app currently broken
     * [Converse.js](https://github.com/YunoHost-Apps/converse_ynh): seems to work 🥳
-    * [Jitsi](https://github.com/YunoHost-Apps/jitsi_ynh): reported [to work](https://forum.yunohost.org/t/jitsi-install-fails-with-prosody-testing/35879) 🥳 (you must install first the Prosody app, then the Jitsi app)
+    * [Jitsi](https://github.com/YunoHost-Apps/jitsi_ynh): reported [to work](https://forum.yunohost.org/t/jitsi-install-fails-with-prosody-testing/35879) 🥳 
     * [Nextcloud](https://github.com/YunoHost-Apps/nextcloud_ynh): to be tested
     * [Libervia](https://salut-a-toi.org/): to be tested [non-working app](https://github.com/YunoHost-Apps/sat_ynh)
     * [biboumi](https://github.com/YunoHost-Apps/biboumi_ynh): currently [not working](https://github.com/YunoHost-Apps/biboumi_ynh/issues/29)
     * ...?
   * check initial configuration (DNS, ?) : information via PRE_INSTALL.md
-  * update scripts/remove and others...
-  * check/improve app score
 
 # READ before install!
 Ideally all the README :) but this in particular:
 * You must ensure that your DNS configuration includes the subdomains `muc.`, `xmpp-upload.` and `pubsub.`
 * You should **not** create Yunohost subdomains `muc.`, `xmpp-upload.` and `pubsub.`
-* You have to deinstall Metronome app before to install this app (using the same ports).
+
+## App conflicts/dependencies
+**Conflict**
+* [Metronome](https://github.com/YunoHost-Apps/metronome_ynh) : you have to deinstall Metronome app before to install this app (using the same ports)
+* [Simplex](https://github.com/YunoHost-Apps/simplex_ynh) : you have to deinstall Simplex app before to install this app (using the same ports)
+
+**Sequencing**
+* [Jitsi](https://github.com/YunoHost-Apps/jitsi_ynh) : if you want to have both Jitsi and Prosody on your server, you must install first the Prosody app, then the Jitsi app
+
+**Dependencies**
+* [coturn](https://github.com/YunoHost-Apps/jitsi_ynh) : it will be automatically installed if needed
+
 
 # Additionnal infos
 * Users connect on XMPP with their email address. Ensure in the Yunohost Users configuration panel they have an email address matching the domain on which you install Prosody. If not add an email alias.
