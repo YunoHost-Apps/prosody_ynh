@@ -1,5 +1,15 @@
 #! /bin/bash
 
+# This script is expected to be called xx-$app
+app=$(basename $0 | cut -d- -f2)
+domain=$(yunohost app setting $app domain)
+
+# only add subdomains to the app's domain
+if [[ "$domain"  != *"$base_domain" ]]; then
+  exit 0
+fi
+
+
 suffix="${base_domain}."
 echo "
 - name: 'xmpp-upload.${suffix}'
