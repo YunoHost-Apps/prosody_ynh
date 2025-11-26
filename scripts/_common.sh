@@ -19,7 +19,7 @@ _configure_prosody() {
     ynh_app_setting_set_default --key=http_file_share_global_quota --value="500 * 1024 * 1024"
     http_file_share_global_quota=$(ynh_app_setting_get --key=http_file_share_global_quota)
 
-    ynh_app_setting_set_default --key=http_file_share_expires_after --value="92 * 24 * 60 * 60"
+    ynh_app_setting_set_default --key=http_file_share_expires_after --value="3 * 31 * 24 * 60 * 60"
     http_file_share_expires_after=$(ynh_app_setting_get --key=http_file_share_expires_after)
 
     ynh_app_setting_set_default --key=rooms_persistent --value="true"
