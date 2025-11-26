@@ -54,10 +54,10 @@ services = [ "prosody", ]
     name.en = "Room default settings"
     name.fr = "Paramètres par défaut des salons"
 
-        [main.room_default_config.persistent]
+        [main.room_default_config.rooms_persistent]
         ask.en = "Make rooms persistent by default"
         ask.fr = "Rendre les salons persistants par défaut"
         type = "boolean"
         yes = "true"
         no = "false"
-        bind = ":/etc/prosody/conf.avail/__DOMAIN__.cfg.lua"
+        bind = "persistent:/etc/prosody/conf.avail/__DOMAIN__.cfg.lua"

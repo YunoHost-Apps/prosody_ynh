@@ -12,6 +12,20 @@ _configure_prosody() {
     turn_password=$(ynh_app_setting_get --app="coturn" --key=turnserver_pwd)
     turn_external_port=$(ynh_app_setting_get --app="coturn" --key=port_turnserver_tls)
 
+    # Restore custom settings from config panel if any, or setup reasonable default values
+    ynh_app_setting_set_default --key=http_file_share_size_limit --value="50 * 1024 * 1024"
+    http_file_share_size_limit=$(ynh_app_setting_get --key=http_file_share_size_limit)
+
+    ynh_app_setting_set_default --key=http_file_share_global_quota --value="500 * 1024 * 1024"
+    http_file_share_global_quota=$(ynh_app_setting_get --key=http_file_share_global_quota)
+
+    ynh_app_setting_set_default --key=http_file_share_expires_after --value="92 * 24 * 60 * 60"
+    http_file_share_expires_after=$(ynh_app_setting_get --key=http_file_share_expires_after)
+
+    ynh_app_setting_set_default --key=rooms_persistent --value="true"
+    rooms_persistent=$(ynh_app_setting_get --key=rooms_persistent)
+
+
     ynh_print_info "Adding Prosody configuration files..."
 
     # Add 00.cfg.lua, needed to customize some settings acrros all prosody vhosts
