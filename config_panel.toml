@@ -11,7 +11,7 @@ services = [ "prosody", ]
     name.fr = "Partage de fichiers"
 
         [main.upload.http_file_share_size_limit]
-        ask.en = "Maximum uploaded file size"
+        ask.en = "Maximum size per shared file"
         ask.fr = "Taille maximale d'un fichier partagé"
         type = "select"
         choices."10 * 1024 * 1024" = "10MiB"
@@ -23,8 +23,8 @@ services = [ "prosody", ]
         bind = ":/etc/prosody/conf.avail/__DOMAIN__.cfg.lua"
 
         [main.upload.http_file_share_global_quota]
-        ask.en = "Maximum storage size per user"
-        ask.fr = "Espace maximum de stockage par compte utilisateur"
+        ask.en = "Global storage limit"
+        ask.fr = "Limite globale de stockage"
         type = "select"
         choices."500 * 1024 * 1024" = "500MiB"
         choices."1 * 1024 * 1024 * 1024" = "1GiB"
