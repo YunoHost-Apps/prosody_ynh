@@ -12,6 +12,20 @@ _configure_prosody() {
     turn_password=$(ynh_app_setting_get --app="coturn" --key=turnserver_pwd)
     turn_external_port=$(ynh_app_setting_get --app="coturn" --key=port_turnserver_tls)
 
+    # Restore custom settings from config panel if any, or setup reasonable default values
+    ynh_app_setting_set_default --key=http_file_share_size_limit --value="50 * 1024 * 1024"
+    http_file_share_size_limit=$(ynh_app_setting_get --key=http_file_share_size_limit)
+
+    ynh_app_setting_set_default --key=http_file_share_global_quota --value="500 * 1024 * 1024"
+    http_file_share_global_quota=$(ynh_app_setting_get --key=http_file_share_global_quota)
+
+    ynh_app_setting_set_default --key=http_file_share_expires_after --value="3 * 31 * 24 * 60 * 60"
+    http_file_share_expires_after=$(ynh_app_setting_get --key=http_file_share_expires_after)
+
+    ynh_app_setting_set_default --key=rooms_persistent --value="true"
+    rooms_persistent=$(ynh_app_setting_get --key=rooms_persistent)
+
+
     ynh_print_info "Adding Prosody configuration files..."
 
     # Add 00.cfg.lua, needed to customize some settings acrros all prosody vhosts
@@ -21,6 +35,10 @@ _configure_prosody() {
     # Add domain configuration
     ynh_config_add --template="domain.tpl.cfg.lua" --destination="/etc/prosody/conf.avail/${domain}.cfg.lua"
     ln -srf /etc/prosody/conf.avail/${domain}.cfg.lua /etc/prosody/conf.d/
+
+    # Make sure data is migrated to the new http_file_share datastorage format
+    ynh_systemctl --service=$app --action="restart"
+    prosodyctl mod_migrate_http_upload xmpp-upload.${domain} ${domain}
 
     # Add content for /.well-known/host-meta (XEP-0156: Discovering Alternative XMPP Connection Methods)
     ynh_print_info "Creating content for \"/.well-known/host-meta\""
@@ -33,13 +51,6 @@ _configure_prosody() {
 
     cp -R "../conf/hook_conf_regen" "/usr/share/yunohost/hooks/conf_regen/98-nginx_$app"
     YNH_HELPERS_VERSION=1 yunohost tools regen-conf nginx
-
-    # Create directory for file sharing uploads
-    ynh_print_info "Setting up HTTP upload folder..."
-
-    mkdir -p "/var/xmpp-upload/${domain}/upload"
-    chown -R prosody:www-data /var/xmpp-upload/
-    chmod -R g+s /var/xmpp-upload/
 }
 
 _setup_initial_app_permissions() {

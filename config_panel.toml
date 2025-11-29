@@ -1,0 +1,68 @@
+version = "1.0"
+
+[main]
+name.en = "Advanced Prosody configuration"
+name.fr = "Paramétrage Prosody avancé"
+
+services = [ "prosody", ]
+
+    [main.upload]
+    name.en = "File sharing"
+    name.fr = "Partage de fichiers"
+
+        [main.upload.http_file_share_size_limit]
+        ask.en = "Maximum size per shared file"
+        ask.fr = "Taille maximale d'un fichier partagé"
+        type = "select"
+        choices."10 * 1024 * 1024" = "10MiB"
+        choices."20 * 1024 * 1024" = "20MiB"
+        choices."50 * 1024 * 1024" = "50MiB"
+        choices."100 * 1024 * 1024" = "100MiB"
+        choices."200 * 1024 * 1024" = "200MiB"
+        choices."500 * 1024 * 1024" = "500MiB"
+        bind = ":/etc/prosody/conf.avail/__DOMAIN__.cfg.lua"
+
+        [main.upload.http_file_share_global_quota]
+        ask.en = "Global storage limit"
+        ask.fr = "Limite globale de stockage"
+        type = "select"
+        choices."500 * 1024 * 1024" = "500MiB"
+        choices."1 * 1024 * 1024 * 1024" = "1GiB"
+        choices."2 * 1024 * 1024 * 1024" = "2GiB"
+        choices."5 * 1024 * 1024 * 1024" = "5GiB"
+        choices."100 * 1024 * 1024 * 1024" = "100GiB"
+        choices."200 * 1024 * 1024 * 1024" = "200GiB"
+        choices."500 * 1024 * 1024 * 1024" = "500GiB"
+        choices."1 * 1024 * 1024 * 1024 * 1024" = "1TiB"
+        choices."2 * 1024 * 1024 * 1024 * 1024" = "2TiB"
+        choices."5 * 1024 * 1024 * 1024 * 1024" = "5TiB"
+        choices."999 * 1024 * 1024 * 1024 * 1024" = "999TiB"
+        bind = ":/etc/prosody/conf.avail/__DOMAIN__.cfg.lua"
+
+        [main.upload.http_file_share_expires_after]
+        ask.en = "File retention duration"
+        ask.fr = "Durée de rétention des fichiers"
+        type = "select"
+        choices."1 * 24 * 60 * 60" = "1 day"
+        choices."2 * 24 * 60 * 60" = "2 days"
+        choices."7 * 24 * 60 * 60" = "1 week"
+        choices."1 * 31 * 24 * 60 * 60" = "1 month"
+        choices."3 * 31 * 24 * 60 * 60" = "3 months"
+        choices."6 * 31 * 24 * 60 * 60" = "6 months"
+        choices."1 * 365 * 24 * 60 * 60" = "1 year"
+        choices."2 * 365 * 24 * 60 * 60" = "2 years"
+        choices."5 * 365 * 24 * 60 * 60" = "5 years"
+        choices."999 * 365 * 24 * 60 * 60" = "999 years"
+        bind = ":/etc/prosody/conf.avail/__DOMAIN__.cfg.lua"
+
+    [main.room_default_config]
+    name.en = "Room default settings"
+    name.fr = "Paramètres par défaut des salons"
+
+        [main.room_default_config.rooms_persistent]
+        ask.en = "Make rooms persistent by default"
+        ask.fr = "Rendre les salons persistants par défaut"
+        type = "boolean"
+        yes = "true"
+        no = "false"
+        bind = "persistent:/etc/prosody/conf.avail/__DOMAIN__.cfg.lua"
