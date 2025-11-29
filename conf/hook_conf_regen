@@ -27,18 +27,14 @@ server {
     root /dev/null;
 
     location /upload/ {
-        alias /var/xmpp-upload/$domain/upload/;
-        # Pass all requests to prosody, except for GET and HEAD requests.
-        limit_except GET HEAD {
-            proxy_pass http://localhost:5280;
-        }
+        proxy_pass http://localhost:5280;
 
         include proxy_params;
         add_header 'Access-Control-Allow-Origin' '*';
         add_header 'Access-Control-Allow-Methods' 'HEAD, GET, PUT, OPTIONS';
         add_header 'Access-Control-Allow-Headers' 'Authorization';
         add_header 'Access-Control-Allow-Credentials' 'true';
-        client_max_body_size 105M; # Choose a value a bit higher than the max upload configured in XMPP server
+        client_max_body_size 1025M; # Choose a value a bit higher than the max upload configured in XMPP server
     }
 
     include /etc/nginx/conf.d/security.conf.inc;

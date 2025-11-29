@@ -65,7 +65,7 @@ Component "muc.__DOMAIN__" "muc"
   muc_burst_factor = 10
   room_default_config = {
     logging = true,
-    persistent = true
+    persistent = __ROOMS_PERSISTENT__
   };
 
   muc_log_expires_after = "1w"
@@ -77,13 +77,13 @@ Component "pubsub.__DOMAIN__" "pubsub"
   unrestricted_node_creation = true -- Anyone can create a PubSub node (from any server)
 
 ---Set up a HTTP Upload service
-Component "xmpp-upload.__DOMAIN__" "http_upload"
+Component "xmpp-upload.__DOMAIN__" "http_file_share"
   name = "__DOMAIN__ Sharing Service"
-  http_upload_path = "/var/xmpp-upload/__DOMAIN__/upload/"
   http_external_url = "https://xmpp-upload.__DOMAIN__"
-  --http_file_base_path = "/upload"
-  --http_file_size_limit = 50*1024*1024
-  --http_file_quota = 50*1024*1024
-  http_upload_file_size_limit = 50 * 1024 * 1024 -- bytes (limited by http_max_content_size (default 10M))
-  http_upload_quota = 1 * 1024 * 1024 * 1024 -- bytes
-  http_upload_expires_after = 60 * 60 * 24 * 7 -- a week in seconds
+  http_file_share_size_limit = __HTTP_FILE_SHARE_SIZE_LIMIT__
+  http_file_share_global_quota = __HTTP_FILE_SHARE_GLOBAL_QUOTA__
+  http_file_share_expires_after = __HTTP_FILE_SHARE_EXPIRES_AFTER__
+
+  http_paths = {
+    file_share = "/upload";
+  }
