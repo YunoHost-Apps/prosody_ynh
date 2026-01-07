@@ -29,6 +29,12 @@ ynh_apt_install_dependencies "$deps, prosody, prosody-modules"
 #=================================================
 ynh_script_progression "Configuring Prosody and NGINX..."
 
+# Make sure data is migrated to the new http_file_share datastorage format before upgrading config
+ynh_systemctl --service=$app --action="restart"
+prosodyctl mod_migrate_http_upload xmpp-upload.${domain} ${domain}
+# The legacy folder should now only contain empty dirs, let's remove those
+find /var/xmpp-upload -type d -empty -delete &> /dev/null
+
 # Add config files for prosody and nginx
 _configure_prosody
 
