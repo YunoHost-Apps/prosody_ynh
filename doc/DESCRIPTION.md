@@ -24,9 +24,6 @@ Read more about this choice in [RATIONALE.md](https://github.com/YunoHost-Apps/p
   * automatically install coturn if not yet present
   * XEP-0156, XEP-0163, XEP-0191, XEP-0215, XEP-0237, XEP-0280, XEP-0313, XEP-0363 (see 'xmpp_compliance' file), XEP-0421 TBC
 
-🐞 What does not work:
-  * vjud (Users directory) (help welcomed!)
-
 🙋 TODO (help welcomed!):
   * usability by other apps:
     * [PeerTube](https://github.com/YunoHost-Apps/peertube_ynh): to be tested
