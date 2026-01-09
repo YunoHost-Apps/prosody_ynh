@@ -24,18 +24,13 @@ Read more about this choice in [RATIONALE.md](https://github.com/YunoHost-Apps/p
   * automatically install coturn if not yet present
   * XEP-0156, XEP-0163, XEP-0191, XEP-0215, XEP-0237, XEP-0280, XEP-0313, XEP-0363 (see 'xmpp_compliance' file), XEP-0421 TBC
 
-🐞 What does not work:
-  * vjud (Users directory) (help welcomed!)
-
 🙋 TODO (help welcomed!):
   * usability by other apps:
     * [PeerTube](https://github.com/YunoHost-Apps/peertube_ynh): to be tested
-    * [Movim](https://github.com/YunoHost-Apps/movim_ynh): app currently broken
     * [Converse.js](https://github.com/YunoHost-Apps/converse_ynh): seems to work 🥳
     * [Jitsi](https://github.com/YunoHost-Apps/jitsi_ynh): reported [to work](https://forum.yunohost.org/t/jitsi-install-fails-with-prosody-testing/35879) 🥳 
     * [Nextcloud](https://github.com/YunoHost-Apps/nextcloud_ynh): to be tested
     * [Libervia](https://salut-a-toi.org/): to be tested [non-working app](https://github.com/YunoHost-Apps/sat_ynh)
-    * [biboumi](https://github.com/YunoHost-Apps/biboumi_ynh): currently [not working](https://github.com/YunoHost-Apps/biboumi_ynh/issues/29)
     * ...?
   * check initial configuration (DNS, ?) : information via PRE_INSTALL.md
 
