@@ -18,12 +18,15 @@ XEP-0363: HTTP File Upload                                       PASSED
 XEP-0368: SRV records for XMPP over TLS                          FAILED
 XEP-0384: OMEMO Encryption                                       PASSED
 XEP-0398: User Avatar to vCard-Based Avatars Conversion          PASSED
+XEP-0402: PEP Native Bookmarks                                   PASSED
+XEP-0421: Anonymous unique occupant identifiers for MUCs         PASSED
+XEP-0490: Message Displayed Synchronization                      PASSED
 
 Informational tests:
 XEP-0077: In-Band Registration                                   PASSED
-XEP-0156: Discovering Alternative XMPP Connection Methods (HTTP) FAILED
+XEP-0156: Discovering Alternative XMPP Connection Methods (HTTP) PASSED
 XEP-0157: Contact Addresses for XMPP Services (Abuse)            FAILED
 XEP-0280: Message Carbons - Recommended Rules                    PASSED
 XEP-0313: Message Archive Management (extended usage)            PASSED
 XEP-0363: HTTP File Upload (CORS Headers)                        PASSED
-XEP-0402: PEP Native Bookmarks                                   PASSED
+XEP-0485: PubSub Server Information                              FAILED
