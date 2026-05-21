@@ -16,7 +16,7 @@ ynh_backup "$config_path"
 # BACKUP THE DATA DIR
 #=================================================
 
-for item in /var/lib/prosody/*; do
+for item in /var/lib/prosody/* /var/xmpp-upload; do
     [[ $item == *.sock ]] && continue # do not backup socket file
     ynh_backup $item
 done
