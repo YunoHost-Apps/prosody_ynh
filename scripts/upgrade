@@ -33,7 +33,7 @@ ynh_script_progression "Configuring Prosody and NGINX..."
 ynh_systemctl --service=$app --action="restart"
 prosodyctl mod_migrate_http_upload xmpp-upload.${domain} ${domain}
 # The legacy folder should now only contain empty dirs, let's remove those
-find /var/xmpp-upload -type d -empty -delete &> /dev/null
+test -d /var/xmpp-upload && find /var/xmpp-upload -type d -empty -delete &> /dev/null
 
 # Add config files for prosody and nginx
 _configure_prosody
