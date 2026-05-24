@@ -87,3 +87,9 @@ Component "xmpp-upload.__DOMAIN__" "http_file_share"
   http_paths = {
     file_share = "/upload";
   }
+
+
+---Set up a VJUD service
+--FIXME: vjud does not load even if vcard is installed/enabled
+--Component "vjud.__DOMAIN__" "vjud"
+--  vjud_disco_name = "__DOMAIN__ User Directory"

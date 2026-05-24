@@ -25,6 +25,7 @@ _configure_prosody() {
     ynh_app_setting_set_default --key=rooms_persistent --value="true"
     rooms_persistent=$(ynh_app_setting_get --key=rooms_persistent)
 
+
     ynh_print_info "Adding Prosody configuration files..."
 
     # Add 00.cfg.lua, needed to customize some settings acrros all prosody vhosts
@@ -34,6 +35,10 @@ _configure_prosody() {
     # Add domain configuration
     ynh_config_add --template="domain.tpl.cfg.lua" --destination="/etc/prosody/conf.avail/${domain}.cfg.lua"
     ln -srf /etc/prosody/conf.avail/${domain}.cfg.lua /etc/prosody/conf.d/
+
+    # Make sure data is migrated to the new http_file_share datastorage format
+    ynh_systemctl --service=$app --action="restart"
+    prosodyctl mod_migrate_http_upload xmpp-upload.${domain} ${domain}
 
     # Add content for /.well-known/host-meta (XEP-0156: Discovering Alternative XMPP Connection Methods)
     ynh_print_info "Creating content for \"/.well-known/host-meta\""
