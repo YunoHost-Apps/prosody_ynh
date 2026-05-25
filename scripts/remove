@@ -15,12 +15,12 @@ if ynh_hide_warnings yunohost service status $app >/dev/null; then
 	yunohost service remove $app
 fi
 
+ynh_systemctl --service="prosody" --action="stop"
+
 rm /etc/prosody/conf.d/$domain.cfg.lua
 rm /etc/prosody/conf.avail/$domain.cfg.lua
 rm /etc/prosody/conf.d/00.cfg.lua
 rm /etc/prosody/conf.avail/00.cfg.lua
-
-DEBIAN_FRONTEND=noninteractive apt-get purge --assume-yes prosody
 
 #=================================================
 # CLEANUP NGINX CONFIG

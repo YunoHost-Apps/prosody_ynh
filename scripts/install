@@ -37,10 +37,6 @@ fi
 #=================================================
 ynh_script_progression "Installing Prosody package from Debian..."
 
-# and declare the package dependency to prosody & prosody-modules
-deps=$(ynh_read_manifest "resources.apt.packages")
-ynh_apt_install_dependencies "$deps, prosody, prosody-modules"
-
 #=================================================
 # SPECIFIC SETUP
 #=================================================
@@ -112,11 +108,8 @@ ynh_systemctl --service=$app --action="restart"
 
 ynh_systemctl --service="nginx" --action="reload"
 
-# add mod_cloud_notify_extensions modules not included in Debian bookworm prosody-modules package (only in bookworm-backports)
-/usr/bin/prosodyctl install --server=https://modules.prosody.im/rocks/ mod_cloud_notify_extensions
-
-# restart to take into account new modules
-ynh_systemctl --service=$app --action="restart"
+# Make sure the expected extra prosody modules are installed, whether manually or from Debian packages.
+_ensure_extra_modules_are_installed
 
 #=================================================
 # END OF SCRIPT
