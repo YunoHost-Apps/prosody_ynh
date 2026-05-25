@@ -18,13 +18,6 @@ Don't worry, no data will be lost."
 _setup_initial_app_permissions
 
 #=================================================
-# DECLARE PROSODY & PROSODY-MODULES DEPENDENCIES
-#=================================================
-
-deps=$(ynh_read_manifest "resources.apt.packages")
-ynh_apt_install_dependencies "$deps, prosody, prosody-modules"
-
-#=================================================
 # ADD CONFIGURATION FILES
 #=================================================
 ynh_script_progression "Configuring Prosody and NGINX..."
@@ -34,6 +27,9 @@ ynh_systemctl --service=$app --action="restart"
 prosodyctl mod_migrate_http_upload xmpp-upload.${domain} ${domain}
 # The legacy folder should now only contain empty dirs, let's remove those
 test -d /var/xmpp-upload && find /var/xmpp-upload -type d -empty -delete &> /dev/null
+
+# Make sure the expected extra prosody modules are installed, whether manually or from Debian packages.
+_ensure_extra_modules_are_installed
 
 # Add config files for prosody and nginx
 _configure_prosody

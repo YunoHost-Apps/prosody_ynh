@@ -68,3 +68,24 @@ _setup_initial_app_permissions() {
         ynh_app_setting_set --app=prosody --key=_is_workaround_for_missing_permissions_already_applied --value=yes
     fi
 }
+
+_ensure_extra_modules_are_installed() {
+    # Some useful prosody modules may not be available in Debian repositories yet.
+    # When this is the case, we install them "manually". And when these modules are
+    # finally included in Debian, we remove the "manually" installed ones.
+    if grep -q "^VERSION_CODENAME=bookworm" /etc/os-release ; then
+        if ! prosodyctl list | grep -q ^mod_cloud_notify_extensions ; then
+            ynh_print_info "Installing mod_cloud_notify_extensions \"manually\" because it is not available in Debian Bookworm."
+            prosodyctl install --server=https://modules.prosody.im/rocks/ mod_cloud_notify_extensions
+            ynh_systemctl --service=$app --action="restart"
+        fi
+    else
+        if prosodyctl list | grep -q ^mod_cloud_notify_ ; then
+            ynh_print_info "Uninstalling mod_cloud_notify_extensions that was previously installed \"manually\". It is now included in Debian."
+            # First uninstall mod_cloud_notify_extensions, and then its dependencies
+            prosodyctl remove mod_cloud_notify_extensions
+            for mod in $(prosodyctl list | grep ^mod_cloud_notify_); do prosodyctl remove ${mod} ; done
+            ynh_systemctl --service=$app --action="restart"
+        fi
+    fi
+}

@@ -62,9 +62,14 @@ ram.runtime = "10M"
 
     [resources.permissions]
 
-    # Dependencies for prosodyctl install
-    # Installation of Recommends are disabled by default by some VPS providers
-    # therefore requiring explicitely here recommends for packages prosody and prosody-modules:
-    # lua5.4-event, lua5.4-readline, lua5.4-unbound, lua-ldap
+    # In Bookworm, we need to run 'prosodyctl install' which requires some extra packages.
+    # And because automatic installation of Recommends is sometimes disabled by default by some VPS providers,
+    # we need to declare here a pretty-long list of 'lua*' packages.
     [resources.apt]
-    packages = "liblua5.4-dev, lua-busted, lua5.4, lua5.4-event, lua5.4-readline, lua5.4-expat, lua5.4-socket, openssl, txt2man, lua5.4-sec, lua5.4-unbound, lua-ldap, luarocks"
+    packages_from_raw_bash="""
+        if grep -q "^VERSION_CODENAME=bookworm" /etc/os-release ; then
+            echo "prosody prosody-modules liblua5.4-dev lua-busted lua5.4 lua5.4-event lua5.4-readline lua5.4-expat lua5.4-socket openssl txt2man lua5.4-sec lua5.4-unbound lua-ldap luarocks"
+        else
+            echo "prosody prosody-modules luarocks"
+        fi
+    """
