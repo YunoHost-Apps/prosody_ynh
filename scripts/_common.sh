@@ -89,6 +89,11 @@ _ensure_extra_modules_are_installed() {
             prosodyctl install --server=https://modules.prosody.im/rocks/ mod_pubsub_serverinfo
             ynh_systemctl --service=$app --action="restart"
         fi
+        if ! prosodyctl list | grep -q ^mod_sasl_ssdp ; then
+            ynh_print_info "Installing mod_sasl_ssdp \"manually\" because it is not available in Debian Bookworm."
+            prosodyctl install --server=https://modules.prosody.im/rocks/ mod_sasl_ssdp
+            ynh_systemctl --service=$app --action="restart"
+        fi
     else
         if prosodyctl list | grep -q ^mod_cloud_notify_ ; then
             ynh_print_info "Uninstalling mod_cloud_notify_extensions that was previously installed \"manually\". It is now included in Debian."

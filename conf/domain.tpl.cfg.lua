@@ -18,6 +18,7 @@ VirtualHost "__DOMAIN__"
     "csi_battery_saver";
     "server_contact_info"; -- XEP-0157: advertise abuse/admin contacts
     "pubsub_serverinfo";   -- XEP-0485: publish server info via pubsub
+    "sasl_ssdp";           -- XEP-0474: SASL SCRAM downgrade protection
   }
 
   modules_disabled = {
