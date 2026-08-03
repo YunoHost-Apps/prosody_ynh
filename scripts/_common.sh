@@ -79,6 +79,11 @@ _ensure_extra_modules_are_installed() {
             prosodyctl install --server=https://modules.prosody.im/rocks/ mod_cloud_notify_extensions
             ynh_systemctl --service=$app --action="restart"
         fi
+        if ! prosodyctl list | grep -q '^mod_server_info$' ; then
+            ynh_print_info "Installing mod_server_info \"manually\" (required by mod_pubsub_serverinfo, not in Debian Bookworm)."
+            prosodyctl install --server=https://modules.prosody.im/rocks/ mod_server_info
+            ynh_systemctl --service=$app --action="restart"
+        fi
         if ! prosodyctl list | grep -q ^mod_pubsub_serverinfo ; then
             ynh_print_info "Installing mod_pubsub_serverinfo \"manually\" because it is not available in Debian Bookworm."
             prosodyctl install --server=https://modules.prosody.im/rocks/ mod_pubsub_serverinfo
