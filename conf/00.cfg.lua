@@ -12,3 +12,11 @@ c2s_direct_tls_ssl = {
     certificate = "/etc/yunohost/certs/__DOMAIN__/crt.pem";
     key = "/etc/yunohost/certs/__DOMAIN__/key.pem";
 }
+
+-- Enable Direct-TLS for server-to-server on port 5270 (XEP-0368). Same
+-- certificate requirement as the c2s listener above.
+s2s_direct_tls_ports = { 5270 }
+s2s_direct_tls_ssl = {
+    certificate = "/etc/yunohost/certs/__DOMAIN__/crt.pem";
+    key = "/etc/yunohost/certs/__DOMAIN__/key.pem";
+}

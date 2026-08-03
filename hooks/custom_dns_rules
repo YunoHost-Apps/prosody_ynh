@@ -44,4 +44,8 @@ echo "
   ttl: 3600
   type: SRV
   value: '0 5 5223 ${suffix}'
+- name: '_xmpps-server._tcp'
+  ttl: 3600
+  type: SRV
+  value: '0 5 5270 ${suffix}'
 " > ${YNH_STDRETURN}
