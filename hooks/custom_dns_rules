@@ -32,15 +32,15 @@ echo "
   ttl: 3600
   type: CNAME
   value: '${suffix}'
-- name: '_xmpp-client._tcp.${suffix}'
+- name: '_xmpp-client._tcp'
   ttl: 3600
   type: SRV
   value: '0 5 5222 ${suffix}'
-- name: '_xmpp-server._tcp.${suffix}'
+- name: '_xmpp-server._tcp'
   ttl: 3600
   type: SRV
   value: '0 5 5269 ${suffix}'
-- name: '_xmpps-client._tcp.${suffix}'
+- name: '_xmpps-client._tcp'
   ttl: 3600
   type: SRV
   value: '0 5 5223 ${suffix}'
