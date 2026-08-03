@@ -28,6 +28,10 @@ echo "
   ttl: 3600
   type: CNAME
   value: '${suffix}'
+- name: 'proxy.${suffix}'
+  ttl: 3600
+  type: CNAME
+  value: '${suffix}'
 - name: '_xmpp-client._tcp.${suffix}'
   ttl: 3600
   type: SRV

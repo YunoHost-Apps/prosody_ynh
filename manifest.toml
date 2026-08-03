@@ -59,6 +59,10 @@ ram.runtime = "10M"
     server.default = 5269
     server.exposed = "TCP"
     server.fixed = true
+    # 5000 is the SOCKS5 bytestreams file-transfer proxy (XEP-0065)
+    proxy.default = 5000
+    proxy.exposed = "TCP"
+    proxy.fixed = true
 
     [resources.permissions]
 

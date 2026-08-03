@@ -17,6 +17,7 @@ VirtualHost "__DOMAIN__"
     "websocket";
     "csi_battery_saver";
     "server_contact_info"; -- XEP-0157: advertise abuse/admin contacts
+    "pubsub_serverinfo";   -- XEP-0485: publish server info via pubsub
   }
 
   modules_disabled = {
@@ -28,6 +29,7 @@ VirtualHost "__DOMAIN__"
   disco_items = {
     { "muc.__DOMAIN__" },
     { "pubsub.__DOMAIN__" },
+    { "proxy.__DOMAIN__" },
     --{ "jabber.__DOMAIN__" },
     --{ "vjud.__DOMAIN__" },
     { "xmpp-upload.__DOMAIN__" },
@@ -88,3 +90,8 @@ Component "xmpp-upload.__DOMAIN__" "http_file_share"
   http_paths = {
     file_share = "/upload";
   }
+
+---Set up a SOCKS5 Bytestreams file-transfer proxy (XEP-0065)
+Component "proxy.__DOMAIN__" "proxy65"
+  name = "__DOMAIN__ File Transfer Proxy"
+  proxy65_address = "proxy.__DOMAIN__"
