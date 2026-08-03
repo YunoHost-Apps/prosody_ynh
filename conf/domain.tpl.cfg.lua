@@ -16,6 +16,7 @@ VirtualHost "__DOMAIN__"
     "bosh";
     "websocket";
     "csi_battery_saver";
+    "server_contact_info"; -- XEP-0157: advertise abuse/admin contacts
   }
 
   modules_disabled = {
@@ -37,10 +38,10 @@ VirtualHost "__DOMAIN__"
   turn_external_host = "__DOMAIN__"
   turn_external_port = __TURN_EXTERNAL_PORT__
 
---  contact_info = {
---    abuse = { "mailto:abuse@__DOMAIN__", "xmpp:admin@__DOMAIN__" };
---    admin = { "mailto:root@__DOMAIN__", "xmpp:admin@__DOMAIN__" };
---  };
+  contact_info = {
+    abuse = { "mailto:abuse@__DOMAIN__", "xmpp:admin@__DOMAIN__" };
+    admin = { "mailto:root@__DOMAIN__", "xmpp:admin@__DOMAIN__" };
+  };
 
   http_paths = {
     bosh = "/xmpp-bosh";
