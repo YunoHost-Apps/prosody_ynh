@@ -31,6 +31,16 @@ _configure_prosody() {
     ynh_config_add --template="00.cfg.lua" --destination="/etc/prosody/conf.avail/00.cfg.lua"
     ln -srf /etc/prosody/conf.avail/00.cfg.lua /etc/prosody/conf.d/
 
+    # SASL2 stack (XEP-0388 SASL2, XEP-0386 Bind2, XEP-0484 FAST + inline stream
+    # management/resumption). These modules ship with Prosody 13; they do not
+    # exist on the Prosody 0.12 that Debian Bookworm provides, so only enable
+    # them on newer Debian (Trixie and later).
+    if grep -q "^VERSION_CODENAME=bookworm" /etc/os-release ; then
+        sasl2_modules=""
+    else
+        sasl2_modules='"sasl2"; "sasl2_bind2"; "sasl2_sm"; "sasl2_fast";'
+    fi
+
     # Add domain configuration
     ynh_config_add --template="domain.tpl.cfg.lua" --destination="/etc/prosody/conf.avail/${domain}.cfg.lua"
     ln -srf /etc/prosody/conf.avail/${domain}.cfg.lua /etc/prosody/conf.d/
