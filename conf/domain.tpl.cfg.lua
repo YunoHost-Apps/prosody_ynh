@@ -16,6 +16,8 @@ VirtualHost "__DOMAIN__"
     "bosh";
     "websocket";
     "csi_battery_saver";
+    -- SASL2 stack (Prosody 13+ only; empty on Debian Bookworm / Prosody 0.12)
+    __SASL2_MODULES__
   }
 
   modules_disabled = {
