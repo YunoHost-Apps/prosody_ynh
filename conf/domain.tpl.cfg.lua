@@ -41,10 +41,16 @@ VirtualHost "__DOMAIN__"
   turn_external_host = "__DOMAIN__"
   turn_external_port = __TURN_EXTERNAL_PORT__
 
-  contact_info = {
-    abuse = { "mailto:abuse@__DOMAIN__", "xmpp:admin@__DOMAIN__" };
-    admin = { "mailto:root@__DOMAIN__", "xmpp:admin@__DOMAIN__" };
-  };
+  -- XEP-0157 server contact info. YunoHost does not provision role aliases
+  -- (abuse@, postmaster@, root@) for a domain, so we never guess an address:
+  -- advertise only what the admin sets via the config panel (empty = none).
+  xmpp_contact_address = "__XMPP_CONTACT_ADDRESS__"
+  if xmpp_contact_address ~= "" then
+    contact_info = {
+      abuse = { xmpp_contact_address };
+      admin = { xmpp_contact_address };
+    };
+  end
 
   http_paths = {
     bosh = "/xmpp-bosh";

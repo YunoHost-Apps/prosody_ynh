@@ -25,6 +25,9 @@ _configure_prosody() {
     ynh_app_setting_set_default --key=rooms_persistent --value="true"
     rooms_persistent=$(ynh_app_setting_get --key=rooms_persistent)
 
+    ynh_app_setting_set_default --key=xmpp_contact_address --value=""
+    xmpp_contact_address=$(ynh_app_setting_get --key=xmpp_contact_address)
+
     ynh_print_info "Adding Prosody configuration files..."
 
     # Add 00.cfg.lua, needed to customize some settings acrros all prosody vhosts

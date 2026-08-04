@@ -55,6 +55,18 @@ services = [ "prosody", ]
         choices."999 * 365 * 24 * 60 * 60" = "999 years"
         bind = ":/etc/prosody/conf.avail/__DOMAIN__.cfg.lua"
 
+    [main.contact]
+    name.en = "Server contact"
+    name.fr = "Contact du serveur"
+
+        [main.contact.xmpp_contact_address]
+        ask.en = "Contact address (XEP-0157)"
+        ask.fr = "Adresse de contact (XEP-0157)"
+        help.en = "Advertised as the server admin/abuse contact. YunoHost does not provide role aliases like abuse@, so enter an address you actually receive (e.g. mailto:you@example.org or xmpp:you@example.org). Leave empty to advertise none."
+        type = "string"
+        default = ""
+        bind = "xmpp_contact_address:/etc/prosody/conf.avail/__DOMAIN__.cfg.lua"
+
     [main.room_default_config]
     name.en = "Room default settings"
     name.fr = "Paramètres par défaut des salons"
