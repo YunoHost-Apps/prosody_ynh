@@ -44,11 +44,14 @@ VirtualHost "__DOMAIN__"
   -- XEP-0157 server contact info. YunoHost does not provision role aliases
   -- (abuse@, postmaster@, root@) for a domain, so we never guess an address:
   -- advertise only what the admin sets via the config panel (empty = none).
-  xmpp_contact_address = "__XMPP_CONTACT_ADDRESS__"
-  if xmpp_contact_address ~= "" then
+  -- A Lua local, not a config setting: assigning a bare name here would set it
+  -- as a Prosody option, and reading it back would go through configmanager's
+  -- environment metatable rather than being a plain variable read.
+  local contact = "__XMPP_CONTACT_ADDRESS__"
+  if contact ~= "" then
     contact_info = {
-      abuse = { xmpp_contact_address };
-      admin = { xmpp_contact_address };
+      abuse = { contact };
+      admin = { contact };
     };
   end
 
