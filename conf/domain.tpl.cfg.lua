@@ -16,6 +16,9 @@ VirtualHost "__DOMAIN__"
     "bosh";
     "websocket";
     "csi_battery_saver";
+    "server_contact_info"; -- XEP-0157: advertise abuse/admin contacts
+    "pubsub_serverinfo";   -- XEP-0485: publish server info via pubsub
+    "sasl_ssdp";           -- XEP-0474: SASL SCRAM downgrade protection
   }
 
   modules_disabled = {
@@ -27,6 +30,7 @@ VirtualHost "__DOMAIN__"
   disco_items = {
     { "muc.__DOMAIN__" },
     { "pubsub.__DOMAIN__" },
+    { "proxy.__DOMAIN__" },
     --{ "jabber.__DOMAIN__" },
     --{ "vjud.__DOMAIN__" },
     { "xmpp-upload.__DOMAIN__" },
@@ -37,10 +41,19 @@ VirtualHost "__DOMAIN__"
   turn_external_host = "__DOMAIN__"
   turn_external_port = __TURN_EXTERNAL_PORT__
 
---  contact_info = {
---    abuse = { "mailto:abuse@__DOMAIN__", "xmpp:admin@__DOMAIN__" };
---    admin = { "mailto:root@__DOMAIN__", "xmpp:admin@__DOMAIN__" };
---  };
+  -- XEP-0157 server contact info. YunoHost does not provision role aliases
+  -- (abuse@, postmaster@, root@) for a domain, so we never guess an address:
+  -- advertise only what the admin sets via the config panel (empty = none).
+  -- A Lua local, not a config setting: assigning a bare name here would set it
+  -- as a Prosody option, and reading it back would go through configmanager's
+  -- environment metatable rather than being a plain variable read.
+  local contact = "__XMPP_CONTACT_ADDRESS__"
+  if contact ~= "" then
+    contact_info = {
+      abuse = { contact };
+      admin = { contact };
+    };
+  end
 
   http_paths = {
     bosh = "/xmpp-bosh";
@@ -87,3 +100,8 @@ Component "xmpp-upload.__DOMAIN__" "http_file_share"
   http_paths = {
     file_share = "/upload";
   }
+
+---Set up a SOCKS5 Bytestreams file-transfer proxy (XEP-0065)
+Component "proxy.__DOMAIN__" "proxy65"
+  name = "__DOMAIN__ File Transfer Proxy"
+  proxy65_address = "proxy.__DOMAIN__"

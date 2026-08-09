@@ -28,4 +28,24 @@ echo "
   ttl: 3600
   type: CNAME
   value: '${suffix}'
+- name: 'proxy.${suffix}'
+  ttl: 3600
+  type: CNAME
+  value: '${suffix}'
+- name: '_xmpp-client._tcp'
+  ttl: 3600
+  type: SRV
+  value: '0 5 5222 ${suffix}'
+- name: '_xmpp-server._tcp'
+  ttl: 3600
+  type: SRV
+  value: '0 5 5269 ${suffix}'
+- name: '_xmpps-client._tcp'
+  ttl: 3600
+  type: SRV
+  value: '0 5 5223 ${suffix}'
+- name: '_xmpps-server._tcp'
+  ttl: 3600
+  type: SRV
+  value: '0 5 5270 ${suffix}'
 " > ${YNH_STDRETURN}

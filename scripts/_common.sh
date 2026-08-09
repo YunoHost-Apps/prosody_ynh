@@ -25,6 +25,9 @@ _configure_prosody() {
     ynh_app_setting_set_default --key=rooms_persistent --value="true"
     rooms_persistent=$(ynh_app_setting_get --key=rooms_persistent)
 
+    ynh_app_setting_set_default --key=xmpp_contact_address --value=""
+    xmpp_contact_address=$(ynh_app_setting_get --key=xmpp_contact_address)
+
     ynh_print_info "Adding Prosody configuration files..."
 
     # Add 00.cfg.lua, needed to customize some settings acrros all prosody vhosts
@@ -77,6 +80,21 @@ _ensure_extra_modules_are_installed() {
         if ! prosodyctl list | grep -q ^mod_cloud_notify_extensions ; then
             ynh_print_info "Installing mod_cloud_notify_extensions \"manually\" because it is not available in Debian Bookworm."
             prosodyctl install --server=https://modules.prosody.im/rocks/ mod_cloud_notify_extensions
+            ynh_systemctl --service=$app --action="restart"
+        fi
+        if ! prosodyctl list | grep -q '^mod_server_info$' ; then
+            ynh_print_info "Installing mod_server_info \"manually\" (required by mod_pubsub_serverinfo, not in Debian Bookworm)."
+            prosodyctl install --server=https://modules.prosody.im/rocks/ mod_server_info
+            ynh_systemctl --service=$app --action="restart"
+        fi
+        if ! prosodyctl list | grep -q ^mod_pubsub_serverinfo ; then
+            ynh_print_info "Installing mod_pubsub_serverinfo \"manually\" because it is not available in Debian Bookworm."
+            prosodyctl install --server=https://modules.prosody.im/rocks/ mod_pubsub_serverinfo
+            ynh_systemctl --service=$app --action="restart"
+        fi
+        if ! prosodyctl list | grep -q ^mod_sasl_ssdp ; then
+            ynh_print_info "Installing mod_sasl_ssdp \"manually\" because it is not available in Debian Bookworm."
+            prosodyctl install --server=https://modules.prosody.im/rocks/ mod_sasl_ssdp
             ynh_systemctl --service=$app --action="restart"
         fi
     else
