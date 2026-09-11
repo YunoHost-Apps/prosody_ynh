@@ -16,8 +16,8 @@ You will be able to connect using `your_yunohost_username@domain.tld` + your pas
 
 ## App conflicts/dependencies
 **Conflict**
-* [Metronome](https://github.com/YunoHost-Apps/metronome_ynh) : you have to deinstall Metronome app before to install this app (using the same ports)
-* [Simplex](https://github.com/YunoHost-Apps/simplex_ynh) : you have to deinstall Simplex app before to install this app (using the same ports)
+* [Metronome](https://github.com/YunoHost-Apps/metronome_ynh): you have to deinstall Metronome app before to install this app (using the same ports)
+* [Simplex](https://github.com/YunoHost-Apps/simplex_ynh): you have to deinstall Simplex app before to install this app (using the same ports)
 
 **Sequencing**
 * [Jitsi](https://github.com/YunoHost-Apps/jitsi_ynh): if you want to have both Jitsi and Prosody on your server, you must install first the Prosody app, then the Jitsi app
