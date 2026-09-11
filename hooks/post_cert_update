@@ -1,0 +1,10 @@
+# This script is expected to be called xx-$app
+app=$(basename $0 | cut -d- -f2)
+domain=$(yunohost app setting $app domain)
+
+if [[ "$domain" != "$1" ]]
+then
+    exit 0
+fi
+
+systemctl reload prosody
