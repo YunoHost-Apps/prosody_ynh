@@ -1,28 +1,33 @@
-Prosody is a modern XMPP communication server. It aims to be easy to set up and configure, and efficient with system resources. Additionally, for developers it aims to be easy to extend and give a flexible system on which to rapidly develop added functionality, or prototype new protocols.
+Prosody is a modern and lightweight XMPP communication server.
 
-ℹ️  **Important note**
+To use Prosody/XMPP, you will also need a client.
+There are a [lot of XMPP clients](https://xmpp.org/software/?category=clients) available out there, but here are some recommendations, depending on your device, platform and preferences:
 
-This app installs Prosody from Debian packages.
-Basically, this means that you will not benefit from the latest versions of Prosody but benefit the stability and security of the Debian packaging.
-Read more about this decision in [RATIONALE.md](https://github.com/YunoHost-Apps/prosody_ynh/tree/stable/RATIONALE.md)
+- [Conversations](https://conversations.im/) - Android
+- [Movim](https://movim.eu) - Web - available as a YunoHost app
+- [ConverseJS](https://conversejs.org) - Web - available as a YunoHost app
+- [Gajim](https://gajim.org/) - Linux, Windows
+- [Dino](https://dino.im) - Linux
+- [Monal](https://monal-im.org/) - iOS, macOS
+- [Profanity](https://profanity-im.github.io/) - Linux console
+- [Poezio](https://poez.io/) - Linux console
 
-🚀 Target is to provide at least:
-  * A/V calls (https://github.com/YunoHost/issues/issues/1607) 
-  * BOSH (https://forum.yunohost.org/t/unable-to-set-up-bosh-conf-nginx/12995)
-  * invite links (if not covered by https://github.com/YunoHost/issues/issues/1677)
-  * File sharing for all usual filetypes (https://forum.yunohost.org/t/metronome-mime-types-for-metronome-again/20073)
+You will be able to connect using `your_yunohost_username@domain.tld` + your password (i.e. your credentials are the same as for email, but for instant messaging)
 
-...and ultimately an Advanced Server compliance level (https://xmpp.org/extensions/xep-0479.html).
+## App conflicts/dependencies
+**Conflict**
+* [Metronome](https://github.com/YunoHost-Apps/metronome_ynh) : you have to deinstall Metronome app before to install this app (using the same ports)
+* [Simplex](https://github.com/YunoHost-Apps/simplex_ynh) : you have to deinstall Simplex app before to install this app (using the same ports)
 
-✅ What works:
-  * install on YunoHost 12
-  * LDAP auth
-  * A/V calls
-  * File upload
-  * MUC
-  * optional import of rosters, MUCs, bookmarks from Metronome (integrated service on Yunohost 11 or app on Yunohost 12) (pep is not supported, #12)
-  * automatically install coturn if not yet present
-  * XEP-0156, XEP-0163, XEP-0191, XEP-0215, XEP-0237, XEP-0280, XEP-0313, XEP-0363 (see 'xmpp_compliance' file), XEP-0421 TBC
+**Sequencing**
+* [Jitsi](https://github.com/YunoHost-Apps/jitsi_ynh): if you want to have both Jitsi and Prosody on your server, you must install first the Prosody app, then the Jitsi app
+
+**Dependencies**
+* [Coturn](https://github.com/YunoHost-Apps/jitsi_ynh): it will be automatically installed if needed
+
+
+# Additionnal infos
+* Users connect on XMPP with their email address. Ensure in the YunoHost Users configuration panel they have an email address matching the domain on which you install Prosody. If not add an email alias.
 
 🙋 TODO (help welcomed!):
   * usability by other apps:
@@ -32,28 +37,7 @@ Read more about this decision in [RATIONALE.md](https://github.com/YunoHost-Apps
     * [Nextcloud](https://github.com/YunoHost-Apps/nextcloud_ynh): to be tested
     * [Libervia](https://salut-a-toi.org/): to be tested [non-working app](https://github.com/YunoHost-Apps/sat_ynh)
     * ...?
-  * check initial configuration (DNS, ?) : information via PRE_INSTALL.md
+  * check initial configuration (DNS, ?): information via PRE_INSTALL.md
 
-# READ before install!
-Ideally all the README :) but this in particular:
-* You must ensure that your DNS configuration includes the subdomains `muc.`, `xmpp-upload.` and `pubsub.`
-* You should **not** create Yunohost subdomains `muc.`, `xmpp-upload.` and `pubsub.`
-
-## App conflicts/dependencies
-**Conflict**
-* [Metronome](https://github.com/YunoHost-Apps/metronome_ynh) : you have to deinstall Metronome app before to install this app (using the same ports)
-* [Simplex](https://github.com/YunoHost-Apps/simplex_ynh) : you have to deinstall Simplex app before to install this app (using the same ports)
-
-**Sequencing**
-* [Jitsi](https://github.com/YunoHost-Apps/jitsi_ynh) : if you want to have both Jitsi and Prosody on your server, you must install first the Prosody app, then the Jitsi app
-
-**Dependencies**
-* [coturn](https://github.com/YunoHost-Apps/jitsi_ynh) : it will be automatically installed if needed
-
-
-# Additionnal infos
-* Users connect on XMPP with their email address. Ensure in the Yunohost Users configuration panel they have an email address matching the domain on which you install Prosody. If not add an email alias.
-
-
-💬 Further discussions, support on xmpp:yunohost-xmpp@muc.chapril.org?join
+💬 Further discussions, support on [yunohost-xmpp@muc.chapril.org](xmpp:yunohost-xmpp@muc.chapril.org?join)
 Or in the [forum](https://forum.yunohost.org/c/apps/11).
