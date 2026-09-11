@@ -1,6 +1,6 @@
 Prosody est un serveur de messagerie instantannée XMPP moderne et léger.
 
-Pour utiliser Metronome / XMPP, vous aurez également besoin d'un client.
+Pour utiliser Prosody/XMPP, vous aurez également besoin d'un client.
 Il existe [beaucoup de clients XMPP](https://xmpp.org/software/?category=clients), mais voici une liste de recommandations, selon votre appareil, votre plateforme et vos préférences :
 
 - [Conversations](https://conversations.im/) - Android

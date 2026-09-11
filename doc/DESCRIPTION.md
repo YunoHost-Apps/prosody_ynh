@@ -1,6 +1,6 @@
 Prosody is a modern and lightweight XMPP communication server.
 
-To use Prosody / XMPP, you will also need a client.
+To use Prosody/XMPP, you will also need a client.
 There are a [lot of XMPP clients](https://xmpp.org/software/?category=clients) available out there, but here are some recommendations, depending on your device, platform and preferences:
 
 - [Conversations](https://conversations.im/) - Android
@@ -20,14 +20,14 @@ You will be able to connect using `your_yunohost_username@domain.tld` + your pas
 * [Simplex](https://github.com/YunoHost-Apps/simplex_ynh) : you have to deinstall Simplex app before to install this app (using the same ports)
 
 **Sequencing**
-* [Jitsi](https://github.com/YunoHost-Apps/jitsi_ynh) : if you want to have both Jitsi and Prosody on your server, you must install first the Prosody app, then the Jitsi app
+* [Jitsi](https://github.com/YunoHost-Apps/jitsi_ynh): if you want to have both Jitsi and Prosody on your server, you must install first the Prosody app, then the Jitsi app
 
 **Dependencies**
-* [coturn](https://github.com/YunoHost-Apps/jitsi_ynh) : it will be automatically installed if needed
+* [Coturn](https://github.com/YunoHost-Apps/jitsi_ynh): it will be automatically installed if needed
 
 
 # Additionnal infos
-* Users connect on XMPP with their email address. Ensure in the Yunohost Users configuration panel they have an email address matching the domain on which you install Prosody. If not add an email alias.
+* Users connect on XMPP with their email address. Ensure in the YunoHost Users configuration panel they have an email address matching the domain on which you install Prosody. If not add an email alias.
 
 🙋 TODO (help welcomed!):
   * usability by other apps:
@@ -37,7 +37,7 @@ You will be able to connect using `your_yunohost_username@domain.tld` + your pas
     * [Nextcloud](https://github.com/YunoHost-Apps/nextcloud_ynh): to be tested
     * [Libervia](https://salut-a-toi.org/): to be tested [non-working app](https://github.com/YunoHost-Apps/sat_ynh)
     * ...?
-  * check initial configuration (DNS, ?) : information via PRE_INSTALL.md
+  * check initial configuration (DNS, ?): information via PRE_INSTALL.md
 
 💬 Further discussions, support on [yunohost-xmpp@muc.chapril.org](xmpp:yunohost-xmpp@muc.chapril.org?join)
 Or in the [forum](https://forum.yunohost.org/c/apps/11).
