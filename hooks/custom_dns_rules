@@ -10,22 +10,21 @@ if [[ "$domain"  != *"$base_domain" ]]; then
 fi
 
 
-suffix="${base_domain}."
 echo "
-- name: 'xmpp-upload.${suffix}'
+- name: 'xmpp-upload${suffix}'
   ttl: 3600
   type: CNAME
-  value: '${suffix}'
-- name: 'muc.${suffix}'
+  value: '${base_domain}.'
+- name: 'muc${suffix}'
   ttl: 3600
   type: CNAME
-  value: '${suffix}'
-- name: 'pubsub.${suffix}'
+  value: '${base_domain}.'
+- name: 'pubsub${suffix}'
   ttl: 3600
   type: CNAME
-  value: '${suffix}'
-- name: 'vjud.${suffix}'
+  value: '${base_domain}.'
+- name: 'vjud${suffix}'
   ttl: 3600
   type: CNAME
-  value: '${suffix}'
+  value: '${base_domain}.'
 " > ${YNH_STDRETURN}
